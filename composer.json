@@ -17,6 +17,7 @@
 	"require": {
 		"php": ">=5.3.7",
 		"firebase/php-jwt": "^5.0"
+		"fzaninotto/faker": "^1.6"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
