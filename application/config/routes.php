@@ -54,18 +54,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-# User routes operation in controller:
-$route['profile/(:num)'] = 'user/see_profile/$1';
-$route['register'] = 'user/register';
-
 # Dashboard routes operation in controller:
-$route['dashboard'] = 'dashboard';
+$route['account'] = 'account';
 
 # Generic routes operations in controller:
-$route['how-it-works'] = 'application/how_it_works';
-$route['default_controller'] = 'application';
-$route['contact'] = 'application/contact';
-$route['about'] = 'application/about';
+$route['default_controller'] = 'institutional';
+$route['contact'] = 'institutional/contact';
+$route['about'] = 'institutional/about';
 
-# Clothing routes operation in controller:
-$route['clothing-in-donation'] = 'clothing';
+# item routes operation in controller:
+$route['item'] = 'item/show_all';
+$route['item/new'] = 'item/register';
+$route['item/(:num)'] = 'item/show/$1';
+
+
+# User routes, cause of your statement ":any" will always be 
+# the last declaration routes, otherwise conflict of routes:
+// $route['login'] = 'user/login';
+// $route['logout'] = 'user/logout';
+// $route['register'] = 'user/register';
+// $route['user'] = 'user/show_all';
+// $route['user/interest'] = 'user/item_interest';
+// $route['user/(:num)/item'] = 'item/show_by_user/$1';
+// $route['(:any)'] = 'user/show_profile/$1';
+
+
+
+$route['API/user/(:num)'] = 'API/user/index/id/$1'; 
+
+
+$route['API/example/users/(:num)'] = 'API/example/users/id/$1'; // Example 4
+$route['API/example/users/(:num)(\.)([a-zA-Z0-9_-]+)(.*)'] = 'API/example/users/id/$1/format/$3$4'; // Example 8
+
+
