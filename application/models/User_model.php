@@ -47,6 +47,17 @@ class User_model extends CI_Model {
         return $query->row_array();
     }
     
+    public function update($ID, $data)
+    {
+        $this->db->where('id', $ID);
+        $this->db->update('user', $data);
+    }
+    
+    public function delete_user($ID)
+    {
+        $this->db->delete('user', array('id' => $ID)); 
+    }
+    
 }
 
 ?>

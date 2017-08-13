@@ -7,7 +7,7 @@ class User extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('user_model');
-        $this->load->model('interest_model');
+        $this->load->model('wish_model');
     }
 	
 	# Verify if the attributes were sent correctly via post, If this happens the 
@@ -111,7 +111,7 @@ class User extends CI_Controller {
 	    }
 	    else
 	    {
-			$this->interest_model->set_interest();
+			# $this->wish_model->create_wish();
 	    }
 	    return false;
 	}
