@@ -1,5 +1,5 @@
 <?php
-class Interest_model extends CI_Model {
+class Wish_model extends CI_Model {
     
     public function __construct()
     {
@@ -12,14 +12,20 @@ class Interest_model extends CI_Model {
         return $query->row_array();
     }
     
-    public function set_interest()
+    public function create_wish($ID)
     {
         $data = array(
             'id_item' => $this->input->post('id_item'),
-            'id_user' => $this->session->user['id']
+            'id_user' => $ID
         );
         
-        return $this->db->insert('interest', $data);
+        return $this->db->insert('wish', $data);
+    }
+    
+    public function delete_wish($UID, $IID)
+    {
+        $data = array('id_item' => $IID, 'id_user' => $UID);
+        $this->db->delete('wish', $data); 
     }
 }
 

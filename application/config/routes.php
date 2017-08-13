@@ -80,10 +80,9 @@ $route['item/(:num)'] = 'item/show/$1';
 
 
 
-$route['API/user/(:num)'] = 'API/user/index/id/$1'; 
+$route['API/user/(:num)'] = 'API/user/index/id/$1';
+$route['API/user/(:num)/wish'] = 'API/user/wish/id/$1';
+$route['API/user/(:num)/wish/item/(:num)'] = 'API/user/wish/user_id/$1/item_id/$2';
 
-
-$route['API/example/users/(:num)'] = 'API/example/users/id/$1'; // Example 4
-$route['API/example/users/(:num)(\.)([a-zA-Z0-9_-]+)(.*)'] = 'API/example/users/id/$1/format/$3$4'; // Example 8
 
 
