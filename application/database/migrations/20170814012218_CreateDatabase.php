@@ -34,7 +34,11 @@ class Migration_CreateDatabase extends CI_Migration {
 		$this->db->query('ALTER TABLE  `logins` ENGINE = InnoDB');
 		
 		## Create Table users
+<<<<<<< HEAD
 		$this->dbforge->add_field("`id` int(10) unsigned auto_increment primary key");
+=======
+		$this->dbforge->add_field("`id` int(10) unsigned primary key");
+>>>>>>> Database migration created.
 		$this->dbforge->add_field("`username` varchar(80) NOT NULL ");
 		$this->dbforge->add_field("`profile_image` mediumblob NULL ");
 		$this->dbforge->add_field("`cep` char(8) NULL ");
