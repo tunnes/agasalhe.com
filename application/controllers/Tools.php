@@ -15,7 +15,7 @@ class Tools extends CI_Controller {
         // initiate faker
         $this->faker = Faker\Factory::create();
     }
-
+    
     public function message($to = 'World') {
         echo "Hello {$to}!" . PHP_EOL;
     }
@@ -39,7 +39,7 @@ class Tools extends CI_Controller {
 
         if ($version != null) {
             if ($this->migration->version($version) === FALSE) {
-                show_error($this->migration->error_string());
+              show_error($this->migration->error_string());
             } else {
                 echo "Migrations run successfully" . PHP_EOL;
             }
@@ -48,6 +48,7 @@ class Tools extends CI_Controller {
         }
 
         if ($this->migration->latest() === FALSE) {
+            echo 'merda';
             show_error($this->migration->error_string());
         } else {
             echo "Migrations run successfully" . PHP_EOL;
