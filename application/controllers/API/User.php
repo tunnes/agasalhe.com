@@ -13,6 +13,7 @@ class User extends REST_Controller {
 
         $this->load->model('user_model');
         $this->load->model('wish_model');
+        $this->load->model('auth_model');
         
 		$this->load->helper('form');        
 	    $this->load->library('form_validation');
@@ -138,8 +139,8 @@ class User extends REST_Controller {
     	    }
     	    else
     	    {
-    			$this->wish_model->create_wish($ID);
-                $this->set_response(null, REST_Controller::HTTP_CREATED);			
+    			$reponse = $this->wish_model->create_wish($ID);
+                $response ? $this->set_response(null, REST_Controller::HTTP_CREATED) : $this->set_response(NULL, REST_Controller::HTTP_UNAUTHORIZED);			
     	    }
     	    return false;
         }
@@ -165,5 +166,31 @@ class User extends REST_Controller {
             $this->set_response($message, REST_Controller::HTTP_NO_CONTENT);
         }
     }
-	
+    
+    public function authenticate_post()
+    {
+	    # Todo create an correct validation of true application fields:
+	    $this->form_validation->set_rules('nick_name', 'Nick Name', 'required');
+	    $this->form_validation->set_rules('password', 'Password', 'required');
+	    
+	    if ($this->form_validation->run() === FALSE)
+	    {
+	        $error = $this->form_validation->error_array();
+	    	$this->set_response($error, REST_Controller::HTTP_UNPROCESSABLE_ENTITY);
+	    }
+	    else
+	    {
+	        $user = $this->user_model->get_login();
+	        if(empty($user))
+	        {
+	            
+	            $this->set_response(NULL, REST_Controller::HTTP_UNAUTHORIZED);
+	        }
+	        else
+	        {
+		        $token = $this->auth_model->set_auth($user);
+		        $this->set_response($token, REST_Controller::HTTP_OK);
+	        }
+	    }
+    }
 }
