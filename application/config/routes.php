@@ -78,8 +78,7 @@ $route['item/(:num)'] = 'item/show/$1';
 // $route['user/(:num)/item'] = 'item/show_by_user/$1';
 // $route['(:any)'] = 'user/show_profile/$1';
 
-
-
+$route['API/user/login'] = 'API/user/authenticate';
 $route['API/user/(:num)'] = 'API/user/index/id/$1';
 $route['API/user/(:num)/wish'] = 'API/user/wish/id/$1';
 $route['API/user/(:num)/wish/item/(:num)'] = 'API/user/wish/user_id/$1/item_id/$2';
