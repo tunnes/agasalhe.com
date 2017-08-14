@@ -10,9 +10,13 @@
 		"irc": "irc://irc.freenode.net/codeigniter",
 		"source": "https://github.com/bcit-ci/CodeIgniter"
 	},
+	"config":
+    {
+        "vendor-dir": "application/vendor"
+    },
 	"require": {
 		"php": ">=5.3.7",
-		"twig/twig": "~1.0"
+		"firebase/php-jwt": "^5.0"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"
