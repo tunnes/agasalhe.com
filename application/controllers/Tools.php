@@ -49,6 +49,7 @@ class Tools extends CI_Controller {
         }
 
         if ($this->migration->latest() === FALSE) {
+            echo 'merda';
             show_error($this->migration->error_string());
         } else {
             echo "Migrations run successfully" . PHP_EOL;
