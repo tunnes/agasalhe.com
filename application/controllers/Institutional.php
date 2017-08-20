@@ -8,7 +8,7 @@ class Institutional extends CI_Controller {
 	# about we and our project:
 	public function index()
 	{
-		$this->load->view('institutional/home');
+		$this->load->view('home');
 	}
 	
 	# Is an simple function to render informations about our project and our
