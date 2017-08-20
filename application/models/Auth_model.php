@@ -35,14 +35,18 @@ class Auth_model extends CI_Model {
     
     public function get_auth($token)
     {
-        
-    #   Decrypting token sent with HS256 key:
-    	$json_decoded = JWT::decode($token, $this->key, array('HS256'));
-    
-    #   Converting JSON into an associative array: 
-    	$associative_array = (array) $json_decoded;
+        try {
+        #   Decrypting token sent with HS256 key:
+    	    $json_decoded = JWT::decode($token, $this->key, array('HS256'));
+
+        #   Converting JSON into an associative array: 
+    	    $associative_array = (array) $json_decoded;
     	
-    	return $associative_array;
+    	    return $associative_array;
+        }
+        catch (Exception $e) {
+            return null;
+        }
     }
 }
 

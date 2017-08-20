@@ -191,7 +191,7 @@ switch (ENVIRONMENT)
  */
 
 	// Set the current directory correctly for CLI requests
-	if (defined('STDIN'))
+	if (defined('STDIN')) 
 	{
 		chdir(dirname(__FILE__));
 	}
