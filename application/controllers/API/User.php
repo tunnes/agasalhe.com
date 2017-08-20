@@ -5,7 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 require APPPATH . 'libraries/REST_Controller.php';
 
 class User extends REST_Controller {
-
+    
     function __construct()
     {
         // Construct the parent class
@@ -17,11 +17,12 @@ class User extends REST_Controller {
         
 		$this->load->helper('form');        
 	    $this->load->library('form_validation');
+
     }
 
     public function index_get()
     {
-        $ID = $this->get('id');
+        $ID = (int) $this->get('id');
         
         if ($ID === NULL)
         {
@@ -47,7 +48,6 @@ class User extends REST_Controller {
 	    $this->form_validation->set_rules('password', 'Password', 'required');
 	    $this->form_validation->set_rules('name', 'Name', 'required');
 
-	    
 	    if ($this->form_validation->run() === FALSE)
 	    {
 	        $error = $this->form_validation->error_array();
@@ -63,39 +63,28 @@ class User extends REST_Controller {
     
     public function index_put()
     {
-        $ID = $this->get('id');
+        $ID = $this->verify_parameter('id');
+
+        $this->form_validation->set_data($this->put());
+        $this->form_validation->set_rules('nick_name', 'Nick Name', 'required');
+        $this->form_validation->set_rules('password', 'Password', 'required');
+        $this->form_validation->set_rules('name', 'Name', 'required');
         
-        if ($ID === NULL)
+        if ($this->form_validation->run() === FALSE)
         {
-            $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST);
-            return false;
+            $error = $this->form_validation->error_array();
+        	$this->set_response($error, REST_Controller::HTTP_UNPROCESSABLE_ENTITY);
         }
         else
         {
-    	    # Todo create an correct validation of true application fields:
-    	    $this->form_validation->set_data($this->put());
-    	    $this->form_validation->set_rules('nick_name', 'Nick Name', 'required');
-    	    $this->form_validation->set_rules('password', 'Password', 'required');
-    	    $this->form_validation->set_rules('name', 'Name', 'required');
-    
-    	    
-    	    if ($this->form_validation->run() === FALSE)
-    	    {
-    	        $error = $this->form_validation->error_array();
-    	    	$this->set_response($error, REST_Controller::HTTP_UNPROCESSABLE_ENTITY);
-    	    }
-    	    else
-    	    {
-                $data = array(
-                    'password' => $this->put('password'),
-                    'name' => $this->put('name'),
-                    'nick_name' => url_title($this->put('nick_name'), 'dash', TRUE),
-                );
-    	        $this->user_model->update($ID,$data);
-                $this->set_response(null, REST_Controller::HTTP_OK);
-    	    }
+            $data = array(
+                'password' => $this->put('password'),
+                'name' => $this->put('name'),
+                'nick_name' => url_title($this->put('nick_name'), 'dash', TRUE),
+            );
+            $this->user_model->update($ID,$data);
+            $this->set_response(null, REST_Controller::HTTP_OK);
         }
-        
     }
 
     public function index_delete()
@@ -120,51 +109,36 @@ class User extends REST_Controller {
     
 	public function wish_post()
 	{
-        $ID = $this->get('id');
+        $USER = $this->verify_authentication(); 
+        $ID = $this->verify_parameter('id');
+
+	    # Todo create an correct validation of true application fields:
+	    $this->form_validation->set_rules('id_item', 'Item', 'required');
+	    
+	    if ($this->form_validation->run() === FALSE)
+	    {
+	        $error = $this->form_validation->error_array();
+	    	$this->set_response($error, REST_Controller::HTTP_UNPROCESSABLE_ENTITY);
+	    }
+	    else
+	    {
+			$response = $this->wish_model->create_wish($USER['id']);
+            $response ? $this->set_response(null, REST_Controller::HTTP_CREATED) : $this->set_response(NULL, REST_Controller::HTTP_UNAUTHORIZED);			
+	    }
+	    return false;
         
-        if ($ID === NULL)
-        {
-            $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST);
-            return false;
-        }
-        else
-        {	    
-    	    # Todo create an correct validation of true application fields:
-    	    $this->form_validation->set_rules('id_item', 'Item', 'required');
-    	    
-    	    if ($this->form_validation->run() === FALSE)
-    	    {
-    	        $error = $this->form_validation->error_array();
-    	    	$this->set_response($error, REST_Controller::HTTP_UNPROCESSABLE_ENTITY);
-    	    }
-    	    else
-    	    {
-    			$reponse = $this->wish_model->create_wish($ID);
-                $response ? $this->set_response(null, REST_Controller::HTTP_CREATED) : $this->set_response(NULL, REST_Controller::HTTP_UNAUTHORIZED);			
-    	    }
-    	    return false;
-        }
 	}
 	
 	public function wish_delete()
     {
-        $UID = (int) $this->get('user_id');
-        $IID = (int) $this->get('item_id');        
+        $UID = $this->verify_parameter('user_id');
+        $IID = $this->verify_parameter('item_id');        
 
-        // Validate the id.
-        if ($IID <= 0 && $UID <= 0)
-        {
-        #   Set the response and exit
-        #   BAD_REQUEST (400) being the HTTP response code    
-            $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST);
-        }
-        else{
-
-            $this->wish_model->delete_wish($UID, $IID);
-            $message = ['id' => $ID, 'message' => 'Deleted the resource'];
-        #   NO_CONTENT (204) being the HTTP response code
-            $this->set_response($message, REST_Controller::HTTP_NO_CONTENT);
-        }
+        $this->wish_model->delete_wish($UID, $IID);
+        $message = ['id' => $ID, 'message' => 'Deleted the resource'];
+    
+    #   NO_CONTENT (204) being the HTTP response code
+        $this->set_response($message, REST_Controller::HTTP_NO_CONTENT);
     }
     
     public function authenticate_post()
@@ -192,5 +166,44 @@ class User extends REST_Controller {
 		        $this->set_response($token, REST_Controller::HTTP_OK);
 	        }
 	    }
+    }
+    
+    private function verify_authentication()
+    {
+        $token = NULL;
+        
+        if (array_key_exists("authorization", $this->input->request_headers()))
+        {
+        #   To improve security use base64 conversion in exchange of values 
+        #   between client and server exemple base64_decode($token)
+            $token = $this->input->request_headers('authorization');
+        }
+        
+        $user = $this->auth_model->get_auth($token);
+
+        if($user === NULL)
+        {
+            $this->response(NULL, REST_Controller::HTTP_UNAUTHORIZED);
+            die();
+        }
+        else
+        {
+            return $user;
+        }
+    }
+    
+    private function verify_parameter($parameter_string)
+    {
+        $parameter = $this->get($parameter_string);
+        if ($parameter === NULL)
+        {
+        #   Set the response and exit
+        #   BAD_REQUEST (400) being the HTTP response code               
+            $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST);
+            die();
+        }
+        else{
+            return (int) $parameter;
+        }
     }
 }
