@@ -1,5 +1,6 @@
 <?php
 require_once FCPATH . 'vendor/autoload.php';
+ require_once APPPATH.'libraries/Seeder.php';
 class Tools extends CI_Controller {
 
     public function __construct() {
@@ -48,7 +49,6 @@ class Tools extends CI_Controller {
         }
 
         if ($this->migration->latest() === FALSE) {
-            echo 'merda';
             show_error($this->migration->error_string());
         } else {
             echo "Migrations run successfully" . PHP_EOL;
@@ -61,7 +61,6 @@ class Tools extends CI_Controller {
 
     public function seed($name) {
         $seeder = new Seeder();
-
         $seeder->call($name);
     }
 
