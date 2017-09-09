@@ -8,6 +8,7 @@ class Institutional extends CI_Controller {
 	# about we and our project:
 	public function index()
 	{
+		$this->load->helper('url');
 		$this->load->view('home');
 	}
 	
