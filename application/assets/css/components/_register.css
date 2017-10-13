@@ -1,0 +1,95 @@
+.register-title{
+    margin: 0;
+    font-size: 68px;
+    font-weight: 900;
+    color: #e5005d;
+    background: linear-gradient(to top left, rgba(238, 9, 121, 0.8), rgba(255, 106, 0, 0.8));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.register-text-body{
+    font-size: 18px;
+    font-weight: 300;
+    margin-top: 40px;
+}
+.register-text-body a{
+    color: #fb7951;
+}
+#register-modal .modal-content{
+    max-width: 970px;
+    margin: 0 auto;
+    display: block;
+    padding-top: 50px;
+}
+
+#register-modal .modal-footer{
+    max-width: 970px;
+    margin: 0 auto;
+    display: block;
+    padding-right: 34px;
+}
+.modal.bottom-sheet{
+    max-height: 80%;
+    min-height: 60%;
+    padding: 0 10%;
+}
+.register-file-input{
+    background: linear-gradient(to top left, rgb(245, 91, 122), rgba(240, 70, 146, 0.93));
+    border-radius: 9px;
+    font-size: 12px;
+}
+#tabs-swipe-demo{
+    text-align: right;
+}
+
+/* Buttons & Form */
+.register-button-close:hover{
+    background-color: rgba(148, 148, 148, 0.4);
+    border-radius: 5px;
+    color: white;
+}
+.register-button-submmit{
+    border-radius: 5px;
+    color: #ffffff;
+    background: linear-gradient(to top left, rgba(238, 9, 121, 0.8), #ee6e73);
+}
+.date-field{
+    position: relative;
+    margin-top: 1rem;
+}
+.date-field input{
+    color: #989998;
+}
+.picker__date-display{
+    background: linear-gradient(to top left, rgba(238, 9, 121, 0.8), #ee6e73);
+}
+.picker__day--selected, .picker__day--selected:hover, .picker--focused .picker__day--selected{
+    background: linear-gradient(to top left, rgba(238, 9, 121, 0.8), #ee6e73);
+    border-radius: 15px;
+}
+.picker__close, .picker__today, .picker__clear{
+    color: #ea0060;
+    font-weight: 300;
+    font-size: 15px;
+}
+.picker__nav--prev:hover, .picker__nav--next:hover{
+    background: inherit;
+    color: #ea0060;
+}
+
+@media only screen and (max-width: 750px) {
+    #register-modal .s12{
+        width: 100% !important;
+    }
+    #register-modal .s6{
+        width: 50% !important;
+    }    
+}
+@media only screen and (max-width: 500px) {
+    #register-modal .s12{
+        width: 100% !important;
+    }
+    #register-modal .s6{
+        width: 100% !important;
+    }    
+}
