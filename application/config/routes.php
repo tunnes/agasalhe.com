@@ -63,13 +63,15 @@ $route['contact'] = 'institutional/contact';
 $route['items'] = 'institutional/items';
 
 # item routes operation in controller:
-$route['item'] = 'item/show_all';
-$route['item/new'] = 'item/register';
-$route['item/(:num)'] = 'item/show/$1';
-
+$route['API/item/(:num)'] = 'API/item/index/id/$1';
+$route['API/item/(:num)'] = 'API/item/index/id/$1';
+$route['API/item/trade/(:num)'] = 'API/item/trade/id/$1';
+$route['API/item/(:num)/trade/(:num)'] = 'API/item/trade/item_yours/$1/item_theirs/$2';
+# user routes operation in controller:
 $route['API/user/login'] = 'API/user/authenticate';
 $route['API/user/(:num)'] = 'API/user/index/id/$1';
 $route['API/user/(:num)/wish'] = 'API/user/wish/id/$1';
 $route['API/user/(:num)/wish/item/(:num)'] = 'API/user/wish/user_id/$1/item_id/$2';
+$route['API/user/(:num)/like'] = 'API/user/like/id/$1';
+$route['API/user/(:num)/like/item/(:num)'] = 'API/user/like/user_id/$1/item_id/$2';
 
-// $route['(:any)'] = 'user/show_profile/$1';
