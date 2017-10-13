@@ -16,7 +16,10 @@ class users extends Seeder {
                 'id' => null,
                 'username' => $this->faker->name,
                 'profile_image' => $this->faker->imageUrl(640, 480),
-                'cep' => $this->faker->randomNumber(8, false)
+                'cep' => $this->faker->randomNumber(8, false),
+                'about_me' => $this->faker->text(120),
+                'email' => $this->faker->email,
+                'firebase_id' => $this->faker->randomLetter
             );
 
             $this->db->insert($this->table, $data);
@@ -24,4 +27,6 @@ class users extends Seeder {
 
         echo PHP_EOL;
     }
+    
+    
 }

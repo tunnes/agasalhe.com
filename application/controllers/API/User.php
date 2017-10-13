@@ -13,16 +13,17 @@ class User extends REST_Controller {
 
         $this->load->model('user_model');
         $this->load->model('wish_model');
-        $this->load->model('auth_model');
+        $this->load->model('like_model');
         
 		$this->load->helper('form');        
 	    $this->load->library('form_validation');
+	    $this->load->library('authentication', ['this' => $this]);
 
     }
-
+    # Get an user
     public function index_get()
     {
-        $ID = (int) $this->get('id');
+        $ID = $this->get('id');
         
         if ($ID === NULL)
         {
@@ -32,7 +33,6 @@ class User extends REST_Controller {
         }
         else
         {
-
             $ID = (int) $ID;
             $ID <= 0 ? $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST) : $user = $this->user_model->get_user($ID, "id");
             
@@ -41,12 +41,21 @@ class User extends REST_Controller {
         }
     }
     
-    public function index_post()
+    # Register an user
+    public function index_post()    
     {
-	    # Todo create an correct validation of true application fields:
-	    $this->form_validation->set_rules('nick_name', 'Nick Name', 'required');
-	    $this->form_validation->set_rules('password', 'Password', 'required');
-	    $this->form_validation->set_rules('name', 'Name', 'required');
+        # Birth date Format Standard
+        //$_POST['birth'] = date('Y-m-d', strtotime($this->input->post('birth')));
+        //echo 'DATA: '. $this->input->post('birth');
+	    $this->form_validation->set_rules('nickname', 'nick name', 'trim|required|max_length[20]|is_unique[users.nickname]|regex_match[#^[^0-9][_A-z0-9]*((-)*[_A-z0-9])*$#]');
+	    $this->form_validation->set_rules('username', 'user name', 'trim|required|max_length[80]');
+	    $this->form_validation->set_rules('profile_image', 'profile image');
+	    $this->form_validation->set_rules('postal_code', 'postal code', 'trim|required|integer|exact_length[10]');
+	    $this->form_validation->set_rules('about_me', 'About me', 'trim|max_length[250]');
+	    $this->form_validation->set_rules('email', 'e-mail', 'trim|required|valid_email|is_unique[users.email]');
+	    $this->form_validation->set_rules('gender', 'gender', 'trim|required|in_list[W,M]');
+	    $this->form_validation->set_rules('birth', 'Date of birth', 'trim|required|callback_date_regex');
+	    $this->form_validation->set_rules('firebase_id', 'firebase identifier', 'trim|required|max_length[200]');
 
 	    if ($this->form_validation->run() === FALSE)
 	    {
@@ -60,60 +69,76 @@ class User extends REST_Controller {
             $this->set_response(null, REST_Controller::HTTP_CREATED);
 	    }
     }
-    
+    # Update an user
     public function index_put()
     {
-        $ID = $this->verify_parameter('id');
-
+        $USER = $this->authentication->verify_authentication();
+        
+        # Birth date Format Standard
+        # $put_data = $this->put();
+        # $put_data['birth'] = date('Y-m-d', strtotime($put_data['birth']));
+        
         $this->form_validation->set_data($this->put());
-        $this->form_validation->set_rules('nick_name', 'Nick Name', 'required');
-        $this->form_validation->set_rules('password', 'Password', 'required');
-        $this->form_validation->set_rules('name', 'Name', 'required');
+        $this->form_validation->set_rules('nickname', 'nick name', 'trim|required|max_length[20]|regex_match[#^[^0-9][_A-z0-9]*((-)*[_A-z0-9])*$#]');
+	    $this->form_validation->set_rules('username', 'user name', 'trim|required|max_length[80]');
+	    $this->form_validation->set_rules('profile_image', 'profile image');
+	    $this->form_validation->set_rules('postal_code', 'postal code', 'trim|required|integer|exact_length[10]');
+	    $this->form_validation->set_rules('about_me', 'About me', 'trim|max_length[250]');
+	    $this->form_validation->set_rules('email', 'e-mail', 'trim|required|valid_email');
+	    $this->form_validation->set_rules('gender', 'gender', 'trim|required|in_list[W,M]');
+	    $this->form_validation->set_rules('birth', 'Date of birth', 'trim|required|callback_date_regex');
+	    $this->form_validation->set_rules('firebase_id', 'firebase identifier', 'trim|required|max_length[200]');
         
         if ($this->form_validation->run() === FALSE)
         {
             $error = $this->form_validation->error_array();
-        	$this->set_response($error, REST_Controller::HTTP_UNPROCESSABLE_ENTITY);
+	    	$this->set_response($error, REST_Controller::HTTP_UNPROCESSABLE_ENTITY);
         }
         else
         {
-            $data = array(
-                'password' => $this->put('password'),
-                'name' => $this->put('name'),
-                'nick_name' => url_title($this->put('nick_name'), 'dash', TRUE),
-            );
-            $this->user_model->update($ID,$data);
-            $this->set_response(null, REST_Controller::HTTP_OK);
+            $update = $this->user_model->update($USER['id'], $this->put());
+            if($update[0] === FALSE)
+            {
+                $this->set_response($update[1], REST_Controller::HTTP_UNPROCESSABLE_ENTITY);
+            }
+            $this->set_response($update[1], REST_Controller::HTTP_OK);
         }
     }
-
+    # Delete itself account.
     public function index_delete()
     {
-        $ID = (int) $this->get('id');
-
-        // Validate the id.
-        if ($ID <= 0)
-        {
-        #   Set the response and exit
-        #   BAD_REQUEST (400) being the HTTP response code    
-            $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST);
-        }
-        else{
-
-            $this->user_model->delete_user($ID);
-            $message = ['id' => $ID, 'message' => 'Deleted the resource'];
-        #   NO_CONTENT (204) being the HTTP response code
-            $this->set_response($message, REST_Controller::HTTP_NO_CONTENT);
-        }
+        $USER = $this->authentication->verify_authentication();
+        $this->user_model->delete_user($ID);
+        $message = ['id' => $USER['id'], 'message' => 'The resource has been deleted.'];
+        $this->set_response($message, REST_Controller::HTTP_OK);
     }
     
+    public function wish_get()
+    {
+        $ID = $this->get('id');
+        
+        if ($ID === NULL)
+        {
+            $wishes = $this->wish_model->get_wish();
+            $error = ['status' => FALSE, 'message' => 'Wishes were not found'];
+            $wishes ? $this->response($wishes, REST_Controller::HTTP_OK) : $this->response($error, REST_Controller::HTTP_NOT_FOUND);
+        }
+        else
+        {
+            $ID = (int) $ID;
+            $ID <= 0 ? $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST) : $wish = $this->wish_model->get_wish($ID);
+            
+            $error = ['status' => FALSE, 'message' => 'User wish could not be found'];
+            !empty($wish) ? $this->set_response($wish, REST_Controller::HTTP_OK) : $this->set_response($error, REST_Controller::HTTP_NOT_FOUND);
+        }
+    }
+
 	public function wish_post()
 	{
-        $USER = $this->verify_authentication(); 
-        $ID = $this->verify_parameter('id');
-
-	    # Todo create an correct validation of true application fields:
-	    $this->form_validation->set_rules('id_item', 'Item', 'required');
+        $USER = $this->authentication->verify_authentication(); 
+        # $ID = $this->verify_parameter('id');
+        
+	    $this->form_validation->set_rules('item_id', 'Item ID', 'trim|required|integer|max_length[10]|greater_than[-1]');
 	    
 	    if ($this->form_validation->run() === FALSE)
 	    {
@@ -126,26 +151,75 @@ class User extends REST_Controller {
             $response ? $this->set_response(null, REST_Controller::HTTP_CREATED) : $this->set_response(NULL, REST_Controller::HTTP_UNAUTHORIZED);			
 	    }
 	    return false;
-        
 	}
 	
 	public function wish_delete()
     {
-        $UID = $this->verify_parameter('user_id');
-        $IID = $this->verify_parameter('item_id');        
+        $USER = $this->authentication->verify_authentication(); 
+        $IID = $this->authentication->verify_parameter('item_id');        
 
-        $this->wish_model->delete_wish($UID, $IID);
-        $message = ['id' => $ID, 'message' => 'Deleted the resource'];
+        $this->wish_model->delete_wish($USER['id'], $IID);
+        $message = ['item_removed' => $IID, 'message' => 'The wish has been removed.'];
     
-    #   NO_CONTENT (204) being the HTTP response code
-        $this->set_response($message, REST_Controller::HTTP_NO_CONTENT);
+        # NO_CONTENT (204) being the HTTP response code
+        $this->set_response($message, REST_Controller::HTTP_OK);
+    }
+    
+    public function like_get()
+    {
+        $ID = $this->get('id');
+        
+        if ($ID === NULL)
+        {
+            $likes = $this->like_model->get_like();
+            $error = ['status' => FALSE, 'message' => 'Likes were not found'];
+            $likes ? $this->response($likes, REST_Controller::HTTP_OK) : $this->response($error, REST_Controller::HTTP_NOT_FOUND);
+        }
+        else
+        {
+            $ID = (int) $ID;
+            $ID <= 0 ? $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST) : $like = $this->like_model->get_like($ID);
+            
+            $error = ['status' => FALSE, 'message' => 'Item like could not be found'];
+            !empty($like) ? $this->set_response($like, REST_Controller::HTTP_OK) : $this->set_response($error, REST_Controller::HTTP_NOT_FOUND);
+        }
+    }
+    
+    public function like_post()
+    {
+        $USER = $this->authentication->verify_authentication();
+        
+        $this->form_validation->set_rules('item_id', 'Item ID', 'trim|required|integer|max_length[10]|greater_than[-1]');
+	    
+	    if ($this->form_validation->run() === FALSE)
+	    {
+	        $error = $this->form_validation->error_array();
+	    	$this->set_response($error, REST_Controller::HTTP_UNPROCESSABLE_ENTITY);
+	    }
+	    else
+	    {
+			$response = $this->like_model->set_like($USER['id']);
+            $response ? $this->set_response(null, REST_Controller::HTTP_CREATED) : $this->set_response(NULL, REST_Controller::HTTP_UNAUTHORIZED);			
+	    }
+        
+    }
+    
+    public function like_delete()
+    {
+        $USER = $this->authentication->verify_authentication(); 
+        $IID = $this->authentication->verify_parameter('item_id');        
+
+        $this->like_model->delete_like($USER['id'], $IID);
+        $message = ['item unliked' => $IID, 'message' => 'The item has been unliked.'];
+    
+        # NO_CONTENT (204) being the HTTP response code
+        $this->set_response($message, REST_Controller::HTTP_OK);
     }
     
     public function authenticate_post()
     {
-	    # Todo create an correct validation of true application fields:
-	    $this->form_validation->set_rules('nick_name', 'Nick Name', 'required');
-	    $this->form_validation->set_rules('password', 'Password', 'required');
+	    $this->form_validation->set_rules('nickname', 'nick name', 'trim|required|max_length[50]|regex_match[#^[^0-9][_A-z0-9]*((-)*[_A-z0-9])*$#]');
+	    $this->form_validation->set_rules('firebase_id', 'firebase identifier', 'trim|required|max_length[200]');
 	    
 	    if ($this->form_validation->run() === FALSE)
 	    {
@@ -157,7 +231,6 @@ class User extends REST_Controller {
 	        $user = $this->user_model->get_login();
 	        if(empty($user))
 	        {
-	            
 	            $this->set_response(NULL, REST_Controller::HTTP_UNAUTHORIZED);
 	        }
 	        else
@@ -168,42 +241,32 @@ class User extends REST_Controller {
 	    }
     }
     
-    private function verify_authentication()
+    /* Some basic validations */
+    public function date_regex($field) 
     {
-        $token = NULL;
-        
-        if (array_key_exists("authorization", $this->input->request_headers()))
-        {
-        #   To improve security use base64 conversion in exchange of values 
-        #   between client and server exemple base64_decode($token)
-            $token = $this->input->request_headers('authorization');
-        }
-        
-        $user = $this->auth_model->get_auth($token);
-
-        if($user === NULL)
-        {
-            $this->response(NULL, REST_Controller::HTTP_UNAUTHORIZED);
-            die();
-        }
-        else
-        {
-            return $user;
-        }
-    }
-    
-    private function verify_parameter($parameter_string)
-    {
-        $parameter = $this->get($parameter_string);
-        if ($parameter === NULL)
-        {
-        #   Set the response and exit
-        #   BAD_REQUEST (400) being the HTTP response code               
-            $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST);
-            die();
-        }
-        else{
-            return (int) $parameter;
-        }
+      if(preg_match('#^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])#', $field))
+      { 
+         $date = explode('-', $field);
+         if(!checkdate($date[1], $date[2], $date[0]))
+         {
+           $this->form_validation->set_message('date_regex', 'The {field} field is not valid.');
+           return false;
+         }
+           return true;
+      }
+      $this->form_validation->set_message('date_regex', 'The {field} field is not valid.');
+      return false;
     }
 }
+
+/*
+[13:36, 13/10/2017] Gabriel Morais: date('Y-m-d', strtotime($variavelDaData))
+[13:36, 13/10/2017] Gabriel Morais: e pra tirar do banco  processo inverso
+[13:36, 13/10/2017] Gabriel Morais: date('d/m/Y', strtotime($variavelDobanco))
+[13:36, 13/10/2017] Gabriel Morais: date('Y-m-d', strtotime($variavelDaData)) salva a data no banco nos padroes mysql
+[13:36, 13/10/2017] Gabriel Morais: date('d/m/Y', strtotime($variavelDobanco)) quando for tirar do banco, para deixar no padrão br
+[13:37, 13/10/2017] Gabriel Morais: se bem q o bgl é internacional
+
+ANO MES E DIA TEM Q SER ENVIADO.
+
+*/
