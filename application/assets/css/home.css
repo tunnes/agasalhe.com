@@ -364,10 +364,10 @@ h4 {
     -o-transition: box-shadow 1s ease;
     transition: box-shadow 1s ease;
 }
-.item-card :hover {
+.item-card:hover {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
-.item-card :hover .head img {
+.item-card:hover .head img {
     transform: scale(1.1);
     -moz-transform: scale(1.1);
     -webkit-transform: scale(1.1);
