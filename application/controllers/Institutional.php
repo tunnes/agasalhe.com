@@ -15,9 +15,9 @@ class Institutional extends CI_Controller {
 	# Is an simple function to render informations about our project and our
 	# intentions to provide this portal, were also contains informations about
 	# we team contact like linkedin, facebook, github and twitter profiles:
-	public function about()
+	public function items()
 	{
-		$this->load->view('institutional/about');
+		$this->load->view('items');
 	}
 	
 	# May this function is the most simple in the application cause this return

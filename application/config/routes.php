@@ -60,7 +60,7 @@ $route['account'] = 'account';
 # Generic routes operations in controller:
 $route['default_controller'] = 'institutional';
 $route['contact'] = 'institutional/contact';
-$route['about'] = 'institutional/about';
+$route['items'] = 'institutional/items';
 
 # item routes operation in controller:
 $route['item'] = 'item/show_all';
