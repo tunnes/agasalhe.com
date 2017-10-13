@@ -14,7 +14,11 @@
         
         <!-- Internal file resources -->
         <link rel="stylesheet" type="text/css" href="/application/assets/css/home.css">
+        <link rel="stylesheet" type="text/css" href="/application/assets/css/components/_login.css">
+        <link rel="stylesheet" type="text/css" href="/application/assets/css/components/_register.css">        
         <script type="text/javascript" src="/application/assets/js/home.js"></script>
+        <script type="text/javascript" src="/application/assets/js/components/_login.js"></script>
+        <script type="text/javascript" src="/application/assets/js/components/_register.js"></script>        
         
         <!-- Another control and meta-tags -->
         <link rel="shortcut icon" href="/application/assets/img/favicon.ico" type="image/x-icon">
@@ -33,15 +37,17 @@
                         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                         <ul class="right hide-on-med-and-down">
                             <li><a href="#">Itens</a></li>
-                            <li><a href="#">Sobre</a></li>
                             <li><a href="#">Como funciona</a></li>
-                            <li><a href="#">Entrar</a></li>
+                            <li><a href="#">Sobre</a></li>
+                            <li><a href="#register-modal" class="modal-trigger">Começar</a></li>
+                            <li><a href="#login-modal" class="modal-trigger">Entrar</a></li>                            
                         </ul>
                         <ul class="side-nav" id="mobile-demo">
                             <li><a href="#">Itens</a></li>
-                            <li><a href="#">Sobre</a></li>
                             <li><a href="#">Como funciona</a></li>
-                            <li><a href="#">Entrar</a></li>
+                            <li><a href="#">Sobre</a></li>
+                            <li><a href="#register-modal" class="modal-trigger">Começar</a></li>
+                            <li><a href="#login-modal" class="modal-trigger">Entrar</a></li>
                         </ul>
                     </div>
                 </div>
@@ -377,5 +383,14 @@
             </div>
         </div>
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOgRKKdJv0sJSZYLFQQUUjII20mGsbLj4&callback=initMap"> </script>
+        
+        <!-- External login component starts -->
+            <?php include('components/_login.php') ?>
+        <!-- External login component end's-->
+        
+        <!-- External login component starts -->
+            <?php include('components/_register.php') ?>
+        <!-- External login component end's-->    
+        
     </body>
 </html>
