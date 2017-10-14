@@ -1,0 +1,30 @@
+nav {
+    background: transparent;
+    -webkit-box-shadow: none;
+}
+nav .nav-wrapper img {
+    height: 60px;
+}
+.nav-wrapper a {
+    color: #eb3786;
+}
+.nav-wrapper {
+    display: block;
+    margin: 0 auto;
+    height: 74px !important;
+}
+.wrapper-login-button {
+    background-color: white;
+    color: black;
+    width: 100px;
+    text-align: center;
+    border-radius: 10px;
+    margin-top: 10px;
+    line-height: 34px;
+    height: 34px;
+    margin-left: 20px;
+    margin-top: 14px;
+}
+.wrapper-login-button a {
+    color: #353535;
+}
