@@ -15,19 +15,6 @@ header .container {
     width: 90%;
 }
 
-/* Page title */
-.itens-call-to-action {
-    height: 130px;
-    border-radius: 10px;
-    background: linear-gradient(to left, rgba(255, 106, 0, 0.6), rgba(238, 9, 121, 0.8));
-}
-.itens-call-to-action h2 {
-    margin-top: 0;
-    padding-top: 36px;
-    font-size: 68px;
-    font-weight: 900;
-    color: #ffffff;
-}
 
 /* Content itens */
 .content-items-wrapper {
@@ -45,64 +32,7 @@ header .container {
     padding: 20px;
 }
 
-/* SideBar */
-.sidebar .chips.chips-autocomplete.focus,
-.sidebar .chips.chips-city.focus,
-.sidebar .chips.chips-state.focus {
-    border-bottom: 1px solid #f55781;
-    -webkit-box-shadow: 0 1px 0 0 #f55781;
-    box-shadow: 0 1px 0 0 #f55781;
-}
-.sidebar .chips .chip {
-    background-color: #f2c06f;
-}
-.sidebar .input-field {
-    margin-top: 55px;
-}
-.sidebar .dropdown-content li > a,
-.dropdown-content li > span {
-    color: #f2c06f;
-}
-.sidebar .select-wrapper input.select-dropdown,
-.sidebar .select-wrapper span.caret {
-    color: #9e9e9e;
-}
-.sidebar .input-field.col label {
-    left: 0px;
-}
-.sidebar .btn-large {
-    position: absolute;
-    display: block;
-    width: 210px;
-    margin: 0 auto;
-    bottom: 23px;
-    left: 23px;
-    border-radius: 8px;
-    background-color: #fa3b64;
-}
-.sidebar-on-top {
-    position: fixed;
-    top: 0px;
-}
-.side-header {
-    display: none;
-    position: relative;
-    width: 259px;
-    margin-bottom: 30px;
-    margin-top: 55px;
-}
-.sidebar-header-visible {
-    display: block;
-}
-.side-header h3 {
-    position: absolute;
-    top: -9px;
-    right: 10px;
-    font-size: 36px;
-    text-transform: uppercase;
-    font-weight: 800;
-    color: #ec3487;
-}
+
 
 /* Itens count */
 .content-items-wrapper .itens-count {
@@ -303,4 +233,34 @@ header .container {
     .grid-item {
         width: 100%;
     }
+}
+
+/* Material Design heres */
+header, main, footer {
+  margin-left: 300px;
+}
+
+@media only screen and (max-width : 992px) {
+  header, main, footer {
+    margin-left: 0;
+  }
+}
+
+.account-sidebar .background{
+    height: 176px;
+    width: 100%;
+    background-color: rgb(241, 69, 150);
+}
+
+.subpage-header{
+    height: 176px;
+    padding-left: 25px;
+    background: linear-gradient(to left, rgba(255, 106, 0, 0.6), rgba(238, 9, 121, 0.8));
+}
+.subpage-header h2{
+    margin-top: 0;
+    padding-top: 36px;
+    font-size: 68px;
+    font-weight: 900;
+    color: #ffffff;
 }

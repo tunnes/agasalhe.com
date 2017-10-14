@@ -20,6 +20,11 @@ class Institutional extends CI_Controller {
 		$this->load->view('items');
 	}
 	
+	public function account()
+	{
+		$this->load->view('account');
+	}	
+	
 	# May this function is the most simple in the application cause this return
 	# an form to send a message or feedback to our team:
 	public function contact()

@@ -12,13 +12,17 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
         
+        <!-- Login components -->
+        <script type="text/javascript" src="/application/assets/js/components/_register.js"></script>        
+        <link rel="stylesheet" type="text/css" href="/application/assets/css/components/_login.css">
+        
+        <!-- Register components -->
+        <script type="text/javascript" src="/application/assets/js/components/_login.js"></script>
+        <link rel="stylesheet" type="text/css" href="/application/assets/css/components/_register.css">        
+        
         <!-- Internal file resources -->
         <link rel="stylesheet" type="text/css" href="/application/assets/css/home.css">
-        <link rel="stylesheet" type="text/css" href="/application/assets/css/components/_login.css">
-        <link rel="stylesheet" type="text/css" href="/application/assets/css/components/_register.css">        
         <script type="text/javascript" src="/application/assets/js/home.js"></script>
-        <script type="text/javascript" src="/application/assets/js/components/_login.js"></script>
-        <script type="text/javascript" src="/application/assets/js/components/_register.js"></script>        
         
         <!-- Another control and meta-tags -->
         <link rel="shortcut icon" href="/application/assets/img/favicon.ico" type="image/x-icon">

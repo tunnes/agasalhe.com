@@ -13,7 +13,18 @@
         <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
         <script src="https://unpkg.com/vue@2.4.4/dist/vue.js"></script>
         	
-        <!-- Internal file resources -->
+        <!-- Login components -->
+        <script type="text/javascript" src="/application/assets/js/components/_register.js"></script>        
+        <link rel="stylesheet" type="text/css" href="/application/assets/css/components/_login.css">
+        
+        <!-- Register components -->
+        <script type="text/javascript" src="/application/assets/js/components/_login.js"></script>
+        <link rel="stylesheet" type="text/css" href="/application/assets/css/components/_register.css">  
+        
+        <!-- Navbar components -->
+        <link rel="stylesheet" type="text/css" href="/application/assets/css/components/_navbar.css">        
+        <script type="text/javascript" src="/application/assets/js/components/_navbar.js"></script>
+        
         <link rel="stylesheet" type="text/css" href="/application/assets/css/items.css">
         <script type="text/javascript" src="/application/assets/js/items.js"></script>
         
@@ -25,28 +36,9 @@
 	</head>
 	<body>
         <header>
-            <nav>
-                <div class="container">
-                    <div class="nav-wrapper">
-                        <a href="#" class="brand-logo">
-                        <img src="/application/assets/img/items-logo.png"/>
-                        </a>
-                        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-                        <ul class="right hide-on-med-and-down">
-                            <li><a href="#">Itens</a></li>
-                            <li><a href="#">Sobre</a></li>
-                            <li><a href="#">Como funciona</a></li>
-                            <li><a href="#">Entrar</a></li>
-                        </ul>
-                        <ul class="side-nav" id="mobile-demo">
-                            <li><a href="#">Itens</a></li>
-                            <li><a href="#">Sobre</a></li>
-                            <li><a href="#">Como funciona</a></li>
-                            <li><a href="#">Entrar</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+        <!-- External login component starts -->
+            <?php include('components/_navbar.php') ?>
+        <!-- External login component end's-->   
             <div class="itens-call-to-action">
                 <div class="container">
 	                <h2>
