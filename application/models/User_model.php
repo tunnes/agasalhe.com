@@ -22,15 +22,16 @@ class User_model extends CI_Model {
     {
         $data = array
         (
+            'email' => $this->input->post('email'),
+            'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
             'nickname' => $this->input->post('nickname'),
             'username' => $this->input->post('username'),
             'profile_image' => $this->input->post('profile_image'),
             'postal_code' => $this->input->post('postal_code'),
             'about_me' => $this->input->post('about_me'),
-            'email' => $this->input->post('email'),
             'gender' => $this->input->post('gender'),
             'birth' => $this->input->post('birth'),
-            'firebase_id' => $this->input->post('firebase_id')
+            'phone' => $this->input->post('phone')
         );
     
         return $this->db->insert('users', $data);
@@ -38,13 +39,11 @@ class User_model extends CI_Model {
     
     public function get_login()
     {
-        $data = array(
-            'nickname' => $this->input->post('nickname'),
-            'firebase_id' => $this->input->post('firebase_id')            
-        );
-        
-        $query = $this->db->get_where('users', $data);
-        return $query->row_array();
+        $query = $this->db->get_where('users', array('email' => $this->input->post('email')))->result_array();
+       if($query) {
+          return (password_verify($this->input->post('password'), $query[0]['password'])) ? $query[0] : null;
+       }
+       return null;
     }
     
     public function update($ID, $data)
@@ -61,15 +60,16 @@ class User_model extends CI_Model {
         
        $data = array
         (
+            'email' => $data['email'],
+            'password' => password_hash($data['password'], PASSWORD_DEFAULT),
             'nickname' => $data['nickname'],
             'username' => $data['username'],
             'profile_image' => array_key_exists('profile_image', $data) ? $data['profile_image'] : NULL,
             'postal_code' => $data['postal_code'],
             'about_me' =>  array_key_exists('about_me', $data) ? $data['about_me'] : NULL,
-            'email' => $data['email'],
             'gender' => $data['gender'],
             'birth' => $data['birth'],
-            'firebase_id' => $data['firebase_id']
+            'phone' => $data['phone']
         );
         $this->db->where('id', $ID);
         $this->db->update('users', $data);

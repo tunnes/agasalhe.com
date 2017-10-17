@@ -38,6 +38,6 @@
     </div>
     <div class="modal-footer">
         <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat register-button-close">Sair</a>        
-        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat register-button-submmit">Enviar</a>
+        <a href="#!" id="enviar" class="modal-action modal-close waves-effect waves-green btn-flat register-button-submmit">Enviar</a>
     </div>
 </div>

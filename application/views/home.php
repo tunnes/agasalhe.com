@@ -23,6 +23,10 @@
         <!-- Internal file resources -->
         <link rel="stylesheet" type="text/css" href="/application/assets/css/home.css">
         <script type="text/javascript" src="/application/assets/js/home.js"></script>
+        <script type="text/javascript" src="/application/assets/js/firebase.js"></script>
+        <script type="text/javascript" src="/application/assets/js/components/_login.js"></script>
+        <script type="text/javascript" src="/application/assets/js/components/_register.js"></script>        
+
         
         <!-- Another control and meta-tags -->
         <link rel="shortcut icon" href="/application/assets/img/favicon.ico" type="image/x-icon">
@@ -58,7 +62,7 @@
             </nav>
             <div class="container">
                 <div class="container message-wrapper">
-                    <h1>Hey visitante!</h1>
+                    <h1>Hey, visitante!</h1>
                     <h2>Muita coisa encostada no <br> guarda-roupa?</h2>
                     <span>Com certeza!</span> <span>Nem tanto...</span>
                 </div>
@@ -69,31 +73,30 @@
                 <div class="row">
                     <div class="content-text col s12 m5">
                         <img src="/application/assets/img/header-quotation.svg"/>
-                        <h4>Taah o que vocês fazem então?</h4>
-                        <h3>Sabe aquele relogio que você cansou ou a jaqueta que não serve mais?</h3>
+                        <h4>Okay! O que você faz então?</h4>
+                        <h3>Sabe aquele relógio que você cansou de usar ou jaqueta que não serve mais?</h3>
                         <p>
-                            Então é o seguinte.. Aqui você consegue trocar por alguma coisa bacana 
-                            que você curta, como por exemplo uma fantasia de Louro José, ou uma foto 
-                            raríssima de Aborígene um canhoto. 
+                            Então... É o seguinte, aqui você consegue troca-lo por alguma coisa bacana 
+                            que você curta. Outras pessoas também podem enjoar de seus pertences e coloca-los aqui. 
+                            Quem sabe você goste de algo.
                         </p>
                     </div>
                     <div class="content-text col s12 m7">
                         <div class="secondary-text">
                             <img src="/application/assets/img/header-quotation.svg"/>
-                            <h4>Me livro da bagunça e ainda consigo ganhar coisitias maneiras!?</h4>
-                            <h3>Uhumm é isso ai !</h3>
+                            <h4>Livro-me da bagunça e ainda posso conseguir algo melhor em troca!?</h4>
+                            <h3>É isso mesmo!</h3>
                             <p>
-                                Aqui voce ainda ajuda na sustentabilidade do planeta reduzindo o numero  
-                                de coisas que caem em desuso.
+                                Ao invés de jogar as suas coisas na calçada, você pode oferta-las aqui,
+                                colaborando com a sustentabilidade.
                             </p>
                         </div>
                         <div class="secondary-text">
                             <img src="/application/assets/img/header-quotation.svg"/>
-                            <h4>Sakei posso trocar qualquer coisa que ta jogada em casa?</h4>
-                            <h3>Pera ai bebe, não é bem assim não!</h3>
+                            <h4>Saquei. Posso trocar qualquer coisa que ta jogada em casa?</h4>
+                            <h3>Você pode divulgar o que quiser.</h3>
                             <p>
-                                Aqui não é a casa da mãe joana, como tudo na vida aqui existem regras 
-                                que devem ser respeitadas.
+                                Porém, lembre-se que o seu pertence pode ser de valor para alguém.
                             </p>
                         </div>
                     </div>
@@ -105,7 +108,7 @@
                 <div class="row">
                     <h2>
                         <span>Como funciona?</span>
-                        <span>Essa é fácil, confira <br> o passo a passo e saiba como!</span>
+                        <span>Essa é fácil. Confira <br> o passo a passo e saiba como!</span>
                     </h2>
                     <div class="col s12 m6 l3">
                         <div class="content">
@@ -113,7 +116,7 @@
                                 <h4>01</h4>
                             </div>
                             <img src="/application/assets/img/how-it-works-computer.svg"></img>
-                            <span>Faça seu cadastro no nosso site</span>
+                            <span>Faça seu cadastro em nosso site</span>
                         </div>
                     </div>
                     <div class="col s12 m6 l3">
@@ -122,7 +125,7 @@
                                 <h4>02</h4>
                             </div>
                             <img src="/application/assets/img/how-it-works-ux.svg"></img>
-                            <span>No seu painel, cadastre todos os itemns que deseja trocar ou doar.</span>
+                            <span>No seu painel, cadastre todos os itens que deseja trocar.</span>
                         </div>
                     </div>
                     <div class="col s12 m6 l3">
@@ -131,7 +134,7 @@
                                 <h4>03</h4>
                             </div>
                             <img src="/application/assets/img/how-it-works-iron.svg"></img>  							
-                            <span>Seus itens serão publicados e ficarão disponíveis para troca ou doação.</span>
+                            <span>Seus itens serão publicados e ficarão disponíveis para troca.</span>
                         </div>
                     </div>
                     <div class="col s12 m6 l3">
@@ -160,7 +163,7 @@
                 <div class="col s12 m8 l8 mobile-coming-soon">
                     <h3>
                         <span>Fique ligado!</span>  
-                        <span>Embreve lançaremos <br> nosso app =)</span>
+                        <span>Em breve lançaremos <br> nosso app =)</span>
                     </h3>
                     <img src="/application/assets/img/access-now-iphone.png"/>        			
                 </div>
@@ -171,7 +174,7 @@
                 <div class="itens">
                     <h2>
                         <span>Curtiu?</span>
-                        <span>De olhadinha <br> nos itens mais curtidos!</span>
+                        <span>De uma olhadinha <br> nos itens mais curtidos!</span>
                     </h2>
                 </div>
                 <div class="grid">
@@ -304,7 +307,7 @@
                     </div>
                     <div class="grid-item">
                         <div class="item-card">
-                            <div class="state"> 
+                            <div class="state">
                                 <span>SP</span>
                             </div>
                             <div class="head">
@@ -333,15 +336,15 @@
                     <p>
                         Somos um equipe... ou melhor um time de amigos na verdade, composto por três alunos do curso de Sistemas 
                         para Internet da faculdade de tecnologia Rubens Lara. Temos como objetivo comum aprender e desenvolver uma aplicação totalmente 
-                        gratuita que propage a importancia de se aproveitar objetos sejam eles quais forem e reduzir o disperdicio de roupas, brinquetos
-                        utencilious e etc.. Uma realidade a qual nos incomoda. 
+                        gratuita que propage a importancia de se aproveitar objetos sejam eles quais forem e reduzir o disperdicio de roupas, brinquedos
+                        utensilios e etc. 
                     </p>
                 </div>
                 <img src="/application/assets/img/about-us-team-members.png"/>
                 <div class="about-text">
                     <h3>Nosso time </h3>
                     <p>
-                        Somos um equipe... ou melhor um time de amigos na verdade, composto por três alunos do curso de Sistemas 
+                        Somos uma equipe... ou melhor um time de amigos na verdade, composto por três alunos do curso de Sistemas 
                         para Internet da faculdade de tecnologia Rubens Lara. Temos como objetivo comum aprender e desenvolver uma aplicação totalmente 
                         gratuita que propage a importancia de se aproveitar objetos sejam eles quais forem e reduzir o disperdicio de roupas, brinquetos
                         utencilious e etc.. Uma realidade a qual nos incomoda. 

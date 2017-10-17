@@ -30,4 +30,21 @@ $(document).ready(function() {
         format: 'dd/mm/yyyy',
         onClose: () => { $(document.activeElement).blur() }
     });
+    
+    //Register
+    $("#enviar").click(function(e) {
+        e.preventDefault();
+        alert('foi');
+        AJAXRequester('post', 'user', {
+            nickname: $('#nickname').val(),
+            username: $('#username').val(), 
+            postal_code: $('#postal_code'),
+            gender: $('#gender'),
+            birth: fixDate($('#birth'))
+            }).then(function(data){
+               console.log('THEN: ', JSON.parse(data.responseText));
+            }).catch(function(data){
+                console.log('CATCH: ', JSON.parse(data.responseText));
+            });
+    });
 });

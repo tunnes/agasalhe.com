@@ -3,6 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Institutional extends CI_Controller {
 	
+	public function __construct() 
+    {
+        parent::__construct();
+        $this->load->library('Password_Recovery');
+      
+    }
+	
 	# This is index function for show an view with basic information of our site 
 	# like a menu navigation, footer, how to use system, last clothes posted and
 	# about we and our project:
@@ -30,5 +37,18 @@ class Institutional extends CI_Controller {
 	public function contact()
 	{
 		$this->load->view('institutional/contact');
+	}
+	
+	public function login()
+	{
+		$this->load->view('login_test.php');
+	}
+	
+	public function password_recovery($hash)
+	{
+	  if(!empty($hash)){
+		$this->load->view('password_recovery');
+    	//$this->password_recovery(); 
+	  }
 	}
 }
