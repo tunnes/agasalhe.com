@@ -11,7 +11,7 @@ class Item_model extends CI_Model {
         # Get many items: 
         if ($ID === FALSE)
         {
-            $this->db->select(' u.id as user_id, u.nickname, u.profile_image, i.id as item_id, i.title,
+            $this->db->select(' u.id as user_id, u.nickname, u.phone, u.profile_image, i.id as item_id, i.title,
                                 i.description, i.use_state, i.category, i.active');
             $this->db->from('items as i');
             $this->db->join('users as u', 'u.id = i.user_id', 'inner');

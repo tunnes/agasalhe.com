@@ -57,8 +57,12 @@ function bindData(){
             },
             showMyLikes: function (){
                 this.changeOption('.my-likes');
-                $('.section-title').html('Minhas Curtidas');
-            }            
+                $('.section-title').html('Curtidas');
+            },
+            showMyWishes: function (){
+                this.changeOption('.my-wishs');
+                $('.section-title').html('Desejos');
+            } 
         }
     })
 }

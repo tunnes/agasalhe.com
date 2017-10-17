@@ -173,7 +173,8 @@ table .item-action-button {
 }
 
 .my-likes,
-.my-items {
+.my-items,
+.my-wishs {
     display: none;
     position: relative;
 }

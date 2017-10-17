@@ -18,6 +18,7 @@ class User extends REST_Controller {
 		$this->load->helper('form');        
 	    $this->load->library('form_validation');
 	    $this->load->library('authentication', ['this' => $this]);
+	    $this->load->library('Password_Recovery');
 
     }
     # Get an user
@@ -44,18 +45,16 @@ class User extends REST_Controller {
     # Register an user
     public function index_post()    
     {
-        # Birth date Format Standard
-        //$_POST['birth'] = date('Y-m-d', strtotime($this->input->post('birth')));
-        //echo 'DATA: '. $this->input->post('birth');
+        $this->form_validation->set_rules('email', 'e-mail', 'trim|required|valid_email|is_unique[users.email]|max_length[80]');
+	    $this->form_validation->set_rules('password', 'password', 'trim|required|min_length[6]|max_length[20]');
 	    $this->form_validation->set_rules('nickname', 'nick name', 'trim|required|max_length[20]|is_unique[users.nickname]|regex_match[#^[^0-9][_A-z0-9]*((-)*[_A-z0-9])*$#]');
 	    $this->form_validation->set_rules('username', 'user name', 'trim|required|max_length[80]');
 	    $this->form_validation->set_rules('profile_image', 'profile image');
-	    $this->form_validation->set_rules('postal_code', 'postal code', 'trim|required|integer|exact_length[10]');
+	    $this->form_validation->set_rules('postal_code', 'postal code', 'trim|integer|exact_length[10]'); 
 	    $this->form_validation->set_rules('about_me', 'About me', 'trim|max_length[250]');
-	    $this->form_validation->set_rules('email', 'e-mail', 'trim|required|valid_email|is_unique[users.email]');
 	    $this->form_validation->set_rules('gender', 'gender', 'trim|required|in_list[W,M]');
+	    $this->form_validation->set_rules('phone', 'phone', 'trim|max_length[11]|min_length[10]');
 	    $this->form_validation->set_rules('birth', 'Date of birth', 'trim|required|callback_date_regex');
-	    $this->form_validation->set_rules('firebase_id', 'firebase identifier', 'trim|required|max_length[200]');
 
 	    if ($this->form_validation->run() === FALSE)
 	    {
@@ -74,20 +73,17 @@ class User extends REST_Controller {
     {
         $USER = $this->authentication->verify_authentication();
         
-        # Birth date Format Standard
-        # $put_data = $this->put();
-        # $put_data['birth'] = date('Y-m-d', strtotime($put_data['birth']));
-        
         $this->form_validation->set_data($this->put());
+        $this->form_validation->set_rules('email', 'e-mail', 'trim|required|valid_email|max_length[80]');
+	    $this->form_validation->set_rules('password', 'password', 'trim|required|min_length[6]|max_length[20]');
         $this->form_validation->set_rules('nickname', 'nick name', 'trim|required|max_length[20]|regex_match[#^[^0-9][_A-z0-9]*((-)*[_A-z0-9])*$#]');
 	    $this->form_validation->set_rules('username', 'user name', 'trim|required|max_length[80]');
 	    $this->form_validation->set_rules('profile_image', 'profile image');
 	    $this->form_validation->set_rules('postal_code', 'postal code', 'trim|required|integer|exact_length[10]');
 	    $this->form_validation->set_rules('about_me', 'About me', 'trim|max_length[250]');
-	    $this->form_validation->set_rules('email', 'e-mail', 'trim|required|valid_email');
 	    $this->form_validation->set_rules('gender', 'gender', 'trim|required|in_list[W,M]');
+	    $this->form_validation->set_rules('phone', 'phone', 'trim|max_length[11]|min_length[10]');
 	    $this->form_validation->set_rules('birth', 'Date of birth', 'trim|required|callback_date_regex');
-	    $this->form_validation->set_rules('firebase_id', 'firebase identifier', 'trim|required|max_length[200]');
         
         if ($this->form_validation->run() === FALSE)
         {
@@ -218,8 +214,8 @@ class User extends REST_Controller {
     
     public function authenticate_post()
     {
-	    $this->form_validation->set_rules('nickname', 'nick name', 'trim|required|max_length[50]|regex_match[#^[^0-9][_A-z0-9]*((-)*[_A-z0-9])*$#]');
-	    $this->form_validation->set_rules('firebase_id', 'firebase identifier', 'trim|required|max_length[200]');
+	    $this->form_validation->set_rules('email', 'e-mail', 'trim|required|valid_email|max_length[80]');
+	    $this->form_validation->set_rules('password', 'password', 'trim|required|min_length[6]|max_length[20]');
 	    
 	    if ($this->form_validation->run() === FALSE)
 	    {
@@ -235,9 +231,40 @@ class User extends REST_Controller {
 	        }
 	        else
 	        {
+	            unset($user['password']);
 		        $token = $this->auth_model->set_auth($user);
 		        $this->set_response($token, REST_Controller::HTTP_OK);
 	        }
+	    }
+    }
+    
+    public function password_recovery_post()
+    {
+        $this->form_validation->set_rules("email", "E-mail", "trim|required|valid_email");
+        if ($this->form_validation->run() === FALSE)
+	    {
+	       $error = $this->form_validation->error_array();
+	       $this->set_response($error, REST_Controller::HTTP_UNPROCESSABLE_ENTITY);
+	    }else {
+	    $this->password_recovery->init($this->input->post('email'));
+        $response = $this->password_recovery->sendEmail();
+        $response[0] ? $this->set_response(['status' => true, 'message' => $response[1]], REST_Controller::HTTP_OK) 
+                     : $this->set_response(['status' => false, 'message' => $response[1]], REST_Controller::HTTP_UNPROCESSABLE_ENTITY);
+	    }  
+    }
+    public function password_recovery_put()
+    {
+        $this->form_validation->set_data($this->put());
+        $this->form_validation->set_rules('password', 'password', 'trim|required|min_length[6]|max_length[20]');
+        $this->form_validation->set_rules("hash", "hash", "trim|required|max_length[255]");
+        if ($this->form_validation->run() === FALSE)
+	    {
+	       $error = $this->form_validation->error_array();
+	       $this->set_response($error, REST_Controller::HTTP_UNPROCESSABLE_ENTITY);
+	    }else {
+	    $response = $this->password_recovery->updatePassword($this->put()['hash'], $this->put()['password']);
+        $response[0] ? $this->set_response(['status' => true, 'message' => $response[1]], REST_Controller::HTTP_OK) 
+                     : $this->set_response(['status' => false, 'message' => $response[1]], REST_Controller::HTTP_UNPROCESSABLE_ENTITY);
 	    }
     }
     
@@ -258,15 +285,4 @@ class User extends REST_Controller {
       return false;
     }
 }
-
-/*
-[13:36, 13/10/2017] Gabriel Morais: date('Y-m-d', strtotime($variavelDaData))
-[13:36, 13/10/2017] Gabriel Morais: e pra tirar do banco  processo inverso
-[13:36, 13/10/2017] Gabriel Morais: date('d/m/Y', strtotime($variavelDobanco))
-[13:36, 13/10/2017] Gabriel Morais: date('Y-m-d', strtotime($variavelDaData)) salva a data no banco nos padroes mysql
-[13:36, 13/10/2017] Gabriel Morais: date('d/m/Y', strtotime($variavelDobanco)) quando for tirar do banco, para deixar no padrão br
-[13:37, 13/10/2017] Gabriel Morais: se bem q o bgl é internacional
-
-ANO MES E DIA TEM Q SER ENVIADO.
-
-*/
+// id_action ENUM('trade','donation')

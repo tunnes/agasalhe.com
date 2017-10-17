@@ -53,16 +53,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 # Other operations routes
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-
+$route['password-recovery/(:any)'] = 'institutional/password_recovery/$1';
 # Dashboard routes operation in controller:
 $route['account'] = 'account';
-
 # Generic routes operations in controller:
 $route['default_controller'] = 'institutional';
 $route['contact'] = 'institutional/contact';
 $route['items'] = 'institutional/items';
 $route['account'] = 'institutional/account';
-
+$route['login'] = 'institutional/login';
 # item routes operation in controller:
 $route['API/item/(:num)'] = 'API/item/index/id/$1';
 $route['API/item/(:num)'] = 'API/item/index/id/$1';
@@ -75,4 +74,4 @@ $route['API/user/(:num)/wish'] = 'API/user/wish/id/$1';
 $route['API/user/(:num)/wish/item/(:num)'] = 'API/user/wish/user_id/$1/item_id/$2';
 $route['API/user/(:num)/like'] = 'API/user/like/id/$1';
 $route['API/user/(:num)/like/item/(:num)'] = 'API/user/like/user_id/$1/item_id/$2';
-
+$route['API/user/password-recovery'] = 'API/user/password_recovery';

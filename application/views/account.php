@@ -43,14 +43,14 @@
                     </div>
                 </li>
                 <li>
-                    <a href="#!">Pesquisar Itens</a>
+                    <a href="items">Pesquisar Itens</a>
                 </li>
                 <li>
-                    <a href="#!">Como funciona</a>
+                    <a href="/">Como funciona</a>
                 </li>
-                <li>
-                    <a href="#!">Sobre</a>
-                </li>
+                <!--<li>--> <!-- Just uncomment it and fix the scroll. -->
+                <!--    <a href="/">Sobre</a>-->
+                <!--</li>-->
                 <li>
                     <div class="divider"></div>
                 </li>
@@ -63,17 +63,20 @@
                 </li>
                 <li>
                     <a class="waves-effect waves-red" href="#!" v-on:click="showMyLikes()">Curtidas</a>
-                </li>                
+                </li>
+                <li>
+                    <a class="waves-effect waves-red" href="#!" v-on:click="showMyWishes()">Desejos</a>
+                </li> 
                 <li>
                     <a class="waves-effect waves-red" href="#!" v-on:click="showTrades()">Trocas</a>
                 </li>
                 <li>
-                    <a class="waves-effect waves-red" href="#!">Sair</a>
+                    <a class="waves-effect waves-red" href="/">Sair</a>
                 </li>
             </ul>
             <div class="container">
                 <!-- Option update register -->
-                <div class="update-register">
+                <div class="update-register active-option">
                     <div class="row">
                         <div class="input-field col s12 ">
                             <input id="email" type="text" class="validate">
@@ -113,7 +116,7 @@
                     </div>
                 </div>
                 <!-- Option my items -->
-                <div class=" my-items">
+                <div class="my-items">
                      <a class="btn-floating btn-large waves-effect waves-light right btn-floating-swapage modal-trigger" href="#register-item-modal"><i class="material-icons">add</i></a>
                     <table class="responsive-table">
                         <thead>
@@ -207,8 +210,7 @@
                         <thead>
                             <tr>
                                 <th>Quem?</th>
-                                <th>Quer?</th>
-                                <th>Oque?</th>
+                                <th>O que?</th>
                                 <th></th>
                                 <th></th>
                                 <th>Opções</th>
@@ -221,11 +223,6 @@
                                         <img src="http://via.placeholder.com/60x60" alt="Contact Person">
                                         <span>Gabriel Morais</span>
                                     </div>
-                                </td>
-                                <td>
-                                    <span class="trade-or-donate">
-                                    Trocar
-                                    </span>
                                 </td>
                                 <td class="">
                                     <div class="chip">
@@ -250,12 +247,11 @@
                         </tbody>
                     </table>
                 </div>
-                <!-- Options end's -->
-                <div class="my-likes  active-option">
+                <!-- Options likes -->
+                <div class="my-likes">
                     <table class="responsive-table">
                         <thead>
                             <tr>
-                                <th>Foto</th>
                                 <th>Titulo</th>
                                 <th>Curtidas</th>
                                 <th>Opções</th>
@@ -264,8 +260,17 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <span class="item-image"></span>
+                                    Bicicleta Trek
                                 </td>
+                                <td>
+                                    10
+                                </td>
+                                <td>
+                                    <span class="item-action-button button-show">Visualizar</span>
+                                    <span class="item-action-button button-drop">Descurtir</span>                                    
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>
                                     Bicicleta Trek
                                 </td>
@@ -279,9 +284,6 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <span class="item-image"></span>
-                                </td>
-                                <td>
                                     Bicicleta Trek
                                 </td>
                                 <td>
@@ -294,9 +296,6 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <span class="item-image"></span>
-                                </td>
-                                <td>
                                     Bicicleta Trek
                                 </td>
                                 <td>
@@ -307,19 +306,53 @@
                                     <span class="item-action-button button-drop">Descurtir</span>                                    
                                 </td>
                             </tr>
+                        </tbody>
+                    </table>                    
+                </div>
+                <!-- Option Wishes -->
+                <div class="my-wishs">
+                    <table class="responsive-table">
+                        <thead>
                             <tr>
-                                <td>
-                                    <span class="item-image"></span>
-                                </td>
+                                <th>Titulo</th>
+                                <th>Opções</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
                                 <td>
                                     Bicicleta Trek
                                 </td>
                                 <td>
-                                    10
+                                    <span class="item-action-button button-show">Visualizar</span>
+                                    <span class="item-action-button button-drop">Retirar</span>                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Bicicleta Trek
                                 </td>
                                 <td>
                                     <span class="item-action-button button-show">Visualizar</span>
-                                    <span class="item-action-button button-drop">Descurtir</span>                                    
+                                    <span class="item-action-button button-drop">Retirar</span>                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Bicicleta Trek
+                                </td>
+                                <td>
+                                    <span class="item-action-button button-show">Visualizar</span>
+                                    <span class="item-action-button button-drop">Retirar</span>                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Bicicleta Trek
+                                </td>
+                                <td>
+                                    <span class="item-action-button button-show">Visualizar</span>
+                                    <span class="item-action-button button-drop">Retirar</span>                                    
                                 </td>
                             </tr>
                         </tbody>
@@ -340,12 +373,21 @@
                             <select>
                                 <option value="" disabled selected>Nenhuma</option>
                                 <option value="1">Moveis</option>
-                                <option value="2">Eltronicos</option>
+                                <option value="2">Eletronicos</option>
                                 <option value="3">Roupas</option>
+                                <option value="3">Mais serão adicionadas...</option>
                             </select>
                             <label>Categoria</label>
                         </div>
-                        <div class="file-field input-field col s12 ">
+                        <div class="input-field col s12 m6">
+                            <select>
+                                <option value="3" selected>Usado</option>
+                                <option value="2">Semi-novo</option>
+                                <option value="1">Novo</option>
+                            </select>
+                            <label>Estado</label>
+                        </div>
+                        <div class="file-field input-field col s6 ">
                             <div class="btn">
                                 <span>File</span>
                                 <input type="file">
