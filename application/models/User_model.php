@@ -10,10 +10,11 @@ class User_model extends CI_Model {
     {
         if ($id === FALSE)
         {
+            $this->db->select('id,email,username,nickname,profile_image,about_me,gender,country,state,city,birth,phone');
             $query = $this->db->get('users');
             return $query->result_array();
         }
-
+        $this->db->select('id,email,username,nickname,profile_image,about_me,gender,country,state,city,birth,phone');
         $query = $this->db->get_where('users', array($attribute => $id));
         return $query->row_array();
     }
@@ -27,11 +28,13 @@ class User_model extends CI_Model {
             'nickname' => $this->input->post('nickname'),
             'username' => $this->input->post('username'),
             'profile_image' => $this->input->post('profile_image'),
-            'postal_code' => $this->input->post('postal_code'),
             'about_me' => $this->input->post('about_me'),
             'gender' => $this->input->post('gender'),
             'birth' => $this->input->post('birth'),
-            'phone' => $this->input->post('phone')
+            'phone' => $this->input->post('phone'),
+            'country' => $this->input->post('country'),
+            'state' => $this->input->post('state'),
+            'city' => $this->input->post('city')
         );
     
         return $this->db->insert('users', $data);
@@ -65,11 +68,13 @@ class User_model extends CI_Model {
             'nickname' => $data['nickname'],
             'username' => $data['username'],
             'profile_image' => array_key_exists('profile_image', $data) ? $data['profile_image'] : NULL,
-            'postal_code' => $data['postal_code'],
             'about_me' =>  array_key_exists('about_me', $data) ? $data['about_me'] : NULL,
             'gender' => $data['gender'],
             'birth' => $data['birth'],
-            'phone' => $data['phone']
+            'phone' => array_key_exists('phone', $data) ? $data['phone'] : NULL,
+            'country' => $data['country'],
+            'state' =>  array_key_exists('state', $data) ? $data['state'] : NULL,
+            'city' =>  array_key_exists('city', $data) ? $data['city'] : NULL
         );
         $this->db->where('id', $ID);
         $this->db->update('users', $data);
@@ -98,8 +103,6 @@ class User_model extends CI_Model {
         $res = $this->db->get('users');
         return ! $res->num_rows() > 0;
     }
-    
-    
 }
 
 ?>

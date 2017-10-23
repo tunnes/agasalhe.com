@@ -12,6 +12,10 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
         
+        <!-- Easy Autocomplete -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/easy-autocomplete.min.css" type="text/css" />
+        
         <!-- Login components -->
         <script type="text/javascript" src="/application/assets/js/components/_register.js"></script>        
         <link rel="stylesheet" type="text/css" href="/application/assets/css/components/_login.css">
@@ -22,11 +26,12 @@
         
         <!-- Internal file resources -->
         <link rel="stylesheet" type="text/css" href="/application/assets/css/home.css">
+        <script type="text/javascript" src="/application/assets/js/countries.js"></script>
         <script type="text/javascript" src="/application/assets/js/home.js"></script>
         <script type="text/javascript" src="/application/assets/js/firebase.js"></script>
         <script type="text/javascript" src="/application/assets/js/components/_login.js"></script>
         <script type="text/javascript" src="/application/assets/js/components/_register.js"></script>        
-
+        
         
         <!-- Another control and meta-tags -->
         <link rel="shortcut icon" href="/application/assets/img/favicon.ico" type="image/x-icon">

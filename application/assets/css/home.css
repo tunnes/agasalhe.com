@@ -611,6 +611,17 @@ h4 {
     color: #c92949;
 }
 
+/* autocomplete */
+.easy-autocomplete {
+    width: 100% !important;
+}
+#country::placeholder {
+    color: #555;
+}
+.select-wrapper {
+    color: #555;
+}
+
 @media only screen and (min-width: 1950px) {
     .about-text {
         margin-top: 300px;

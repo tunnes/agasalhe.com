@@ -20,7 +20,7 @@ class Item extends REST_Controller {
     public function index_get()
     {
         $ID = $this->get('id');
-        
+        header('Access-Control-Allow-Origin: *');
         if($ID == NULL)
         {
            $items = $this->item_model->get_item();
@@ -115,7 +115,7 @@ class Item extends REST_Controller {
                        $this->set_response(['status' => FALSE, 'message' => $response[1]], REST_Controller::HTTP_UNPROCESSABLE_ENTITY);
     }
     
-    # Complete the trade, it means done = TRUE
+    # Complete the trade, it means status = DONE
     public function trade_put()
     {
         $USER = $this->authentication->verify_authentication();
@@ -128,7 +128,7 @@ class Item extends REST_Controller {
 
     }
     
-    # Undo a trade request if the trade isn't accepted (done = NULL or FALSE).
+    # Undo a trade request if the trade isn't accepted (status = done).
     public function trade_delete()
     {
         $USER = $this->authentication->verify_authentication();
@@ -136,6 +136,17 @@ class Item extends REST_Controller {
         $ITEM_YOURS = $this->authentication->verify_parameter('item_yours');
         
         $response = $this->item_model->delete_trade($ITEM_YOURS, $ITEM_THEIRS, $USER['id']);
+        $response[0] ? $this->set_response(['status' => TRUE, 'message' => $response[1]], REST_Controller::HTTP_OK) : 
+                       $this->set_response(['status' => FALSE, 'message' => $response[1]], REST_Controller::HTTP_UNPROCESSABLE_ENTITY);
+    }
+  
+    public function refuse_trade_post()
+    {
+        $USER = $this->authentication->verify_authentication();
+        $ITEM_THEIRS = $this->authentication->verify_parameter('item_theirs');
+        $ITEM_YOURS = $this->authentication->verify_parameter('item_yours');
+        
+        $response = $this->item_model->refuse_trade($ITEM_YOURS, $ITEM_THEIRS, $USER['id']);
         $response[0] ? $this->set_response(['status' => TRUE, 'message' => $response[1]], REST_Controller::HTTP_OK) : 
                        $this->set_response(['status' => FALSE, 'message' => $response[1]], REST_Controller::HTTP_UNPROCESSABLE_ENTITY);
     }

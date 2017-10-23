@@ -50,12 +50,14 @@ class User extends REST_Controller {
 	    $this->form_validation->set_rules('nickname', 'nick name', 'trim|required|max_length[20]|is_unique[users.nickname]|regex_match[#^[^0-9][_A-z0-9]*((-)*[_A-z0-9])*$#]');
 	    $this->form_validation->set_rules('username', 'user name', 'trim|required|max_length[80]');
 	    $this->form_validation->set_rules('profile_image', 'profile image');
-	    $this->form_validation->set_rules('postal_code', 'postal code', 'trim|integer|exact_length[10]'); 
 	    $this->form_validation->set_rules('about_me', 'About me', 'trim|max_length[250]');
-	    $this->form_validation->set_rules('gender', 'gender', 'trim|required|in_list[W,M]');
+	    $this->form_validation->set_rules('gender', 'gender', 'trim|required|in_list[M,F]');
 	    $this->form_validation->set_rules('phone', 'phone', 'trim|max_length[11]|min_length[10]');
 	    $this->form_validation->set_rules('birth', 'Date of birth', 'trim|required|callback_date_regex');
-
+        $this->form_validation->set_rules('country', 'country', 'trim|required|exact_length[2]|alpha');
+        $this->form_validation->set_rules('state', 'state', 'trim|max_length[60]');
+        $this->form_validation->set_rules('city', 'city', 'trim|max_length[60]');
+        
 	    if ($this->form_validation->run() === FALSE)
 	    {
 	        $error = $this->form_validation->error_array();
@@ -79,11 +81,13 @@ class User extends REST_Controller {
         $this->form_validation->set_rules('nickname', 'nick name', 'trim|required|max_length[20]|regex_match[#^[^0-9][_A-z0-9]*((-)*[_A-z0-9])*$#]');
 	    $this->form_validation->set_rules('username', 'user name', 'trim|required|max_length[80]');
 	    $this->form_validation->set_rules('profile_image', 'profile image');
-	    $this->form_validation->set_rules('postal_code', 'postal code', 'trim|required|integer|exact_length[10]');
 	    $this->form_validation->set_rules('about_me', 'About me', 'trim|max_length[250]');
-	    $this->form_validation->set_rules('gender', 'gender', 'trim|required|in_list[W,M]');
+	    $this->form_validation->set_rules('gender', 'gender', 'trim|required|in_list[M,F]');
 	    $this->form_validation->set_rules('phone', 'phone', 'trim|max_length[11]|min_length[10]');
 	    $this->form_validation->set_rules('birth', 'Date of birth', 'trim|required|callback_date_regex');
+	    $this->form_validation->set_rules('country', 'country', 'trim|required|exact_length[2]|alpha');
+        $this->form_validation->set_rules('state', 'state', 'trim|max_length[60]');
+        $this->form_validation->set_rules('city', 'city', 'trim|max_length[60]');
         
         if ($this->form_validation->run() === FALSE)
         {
@@ -285,4 +289,3 @@ class User extends REST_Controller {
       return false;
     }
 }
-// id_action ENUM('trade','donation')

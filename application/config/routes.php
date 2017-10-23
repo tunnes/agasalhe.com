@@ -67,6 +67,7 @@ $route['API/item/(:num)'] = 'API/item/index/id/$1';
 $route['API/item/(:num)'] = 'API/item/index/id/$1';
 $route['API/item/trade/(:num)'] = 'API/item/trade/id/$1';
 $route['API/item/(:num)/trade/(:num)'] = 'API/item/trade/item_yours/$1/item_theirs/$2';
+$route['API/item/(:num)/refuse/trade/(:num)'] = 'API/item/refuse_trade/item_yours/$1/item_theirs/$2';
 # user routes operation in controller:
 $route['API/user/login'] = 'API/user/authenticate';
 $route['API/user/(:num)'] = 'API/user/index/id/$1';

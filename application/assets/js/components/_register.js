@@ -30,14 +30,14 @@ $(document).ready(function() {
         format: 'dd/mm/yyyy',
         onClose: () => { $(document.activeElement).blur() }
     });
-    
+    $('select').material_select();
     //Register
     $("#enviar").click(function(e) {
         e.preventDefault();
         alert('foi');
         AJAXRequester('post', 'user', {
             nickname: $('#nickname').val(),
-            username: $('#username').val(), 
+            username: $('#username').val(),
             postal_code: $('#postal_code'),
             gender: $('#gender'),
             birth: fixDate($('#birth'))
