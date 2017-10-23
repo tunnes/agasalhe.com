@@ -21,6 +21,8 @@
         <link rel="icon" href="/favicon.ico" type="/application/assets/imgx-icon">
         <meta charset="UTF-8">
         <title>Items</title>
+        
+        <link rel="stylesheet" type="text/css" href="/application/assets/css/components/_item.css">
 	</head>
 	<body>
         <header class="subpage-header">
@@ -102,22 +104,23 @@
 			        	<div class="grid-sizer"></div>
 	                    <!-- Item component starts here - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->			        	
 	                    <div class="grid-item" v-for="item in items">
-	                        <div class="item-card">
-	                            <div class="state"> 
-	                                <span>SP</span>
-	                            </div>
-	                            <div class="head">
-	                                <img class="item-image" v-bind:src="item.imageUrl"/>
-	                                <span class="action-like">
-    	                                <img src="/application/assets/img/itens-like-heart.svg"></img>
-    	                                <span>10</span>
-	                                </span>
-	                            </div>
-	                            <div class="body">
-	                                <p class="author">{{ item.author }}<span>{{ item.action }}</span></p>
-	                                <p class="item-name">{{ item.name }}</p>
-	                            </div>
-	                        </div>
+    	                        <div class="item-card" v-on:click="showItem(item.itemID)">
+    	                            <div class="state"> 
+    	                                <span>SP</span>
+    	                            </div>
+    	                            <div class="head">
+    	                                <img class="item-image" v-bind:src="item.imageUrl"/>
+    	                                <span class="action-like">
+        	                                <img src="/application/assets/img/itens-like-heart.svg"></img>
+        	                                <span>10</span>
+    	                                </span>
+    	                            </div>
+    	                            <div class="body">
+    	                                <p class="author">{{ item.author }}<span>{{ item.action }}</span></p>
+    	                                <p class="item-name">{{ item.name }}</p>
+    	                            </div>
+    	                        </div>
+	                        </a>
 	                    </div>
 	                    <!-- Item component end's here - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 					</div>
@@ -129,6 +132,7 @@
 					
 		        </div>
 	        </div>
+            <?php include('components/_item.php') ?>
         </main>
         <footer class="page-footer">
             <div class="footer-copyright">

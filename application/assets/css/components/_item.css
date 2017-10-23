@@ -1,0 +1,90 @@
+#item-modal{
+    min-height: 430px;
+}
+.modal-title{
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 20px;
+    font-size: 50px;
+    font-weight: 900;
+    color: #e5005d;
+    background: linear-gradient(to top left, rgba(238, 9, 121, 0.8), rgba(255, 106, 0, 0.8));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: block;
+}
+.modal-pictures{
+    height: 430px;
+    width: 30%;
+    background-color: red;
+    float: left;
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDRhmk9UWJQ6PlxJAMuEJZyJQu3xVr-7j7_6L0gxqTzmxR6Bng');
+    background-size: cover;
+}
+.modal-infomations{
+    display: inline-block;
+    width: 70%;
+    height: 430px;
+    position: relative;
+}
+.modal-infomations .modal-footer{
+    position: absolute;
+    bottom: 40px;
+    padding: 30px;
+    padding-right: 70px;
+}
+
+.author-view{
+    position: absolute;
+    right: 61px;
+    top: 30px;
+}
+.author-image{
+    background-position: center;
+    background-size: cover;
+    width: 40px;
+    height: 40px;
+    border-radius: 40%;
+    display: block;
+    margin: 0 auto;
+}
+.author-name{
+    font-size: 13px;
+    text-align: center;
+    display: block;
+    margin-top: 6px;
+}
+.author-infomations span{
+    display: block;
+}
+.sub-informations{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+.sub-informations span {
+    border: 1px solid #fb7853;
+    padding: 3px 8px;
+    border-radius: 12px;
+    color: #f55d76;
+    margin-right: 7px;
+    font-size: 12px;
+    font-weight: 100;
+}
+.modal-infomations .description{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    width: 95%;
+    text-align: justify;
+    margin-top: 40px;
+}
+.modal-regular-button{
+    font-size: 13px;
+}
+.modal-close-button{
+    font-size: 13px;
+    font-weight: 100;
+    border-radius: 5px;
+    color: #ffffff;
+    background: linear-gradient(to top left, rgba(238, 9, 121, 0.8), #ee6e73);
+}
