@@ -16,26 +16,49 @@ class Item extends REST_Controller {
 	    $this->load->library('form_validation');
 	    $this->load->library('authentication', ['this' => $this]);
     }
+    
     # Get user item(s)
     public function index_get()
     {
         $ID = $this->get('id');
-        header('Access-Control-Allow-Origin: *');
-        if($ID == NULL)
+        $filterResult = $this->input->get('filter-result');
+
+        if($filterResult != NULL)
         {
-           $items = $this->item_model->get_item();
-           $error = ['status' => FALSE, 'message' => 'No items were found'];
-           $items ? $this->response($items, REST_Controller::HTTP_OK) : $this->response($error, REST_Controller::HTTP_NOT_FOUND); 
+            
+            $FILTER_PARAMS = array(
+                'category' => $this->input->get('category'),
+                'state' => $this->input->get('state'),
+                'city' => $this->input->get('city'),
+                'title' => $this->input->get('title')
+            );
+            
+            $useState = $this->input->get('use-state');
+            $useState == 'NOVO' || $useState == 'SEMI-NOVO' ? array_push($FILTER_PARAMS, "use_state", $useState) : NULL;
+            
+            $FILTER_PARAMS = array_filter($FILTER_PARAMS);
+            
+            $items = $this->item_model->get_filter_items($FILTER_PARAMS);
+            $error = ['status' => FALSE, 'message' => 'No items were found'];
+            $items ? $this->response($items, REST_Controller::HTTP_OK) : $this->response($error, REST_Controller::HTTP_NOT_FOUND); 
+            
+        }
+        elseif($ID == NULL)
+        {
+            $items = $this->item_model->get_item();
+            $error = ['status' => FALSE, 'message' => 'No items were found'];
+            $items ? $this->response($items, REST_Controller::HTTP_OK) : $this->response($error, REST_Controller::HTTP_NOT_FOUND); 
         }
         else
         {
-          $ID = (int) $ID;
-          $ID <= 0 ? $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST) : $item = $this->item_model->get_item($ID, "id");
+            $ID = (int) $ID;
+            $ID <= 0 ? $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST) : $item = $this->item_model->get_item($ID, "id");
           
-          $error = ['status' => FALSE, 'message' => 'Item could not be found'];
-          !empty($item) ? $this->set_response($item, REST_Controller::HTTP_OK) : $this->set_response($error, REST_Controller::HTTP_NOT_FOUND);
+            $error = ['status' => FALSE, 'message' => 'Item could not be found'];
+            !empty($item) ? $this->set_response($item, REST_Controller::HTTP_OK) : $this->set_response($error, REST_Controller::HTTP_NOT_FOUND);
         }
     }
+    
     # Create an item
     public function index_post()
     {
@@ -58,6 +81,7 @@ class Item extends REST_Controller {
         
         
     }
+    
     # Update the item
     public function index_put()
     {
@@ -81,6 +105,7 @@ class Item extends REST_Controller {
             $response ? $this->set_response(null, REST_Controller::HTTP_OK) : $this->set_response(NULL, REST_Controller::HTTP_UNAUTHORIZED);
         }
     }
+    
     # Remove the user item
     public function index_delete()
     {

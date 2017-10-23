@@ -6,6 +6,7 @@ class Item_model extends CI_Model {
         $this->load->database();
     }
     
+    # Get itens
     public function get_item($ID = FALSE)
     {
         # Get many items: 
@@ -43,6 +44,34 @@ class Item_model extends CI_Model {
         }
         return $results;
     }
+    
+    # Get itens by paramteres
+    public function get_filter_items($FILTER_PARAMS)
+    {
+
+        $this->db->select(' u.id as user_id, u.nickname, i.id as item_id, i.title');
+        $this->db->from('items as i');
+        $this->db->join('users as u', 'u.id = i.user_id', 'inner');
+        foreach($FILTER_PARAMS as $key => $value)
+        {
+            $this->db->like($key, $value);
+        }
+        
+        
+        $query = $this->db->get()->result_array();
+        $results = array();
+        foreach($query as $value)
+        {
+           $images = $this->get_images($value['item_id']);
+           $likes  = $this->count_likes($value['item_id']);
+           $value['images'] = $images;
+           $value['qt_likes'] = $likes[0]['qt_item_likes'];
+           $results[] = $value;
+        }
+        return $results;
+    
+    }
+    
     # Insert Item
     public function set_item($USER_ID)
     {

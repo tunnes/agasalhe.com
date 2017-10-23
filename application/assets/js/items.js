@@ -2,7 +2,7 @@ $( document ).ready(function(){
 	$('.button-collapse').sideNav();
 	init();
     masonryReload();
-
+    getItems();
 	
 });
 
@@ -15,7 +15,6 @@ function masonryReload(){
      	}); 
     });
 }
-
 
 function bidLayout(){
     function sideBarPosition(){
@@ -81,36 +80,78 @@ function bidLayout(){
     sideBarPosition();
     textualSearch();
 }
+
+function getItems(){
+
+}
+
 function bindData(){
     var itemsController = new Vue({
       el: '#itemsController',
       data: {
-        items: [
-          { name: 'Bicicleta Trek', author: 'Ayrton Felipe', action: 'Quer Trocar', imageUrl: 'http://bit.ly/2yiSzg2' },
-          { name: 'Porta Joias', author: 'Carroline Lopes', action: 'Quer Doar', imageUrl: 'http://bit.ly/2ykc1Zx' },          
-          { name: 'Caneta Maneira', author: 'João Ruoccu', action: 'Quer Trocar', imageUrl: 'http://bit.ly/2yeIrmt' }, 
-          { name: 'Caneta 3D', author: 'Gustavo Souza', action: 'Quer Doar', imageUrl: 'http://bit.ly/2yjPkoz' },
-          { name: 'Playgound Infantil', author: 'Tarcisio Talles', action: 'Quer Doar', imageUrl: 'http://bit.ly/2yjr3iu' },
-          { name: 'Cama de Gato', author: 'Patrick Augusto', action: 'Quer Trocar', imageUrl: 'http://bit.ly/2i6obja' },
-          { name: 'Sofá Braco', author: 'Gabriel Mourais', action: 'Quer Trocar', imageUrl: 'http://bit.ly/2yhMS04' },
-          { name: 'Cama de Casal', author: 'Vitor Souza', action: 'Quer Trocar', imageUrl: 'http://bit.ly/2ykdRcW' },
-          { name: 'Bicicleta Trek', author: 'Ayrton Felipe', action: 'Quer Trocar', imageUrl: 'http://bit.ly/2yiSzg2' },
-          { name: 'Porta Joias', author: 'Carroline Lopes', action: 'Quer Doar', imageUrl: 'http://bit.ly/2ykc1Zx' },          
-          { name: 'Caneta Maneira', author: 'João Ruoccu', action: 'Quer Trocar', imageUrl: 'http://bit.ly/2yeIrmt' }, 
-          { name: 'Caneta 3D', author: 'Gustavo Souza', action: 'Quer Doar', imageUrl: 'http://bit.ly/2yjPkoz' },
-          { name: 'Playgound Infantil', author: 'Tarcisio Talles', action: 'Quer Doar', imageUrl: 'http://bit.ly/2yjr3iu' },
-          { name: 'Cama de Gato', author: 'Patrick Augusto', action: 'Quer Trocar', imageUrl: 'http://bit.ly/2i6obja' },
-          { name: 'Sofá Braco', author: 'Gabriel Mourais', action: 'Quer Trocar', imageUrl: 'http://bit.ly/2yhMS04' },
-          { name: 'Cama de Casal', author: 'Vitor Souza', action: 'Quer Trocar', imageUrl: 'http://bit.ly/2ykdRcW' }          
-        ]
+        show404: false,
+        itemsCount: 0,
+        items: []
       },
-      methods:{
-          populateController: function(dataItems){ }
-      }
+        methods:{
+            searchBySomething: function(){
+                var query = "/API/item?filter-result=true"
+                
+                var title = $('#search-by-title').val();
+                title.length ? query = query + "&title=" + title.replace(/\s/g,'') : null;
+                
+                var category = $('.search-by-category .active.selected span').text();
+                category.length ? query = query + "&category=" + category : null;
+                
+                var useState = $('.search-by-use-state .active.selected span').text();
+                useState.length ? query = query + "&use-state=" + useState : null;
+                
+                var state = $('#search-by-state').val();
+                state.length ? query = query + "&state=" + state.replace(/\s/g,'') : null;
+                
+                var city = $('#search-by-city').val();
+                city.length ? query = query + "&city=" + city.replace(/\s/g,'') : null;
+                
+                this.populateController(query)
+            },
+            populateController: function(path){
+                var that = this;
+                path = path || "/API/item";
+                this.items = [];
+                $.ajax({ 
+                    method: "GET", 
+                    url: path, 
+                    complete: function(jqXHR, textStatus){
+                        switch (jqXHR.status) {
+                            case 200:
+                                jqXHR.responseJSON.map((e) => { that.itemBuilder(e) });
+                                that.itemsCount = jqXHR.responseJSON.length; 
+                                break;
+                            case 404:
+                                that.show404 = true;
+                                that.itemsCount = 0; 
+                                console.log('404');
+                                break;
+                            default:
+                                console.log("Other error")
+                        }
+                    }
+                })
+            },
+            itemBuilder: function(item){
+                this.items.push({ 
+                    name: item.title, 
+                    author: item.nickname, 
+                    imageUrl: item.images.length ? item.images[0].image : "http://bit.ly/2yHLmEy"
+                })
+            }
+        }
     })
+    itemsController.populateController();
 }
 function init(){ 
-    bidLayout();
 	bindData();
+    bidLayout();
+
 }
 

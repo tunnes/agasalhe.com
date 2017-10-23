@@ -45,23 +45,18 @@ function bindData(){
             },
             showTrades: function(){
                 this.changeOption('.trades');
-                $('.section-title').html('Minhas trocas');
             },
             showMyItens: function(){
                 this.changeOption('.my-items');
-                $('.section-title').html('Meus itens');
             },
             showAccountRegister: function (){
                 this.changeOption('.update-register');
-                $('.section-title').html('Editar Cadastro');
             },
             showMyLikes: function (){
                 this.changeOption('.my-likes');
-                $('.section-title').html('Curtidas');
             },
             showMyWishes: function (){
                 this.changeOption('.my-wishs');
-                $('.section-title').html('Desejos');
             } 
         }
     })

@@ -12,10 +12,6 @@ body {
 main {
     flex: 1 0 auto;
 }
-header {
-    margin-bottom: 20px;
-}
-
 .content-items-wrapper {
     margin-bottom: 100px;
 }
@@ -36,7 +32,7 @@ header {
 header,
 main,
 footer {
-    margin-left: 300px;
+    /*margin-left: 300px;*/
 }
 /* Footer */
 
@@ -118,11 +114,12 @@ footer {
 .subpage-header h2 {
     font-family: 'Open Sans', sans-serif;
     position: relative;
-    padding-top: 36px;
+    padding-top: 25px;
     margin-top: 10px;
     color: #ffffff;
     font-weight: 800;
     font-size: 45px;
+    float: left;
     text-transform: uppercase;
 }
 
@@ -135,7 +132,7 @@ footer {
     color: #3b3b3b;
     margin-left: 0px;
     position: relative;
-    margin-top: 20px;
+    margin-top: 50px;
 }
 .active-option {
     display: block !important;
@@ -369,6 +366,102 @@ table .item-action-button {
  box-shadow: 0 1px 0 0 #000;
 }
 
+
+
+/*asdasd*/
+.sidebar-options-wrapper{
+    margin-left: 320px;
+    margin-top: 80px;
+}
+.side-nav.fixed{
+    position: absolute;
+    overflow: hidden;
+    height: 100%;
+    width: 280px;
+}
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    position: relative;
+}
+#account-controller{
+    min-height: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.copyright-wrapper{
+    margin: 0 auto;
+    width: 425px;
+}
+
+header img{
+    position: relative;
+    margin-top: 40px;
+    max-width: 100px;
+    float: left;
+    margin-right: 20px;
+}
+/* Menu */
+.mobile-nav-bar{
+    position: absolute;
+    right: 0px;
+    top: 30px;
+    display: none;
+}
+.fixed-action-btn.horizontal ul {
+    right: 65px;
+    top: 45%;
+    width: 250px;
+}
+.mobile-user-view{
+    display: none;
+    margin-top: 30px;
+    position: relative;
+}
+.mobile-user-view .user-infomations{
+    position: absolute;
+    margin-left: 15px;
+    top: 8px; 
+}
+.mobile-user-view .user-infomations a{
+    display: block;
+}
+.user-view{
+    margin-bottom: 20px !important;
+    position: relative;
+}
+.user-view .user-infomations{
+    position: absolute;
+    left: 110px;
+    top: 23px;
+}
+.trigger-sidenav{
+    position: relative;
+}
+.trigger-sidenav .material-icons{
+    display: none;
+    position: absolute;
+    top: -32px;
+    font-size: 28px;
+    left: 18px;
+    color: white;
+}
+.trigger-sidenav:hover .material-icons{
+    display: block;
+    z-index: 2;
+}
+.trigger-sidenav .circle{
+    -webkit-transition : -webkit-filter 500ms linear
+}
+.trigger-sidenav:hover .circle{
+    filter: brightness(38%);
+}
+
 @media only screen and (max-width: 995px) {
     .container {
         width: 85%;
@@ -406,33 +499,56 @@ table .item-action-button {
     footer {
         margin-left: 0;
     }
-    .sidebar-trigger {
-        display: block;
-    }
     .side-bar-logo h3 {
         right: 25px;
     }
-    header .s12 {
-        margin-left: 60px;
+    .mobile-user-view{
+        display: block;
+    }
+    #slide-out{
+        position: fixed;
+    }
+    .user-view .user-infomations {
+        position: absolute;
+        left: 93px;
+        top: 5px;
+    }
+    .mobile-nav-bar{
+        display: block;
+    }
+    .sidebar-options-wrapper{
+        margin: 0px;
     }
 }
-@media only screen and (max-width: 680px) {
-    .sidebar-trigger {
-        left: 34px;
+@media only screen and (max-width: 690px) {
+    header .s12 h2{
+        font-size: 30px;
+        margin-top: 25px;
+    }
+    header img{
+        margin-top: 55px;
+        max-width: 70px;
     }
 }
-
-@media only screen and (max-width: 620px) {
-    .subpage-header h2 {
-        font-size: 40px;
+@media only screen and (max-width: 470px){
+    .subpage-header{
+        height: auto;
     }
-}
-
-@media only screen and (max-width: 560px) {
-    .subpage-header h2 {
-        margin-top: 15px;
-        padding-top: 0px;
-        margin-bottom: 5px;
+    .subpage-header:before{
+        height: 100%;
+    }
+    header img{
+        float: none;
+        margin: 10px auto auto auto;
+        display: block;
+    }
+    header .s12 h2{
+        text-align: center;
+        margin-top: 0px;
+        width: 100%;
+    }
+    .section-title{
+        text-align: center;
     }
 }
 @media only screen and (max-width: 1125px) {

@@ -13,18 +13,6 @@
         <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
         <script src="https://unpkg.com/vue@2.4.4/dist/vue.js"></script>
         	
-        <!-- Login components -->
-        <script type="text/javascript" src="/application/assets/js/components/_register.js"></script>        
-        <link rel="stylesheet" type="text/css" href="/application/assets/css/components/_login.css">
-        
-        <!-- Register components -->
-        <script type="text/javascript" src="/application/assets/js/components/_login.js"></script>
-        <link rel="stylesheet" type="text/css" href="/application/assets/css/components/_register.css">  
-        
-        <!-- Navbar components -->
-        <link rel="stylesheet" type="text/css" href="/application/assets/css/components/_navbar.css">        
-        <script type="text/javascript" src="/application/assets/js/components/_navbar.js"></script>
-        
         <link rel="stylesheet" type="text/css" href="/application/assets/css/items.css">
         <script type="text/javascript" src="/application/assets/js/items.js"></script>
         
@@ -35,48 +23,82 @@
         <title>Items</title>
 	</head>
 	<body>
-        <header>
-        <!-- External login component starts -->
-            <?php include('components/_navbar.php') ?>
-        <!-- External login component end's-->   
-            <div class="itens-call-to-action">
-                <div class="container">
-	                <h2>
-	                	Itens disponíveis
-	                </h2>
+        <header class="subpage-header">
+            <div class="container">
+                <div class="col s12">
+                    <img src="/application/assets/img/header-logo.png">
+                    <h2>
+                        swapage <br>
+                        Itens Disponiveis
+                    </h2>
                 </div>
             </div>
         </header>
-        <div class="content-items-wrapper">
-        	<div class="container">
-        	    <div class="sidebar-wrapper">
-        	        <div class="side-header">
-        	            <img src="/application/assets/img/items-logo.png"/>
-        	            <h3>Swapage</h3>
-        	        </div>
-		            <div class="sidebar">
-                    <div class="chips chips-autocomplete"></div>
+        <main id="itemsController" class="container">
+            <ul id="slide-out" class="side-nav fixed account-sidebar">
+                <li>
+                    <div class="user-view">
+                        <a href="#!user"><img class="circle" src="http://via.placeholder.com/64x64"></a>
+                        <span class="user-infomations">
+                            <span class="name">John Doe</span>
+                            <span class="email">jdandturk@gmail.com</span>
+                        </span>
+                    </div>
+                </li>
+                <div class="divider"></div>
+                </li>
+                <li><a class="subheader">Pesquisar Itens </a></li>
+                <div class="sidebar">
                     <div class="input-field col s12">
-                        <select>
-                            <option value="" disabled selected>Todas as categorias</option>
+                      <input  id="search-by-title" type="text" class="validate">
+                      <label for="first_name">Digite algum termo</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <select class="search-by-category">
+                            <option value="0" selected>Todas as categorias</option>
                             <option value="1">Moveis</option>
-                            <option value="2">Brinquedos</option>
-                            <option value="3">Eletronicos</option>
+                            <option value="2">Eletrodomestico</option>
+                            <option value="3">Eletronico</option>
                         </select>
                         <label>Categoria</label>
                     </div>
-                    <div class="chips chips-state"></div>                       
-                    <div class="chips chips-city"></div>                     
-                    
-		            <a class="waves-effect waves-light btn-large">
+                    <div class="input-field col s12" style="margin-top: 40px">
+                        <select class="search-by-use-state">
+                            <option value="0" selected>Indiferente</option>
+                            <option value="1">Novo</option>
+                            <option value="2">Semi-Novo</option>
+                            <option value="3">Usado</option>    
+                        </select>
+                        <label>Estado de uso</label>
+                    </div>                    
+                    <div class="input-field col s12">
+                      <input  id="search-by-state" type="text" class="validate">
+                      <label for="first_name">Digite o estado</label>
+                    </div>                     
+                   <div class="input-field col s12">
+                      <input  id="search-by-city" type="text" class="validate">
+                      <label for="first_name">Digite a cidade</label>
+                    </div> 
+		            <a v-on:click="searchBySomething" class="waves-effect waves-light btn-large">
 		                Filtrar
                     </a>
-		       	</div>
-		       	</div>
+                </div>
+            </ul>
+            <div class="content-items-wrapper">
+                <div class="mobile-user-view">
+                    <a href="#" data-activates="slide-out" class="button-collapse trigger-sidenav">
+                        <i class="material-icons">menu</i>
+                        <img class="circle" src="http://via.placeholder.com/64x64">
+                    </a>
+                    <span class="user-infomations"> 
+                        <a href="#!name"><span class="name">John Doe</span></a>
+                        <a href="#!email"><span class="email">jdandturk@gmail.com</span></a>
+                    </span>
+                </div>		       	
 		        <div class="item-results">
-		            <span class="itens-count">Exbindo 16 resultado(s).</span>
+		            <span class="itens-count">Exbindo {{ itemsCount }} resultado(s).</span>
 		            
-		        	<div id="itemsController" class="grid">
+		        	<div v-if="itemsCount > 0">
 			        	<div class="grid-sizer"></div>
 	                    <!-- Item component starts here - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->			        	
 	                    <div class="grid-item" v-for="item in items">
@@ -99,11 +121,25 @@
 	                    </div>
 	                    <!-- Item component end's here - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 					</div>
+					<div v-if="show404" class="any-results">
+					    <h3>
+					        Desculpe.. Nenhum item encontrado =S
+					    </h3>
+					</div>
+					
 		        </div>
 	        </div>
-        </div>
-        <div class="power-by">
-            © Copyright 2017 - Feito com <span> < 3 </span> por Time ainda sem nome.
-        </div>
+        </main>
+        <footer class="page-footer">
+            <div class="footer-copyright">
+                <div class="container">
+                    <div class="copyright-wrapper">
+                        <span>© 2017 Copyright - Feito com</span> 
+                        <span><i class="material-icons">favorite</i></span>
+                        <span>por um time ainda sem nome.</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
 	</body>
 </html>
