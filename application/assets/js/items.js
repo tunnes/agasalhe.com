@@ -76,6 +76,7 @@ function bidLayout(){
         $('select').material_select();
     }
     
+    $('.modal').modal();
     dropdownCategory();
     sideBarPosition();
     textualSearch();
@@ -91,6 +92,16 @@ function bindData(){
       data: {
         show404: false,
         itemsCount: 0,
+        item: { 
+            title: null, 
+            authorName: null, 
+            authorImage: null, 
+            authorLink: null, 
+            category: null,
+            useState: null,
+            likes: null,
+            description: null
+        },
         items: []
       },
         methods:{
@@ -142,12 +153,49 @@ function bindData(){
                 this.items.push({ 
                     name: item.title, 
                     author: item.nickname, 
-                    imageUrl: item.images.length ? item.images[0].image : "http://bit.ly/2yHLmEy"
+                    imageUrl: item.images.length ? item.images[0].image : "http://bit.ly/2yHLmEy",
+                    itemID: item.item_id
                 })
+            },
+            showItem: function(itemID){
+                var that = this;
+                $.ajax({ 
+                    method: "GET", 
+                    url: "/API/item/" + itemID, 
+                    complete: function(jqXHR, textStatus){
+                        switch (jqXHR.status) {
+                            case 200:
+                                var item = jqXHR.responseJSON[0]
+                                $('#item-modal').modal('open');
+                                that.item = {
+                                    title: item.title,
+                                    authorName: item.nickname,
+                                    authorImage: "http://bit.ly/2yHLmEy",
+                                    authorLink: "#todo",
+                                    category: item.category,
+                                    useState: item.use_state,
+                                    likes: item.qt_likes,
+                                    description: item.description,
+                                }
+                                break;
+                            case 404:
+                                console.log('404');
+                                break;
+                            default:
+                                console.log("Other error")
+                        }
+                    }
+                })
+            },
+            showItemByURL: function(){
+                var url = new URL(window.location.href)
+                var ID = url.searchParams.get('ID')
+                this.showItem(ID)
             }
         }
     })
     itemsController.populateController();
+    itemsController.showItemByURL();
 }
 function init(){ 
 	bindData();
@@ -155,3 +203,7 @@ function init(){
 
 }
 
+function itemByURL(){
+    
+    
+}

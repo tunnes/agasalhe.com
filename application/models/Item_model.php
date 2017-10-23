@@ -30,10 +30,12 @@ class Item_model extends CI_Model {
         }
         
         # Get specific item:
-        $this->db->select('id as item_id, title, description, active, use_state, category');
-        $query = $this->db->get_where('items', array('id' => $ID));
-        $query = $query->result_array();
-        $results = array();
+        $this->db->select('users.id as user_id, users.nickname, users.phone, users.profile_image, items.id as item_id, items.title,
+                            items.description, items.use_state, items.category, items.active');
+        $this->db->from('items');
+        $this->db->join('users', 'users.id = items.user_id', 'inner');
+        $this->db->where('items.id', $ID);
+        $query = $this->db->get()->result_array();
         foreach($query as $value)
         {
             $likes  = $this->count_likes($value['item_id']);
