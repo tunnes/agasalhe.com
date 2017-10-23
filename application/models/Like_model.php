@@ -51,22 +51,26 @@ class Like_model extends CI_Model {
             }
             return $results;
         }
-        
-        $this->db->select('items.title, items.id');
-        $this->db->from('likes');
-        $this->db->join('users','likes.user_id = users.id','inner');
-        $this->db->join('items', 'likes.item_id = items.id', 'inner');
-        $this->db->where('likes.user_id', $ID);
+        /*
+        Curtidas recebidas; Tem que trazer os itens curtidos.
+        select items.id from items inner join likes on items.id = likes.user_id
+        where items.user_id = 62
+        */
+        $this->db->select('likes.user_id, users.nickname, likes.item_id, items.title');
+        $this->db->from('items');
+        $this->db->join('likes','likes.item_id = items.id','inner');
+        $this->db->join('users', 'likes.user_id = users.id', 'inner');
+        $this->db->where('items.user_id ', $ID);
         $query = $this->db->get()->result_array();
-        $results = array();
+        //$results = array();
         
-        foreach($query as $value)
-        {
-            $value['qt_item_likes'] = $this->count_like($value['id'])[0]['qt_item_likes'];
-            $results[] = $value;
-        }
+        // foreach($query as $value)
+        // {
+        //     $value['qt_item_likes'] = $this->count_like($value['id'])[0]['qt_item_likes'];
+        //     $results[] = $value;
+        // }
        
-        return $results;
+        return $query;
     }
     
     public function set_like($ID)
@@ -100,17 +104,11 @@ class Like_model extends CI_Model {
     }
     
  /* 
- select users.nickname, items.title 
-from likes inner join users on likes.user_id = users.id
-inner join items on likes.item_id = items.id;
-
-select (select count(*) from likes inner join items on 
-       likes.item_id = items.id where likes.user_id = 3) as qt_like, users.nickname, items.title, items.id
-from likes inner join users on likes.user_id = users.id
-inner join items on likes.item_id = items.id	
-	where likes.user_id = 3
-	group by likes.item_id;
- 
+select likes.user_id, users.nickname, likes.item_id, items.title from items
+inner join likes on likes.item_id = items.id
+inner join users on likes.user_id = users.id
+where items.user_id = 62
+order by likes.user_id, likes.item_id desc
  */
 } 
 ?>

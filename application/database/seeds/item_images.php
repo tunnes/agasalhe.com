@@ -6,17 +6,17 @@ class item_images extends Seeder {
 
     public function run() {
         //seed many records using faker
-        $limit = 30;
+        $limit = 92;
         echo "seeding $limit item_images registers";
 
-        for ($i = 0; $i < $limit; $i++) {
+        for ($i = 62; $i < $limit; $i++) {
             echo ".";
 
             $data = array(
                 'id' => null,
                 'image' => $this->faker->imageUrl(640, 480),
                 'alt' => $this->faker->text(120), 
-                'item_id' => $i+1
+                'item_id' => $i
             );
 
             $this->db->insert($this->table, $data);

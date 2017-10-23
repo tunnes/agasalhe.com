@@ -84,12 +84,7 @@ class Item_model extends CI_Model {
         $this->db->query($delete, array('item_id' => $ITEM_ID));
         $this->db->delete('items', array('id' => $ITEM_ID));
     }
-    /* 
-        trade_status disclaimer:
-        NULL = Pendent
-        0 = Rejected
-        1 = Accepted
-    */
+    
     public function get_trades($USER_ID)
     {
         # Gets user items offered for trading.
@@ -117,6 +112,7 @@ class Item_model extends CI_Model {
         return $results;
     }
     /*
+        
         Required rules for doing a trade:
         - item id must exists ~ obviously.
         - the user cannot trade an item for the same or by another item of their own possession.
@@ -155,7 +151,7 @@ class Item_model extends CI_Model {
             return [false, $this->isAlreadyTraded($ITEM_YOURS, $ITEM_THEIRS)[1]];
         }
         
-        $insert = "INSERT INTO trades VALUES (?, ?, NOW(), NULL)";
+        $insert = "INSERT INTO trades VALUES (?, ?, NOW(), 'PENDING')";
         $this->db->query($insert, array(
             'item_theirs' => $ITEM_THEIRS,
             'item_yours' => $ITEM_YOURS));
@@ -184,14 +180,14 @@ class Item_model extends CI_Model {
         
         $this->db->where('item_theirs', $ITEM_THEIRS);
         $this->db->where('item_yours', $ITEM_YOURS);
-        $this->db->update('trades', array('done' => true));
+        $this->db->update('trades', array('status' => 'DONE'));
         
         $this->db->where('id', $ITEM_THEIRS);
         $this->db->update('items', array('active' => false));
         $this->db->where('id', $ITEM_YOURS);
         $this->db->update('items', array('active' => false));
         
-        return [true, 'The trade has been canceled.'];
+        return [true, 'The trade has been completed.'];
     }
     
     public function delete_trade($ITEM_YOURS, $ITEM_THEIRS, $ID)
@@ -214,6 +210,40 @@ class Item_model extends CI_Model {
         
         $this->db->delete('trades', array('item_theirs' => $ITEM_THEIRS, 'item_yours' => $ITEM_YOURS));
         return [true, 'The trade request has been removed.'];
+    }
+      /*
+        In this function the fields item_theirs and item_yours are inverted to check who intended to do the trade.
+        Can't deny what was denied.
+        Can't deny a trade not intented for you.
+        
+    */
+    public function refuse_trade($ITEM_YOURS, $ITEM_THEIRS, $ID)
+    {
+        if($ITEM_YOURS === $ITEM_THEIRS || !$this->isAlreadyRequested($ITEM_YOURS, $ITEM_THEIRS)[1])
+        {
+            return [false, 'Invalid request.'];
+        }
+        
+        if(!$this->isMyOwnItem($ITEM_YOURS, $ID))
+        {
+            return [false, 'You cannot refuse a trade which is not yours.'];
+        }
+        
+        if(!$this->isAlreadyTraded($ITEM_THEIRS, $ITEM_YOURS)[0])
+        {
+            return [false, 'You cannot refuse a trade which is already finished. Update the page please :-)'];
+        }
+        
+        if($this->isTradeRefused($ITEM_THEIRS, $ITEM_YOURS))
+        {
+            return [false, 'You cannot refuse a trade which was already refused.'];
+        }
+        
+        $this->db->where('item_theirs', $ITEM_YOURS);
+        $this->db->where('item_yours', $ITEM_THEIRS);
+        $this->db->update('trades', array('status' => 'REFUSED'));
+        return [true, 'The trade has been refused.'];
+        
     }
     
     # Aux Functions
@@ -252,7 +282,7 @@ class Item_model extends CI_Model {
         $done = $this->db->get();
         if($done->num_rows() > 0)
         {
-           return [$done->result_array()[0]['done'], TRUE];
+           return [$done->result_array()[0]['status'], TRUE];
         }
         return [NULL, FALSE];
     }
@@ -260,12 +290,12 @@ class Item_model extends CI_Model {
     # Check if i've traded MY item with someone else or if someone else traded it with me. 
     public function isAlreadyTraded($ITEM_YOURS, $ITEM_THEIRS)
     {
-        $this->db->select('*')->from('trades')->where('done = TRUE AND item_yours = ' . $ITEM_YOURS . ' OR done = TRUE AND item_theirs = ' . $ITEM_YOURS);
+        $this->db->select('*')->from('trades')->where("status = 'DONE' AND item_yours = " . $ITEM_YOURS . " OR status = 'DONE' AND item_theirs = " . $ITEM_YOURS);
         if($this->db->get()->num_rows() > 0)
         {
             return [false, 'Your item was already traded.'];
         }
-        $this->db->select('*')->from('trades')->where('done = TRUE AND item_theirs = ' . $ITEM_THEIRS . ' OR done = TRUE AND item_yours = ' . $ITEM_THEIRS);
+        $this->db->select('*')->from('trades')->where("status = 'DONE' AND item_theirs = " . $ITEM_THEIRS . " OR status = 'DONE' AND item_yours = " . $ITEM_THEIRS);
         if($this->db->get()->num_rows() > 0)
         {
             return [false, 'The requested item was already traded.'];
@@ -275,7 +305,13 @@ class Item_model extends CI_Model {
     
     public function isTradeComplete($ITEM_YOURS, $ITEM_THEIRS)
     {
-        $check = $this->db->get_where('trades', array('item_yours' => $ITEM_YOURS, 'item_theirs' => $ITEM_THEIRS, 'done' => TRUE));
+        $check = $this->db->get_where('trades', array('item_yours' => $ITEM_YOURS, 'item_theirs' => $ITEM_THEIRS, 'status' => 'DONE'));
+        return (bool) $check->num_rows() > 0;
+    }
+    
+    public function isTradeRefused($ITEM_YOURS, $ITEM_THEIRS)
+    {
+        $check = $this->db->get_where('trades', array('item_yours' => $ITEM_YOURS, 'item_theirs' => $ITEM_THEIRS, 'status' => 'REFUSED'));
         return (bool) $check->num_rows() > 0;
     }
     

@@ -11,6 +11,7 @@ var config = {
 };
 firebase.initializeApp(config);
 const auth = firebase.auth(); */
+
 const apiEndPoint = 'https://agasalhe-tarcisiolima.c9users.io/API/';
 
 $(function(){

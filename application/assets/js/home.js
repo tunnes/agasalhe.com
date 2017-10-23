@@ -129,6 +129,8 @@ function initMap() {
       });
 }
 $( document ).ready(function(){
+ 
+ 
 	$('.button-collapse').sideNav();
     var $grid = $('.grid').imagesLoaded( function() {
      	$grid.masonry({
@@ -136,5 +138,36 @@ $( document ).ready(function(){
          	percentPosition: true,
          	columnWidth: '.grid-sizer'
      	}); 
-	}); 
+	});
+	
+	var options = {
+ 	data: countries,
+ 	getValue: "name",
+ 
+ 	list: {
+ 		match: {
+ 			enabled: true
+ 		},
+ 		
+ 	onSelectItemEvent: function() {
+ 			var country = $("#country").getSelectedItemData().code;
+ 			console.log(country);
+		},
+		
+		showAnimation: {
+			type: "fade", //normal|slide|fade
+			time: 500,
+			callback: function() {}
+		},
+
+		hideAnimation: {
+			type: "slide", //normal|slide|fade
+			time: 500,
+			callback: function() {}
+		}
+		
+ 	}
+ };
+ $("#country").easyAutocomplete(options);
+	 
 })

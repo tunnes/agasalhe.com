@@ -6,10 +6,10 @@ class items extends Seeder {
 
     public function run() {
          //seed many records using faker
-        $limit = 29;
+        $limit = 92;
         echo "seeding $limit items registers";
 
-        for ($i = 0; $i < $limit; $i++) {
+        for ($i = 62; $i < $limit; $i++) {
             echo ".";
 
             $data = array(
@@ -18,7 +18,8 @@ class items extends Seeder {
                 'description' => $this->faker->text(120),
                 'active' => $this->faker->boolean(50),
                 'use_state' => $this->faker->randomElement(array ('NOVO','USADO','SEMI-NOVO')),
-                'user_id' => $i+1
+                'category' => $this->faker->randomElement(array ('MOVEL','ELETRONICO','ELETRODOMESTICO','BRINQUEDO','ROUPA','UTENSILIO','FERRAMENTA','INSTRUMENTO')),
+                'user_id' => $i
             );
 
             $this->db->insert($this->table, $data);
