@@ -46,9 +46,10 @@ class Institutional extends CI_Controller {
 	
 	public function password_recovery($hash)
 	{
-	  if(!empty($hash)){
+	  if($this->password_recovery->verifyValidity($hash)[0]){
 		$this->load->view('password_recovery');
-    	//$this->password_recovery(); 
+	  }else {
+	  	echo "<h1>A valídade expirou :(</h1><br> <a href='/'>Voltar para o início</a>";
 	  }
 	}
 }

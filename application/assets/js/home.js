@@ -151,6 +151,7 @@ $( document ).ready(function(){
  		
  	onSelectItemEvent: function() {
  			var country = $("#country").getSelectedItemData().code;
+ 			$("#country").data('code', country);
  			console.log(country);
 		},
 		
@@ -165,9 +166,8 @@ $( document ).ready(function(){
 			time: 500,
 			callback: function() {}
 		}
-		
- 	}
- };
+ }
+};
  $("#country").easyAutocomplete(options);
 	 
 })

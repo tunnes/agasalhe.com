@@ -621,6 +621,23 @@ h4 {
 .select-wrapper {
     color: #555;
 }
+.recovery-password {
+    width: 100%;
+    height: 100%;
+    background: #fafafa;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 2;
+    transition: 0.8s;
+    display: none;
+    transform: translateX(-100%);
+}
+.recovery-password p {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 22px;
+    text-align: center;
+}
 
 @media only screen and (min-width: 1950px) {
     .about-text {

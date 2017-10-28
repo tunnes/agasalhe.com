@@ -90,20 +90,19 @@ $("#login-form").submit(function(e) {
 
 
 //It's a promise: you can use it like so: .then( success, err ) or .done() .fail() .always()
-function AJAXRequester(method, resourse, data, headers = null, contentType = "application/json; charset=utf-8") {
+function AJAXRequester(method, resourse, data, headers = {}) {
    return new Promise(function(resolve, reject){
        $.ajax({
         type: method,
         url: apiEndPoint + resourse,
         headers: headers,
-        data: data,
-        contentType: contentType
+        data: data
        })
        .done((data) => resolve(data))
        .fail((data) => reject(data));
     })
 }
 
-function fixDate(date) {
-    return date.split('/').reverse().join('-');
+function datefixer(x) {
+    return x.split('/').reverse().join('-');
 }

@@ -13,7 +13,7 @@ class Password_Recovery {
     $this->mail = new PHPMailer();
     $this->mail->IsSMTP();
     $this->mail->Charset = 'utf8-decode()';      
-    $this->mail->SMTPDebug = 2;
+    #$this->mail->SMTPDebug = 2;
     $this->emailSender = 'swapei.noreply@gmail.com';
     //swapei-tcc-2017
     //swapei.noreply@gmail.com
@@ -44,7 +44,7 @@ class Password_Recovery {
     $date = date('d-m-Y H:i:s', strtotime('+1 day'));
     if($this->verifyWhetherSent()) {
       if(!$this->mail->Send()){
-         echo $this->mail->ErrorInfo;
+        # echo $this->mail->ErrorInfo;
          return [false, "Não foi possível enviar e-mail ao destinatário informado."];
         }else {
           $update = "UPDATE users SET recovery_hash = ?, recovery_validity =  STR_TO_DATE(?, '%d-%m-%Y %H:%i:%s') ". "WHERE email = ?";    
@@ -62,7 +62,7 @@ class Password_Recovery {
     $query = $this->database->db->get('users');
     return $query->num_rows() > 0;
   }
-  private function verifyValidity($hash) {
+  public function verifyValidity($hash) {
     $where = "recovery_hash LIKE '" . $hash . "' AND recovery_validity > NOW()";
     $this->database->db->where($where);
     $query = $this->database->db->get('users');
