@@ -1,0 +1,370 @@
+{
+	"info": {
+		"name": "Swapage API",
+		"_postman_id": "8524caac-6ce3-3b05-9028-1fb5cfd1f4f8",
+		"description": "# Introduction\nWhat does your API do?\n\n# Overview\nThings that the developers should know about\n\n# Authentication\nWhat is the preferred way of using the API?\n\n# Error Codes\nWhat errors and status codes can a user expect?\n\n# Rate limit\nIs there a limit to the number of requests an user can send?",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Show all user on application.",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{root-path}}/API/user",
+					"host": [
+						"{{root-path}}"
+					],
+					"path": [
+						"API",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show all items on application.",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{root-path}}/API/item",
+					"host": [
+						"{{root-path}}"
+					],
+					"path": [
+						"API",
+						"item"
+					]
+				},
+				"description": "Retorna todos o itens de todos os usuários cadastrados no sitema ou de um específico caso o id seja passado."
+			},
+			"response": []
+		},
+		{
+			"name": "Show an item by ID on application.",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{root-path}}/API/item/62",
+					"host": [
+						"{{root-path}}"
+					],
+					"path": [
+						"API",
+						"item",
+						"62"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Filter all items on application by parameters",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{root-path}}/API/item?filter-result=true&title=Ayrton&state&use-state=NOVO&city=Santos&category=ELETRONICO",
+					"host": [
+						"{{root-path}}"
+					],
+					"path": [
+						"API",
+						"item"
+					],
+					"query": [
+						{
+							"key": "filter-result",
+							"value": "true",
+							"equals": true
+						},
+						{
+							"key": "title",
+							"value": "Ayrton",
+							"equals": true
+						},
+						{
+							"key": "state",
+							"value": "",
+							"equals": false
+						},
+						{
+							"key": "use-state",
+							"value": "NOVO",
+							"equals": true
+						},
+						{
+							"key": "city",
+							"value": "Santos",
+							"equals": true
+						},
+						{
+							"key": "category",
+							"value": "ELETRONICO",
+							"equals": true
+						}
+					]
+				},
+				"description": "Retorna todos o itens de todos os usuários cadastrados no sitema ou de um específico caso o id seja passado."
+			},
+			"response": []
+		},
+		{
+			"name": "Register an user on application.",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nickname",
+							"value": "tunnes",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "Ayrton Felipe",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "cep",
+							"value": "00000-000",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "tunnes@tunnes.com",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "tunnes123",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "gender",
+							"value": "M",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "birth",
+							"value": "2012-02-28",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "country",
+							"value": "BR",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{root-path}}/API/user",
+					"host": [
+						"{{root-path}}"
+					],
+					"path": [
+						"API",
+						"user"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Autentication in application.",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "lorem@ipsum.com",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "lorem123",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{root-path}}/API/user/login",
+					"host": [
+						"{{root-path}}"
+					],
+					"path": [
+						"API",
+						"user",
+						"login"
+					]
+				},
+				"description": "Autentica o usuário no sistema."
+			},
+			"response": []
+		},
+		{
+			"name": "Register an item on application.",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6Ijk1IiwiZW1haWwiOiJ0dW5uZXNAdHVubmVzLmNvbSIsInVzZXJuYW1lIjoiQXlydG9uIEZlbGlwZSIsIm5pY2tuYW1lIjoidHVubmVzIiwicHJvZmlsZV9pbWFnZSI6bnVsbCwiYWJvdXRfbWUiOm51bGwsImdlbmRlciI6Ik0iLCJzdGF0ZSI6bnVsbCwiY2l0eSI6bnVsbCwiYmlydGgiOiIyMDEyLTAyLTI4IiwicmVjb3ZlcnlfaGFzaCI6bnVsbCwicmVjb3ZlcnlfdmFsaWRpdHkiOm51bGwsInBob25lIjpudWxsLCJmY20iOm51bGwsImNvdW50cnkiOiJCUiJ9.dZiY6GKQbRHyDLgTczPQ9gmlAnDwFTWkUq8qX8uOcFQ"
+					},
+					{
+						"key": "enctype",
+						"value": "multipart/form-data"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "title",
+							"value": "Meu segundo item.",
+							"type": "text",
+							"description": ""
+						},
+						{
+							"key": "description",
+							"value": "Nada de muito incrivel apenas meu primeiro item sendo cadastrado na aplicação.",
+							"type": "text",
+							"description": ""
+						},
+						{
+							"key": "use_state",
+							"value": "NOVO",
+							"type": "text",
+							"description": ""
+						},
+						{
+							"key": "category",
+							"value": "ELETRONICO",
+							"type": "text",
+							"description": ""
+						},
+						{
+							"key": "image[]",
+							"description": "",
+							"type": "file",
+							"src": "icon-trophy-green.png"
+						},
+						{
+							"key": "image_alt[]",
+							"value": "Primeira imagem",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "image[]",
+							"description": "",
+							"type": "file",
+							"src": "icon-trophy-green.png"
+						},
+						{
+							"key": "image_alt[]",
+							"value": "Segunda imagem",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{root-path}}/API/item",
+					"host": [
+						"{{root-path}}"
+					],
+					"path": [
+						"API",
+						"item"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "{{root-path}}/API/image/register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "enctype",
+						"value": "multipart/form-data"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"value": "",
+							"description": "",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{root-path}}/API/image/register",
+					"host": [
+						"{{root-path}}"
+					],
+					"path": [
+						"API",
+						"image",
+						"register"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "{{root-path}}/API/image/index/1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "{{root-path}}/API/image/index/2",
+					"host": [
+						"{{root-path}}"
+					],
+					"path": [
+						"API",
+						"image",
+						"index",
+						"2"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
