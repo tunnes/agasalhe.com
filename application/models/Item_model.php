@@ -4,6 +4,7 @@ class Item_model extends CI_Model {
     public function __construct()
     {
         $this->load->database();
+        
     }
     
     # Get itens
@@ -79,8 +80,8 @@ class Item_model extends CI_Model {
     {
         $data = array
         (
-            'title' => $this->input->post('description'),
-            'description' => $this->input->post('name'),
+            'title' => $this->input->post('title'),
+            'description' => $this->input->post('description'),
             'use_state' => $this->input->post('use_state'),
             'category' => $this->input->post('category'),
             'user_id' => $USER_ID

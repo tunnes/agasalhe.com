@@ -11,6 +11,7 @@ class Item extends REST_Controller {
         parent::__construct();
         
         $this->load->model('item_model');
+        $this->load->model('image_model');
         $this->load->helper('form');
         
 	    $this->load->library('form_validation');
@@ -63,7 +64,6 @@ class Item extends REST_Controller {
     public function index_post()
     {
         $USER = $this->authentication->verify_authentication();
-        
         $this->form_validation->set_rules('title', 'title', 'trim|required|min_length[2]|max_length[80]');
         $this->form_validation->set_rules('description', 'description', 'trim|required|min_length[2]|max_length[500]');
         $this->form_validation->set_rules('use_state', 'use state', 'trim|required|in_list[NOVO,USADO,SEMI-NOVO]');
@@ -76,6 +76,18 @@ class Item extends REST_Controller {
 	    else
 	    {
 			$response = $this->item_model->set_item($USER['id']);
+			$item_ref = $this->db->insert_id();
+            for($i=0; $i < count($_FILES['image']['name']) ; $i++) {
+			    $image = [
+        			'name' => $_FILES['image']['name'][$i],
+        			'type' => $_FILES['image']['type'][$i],
+        			'tmp_name' => $_FILES['image']['tmp_name'][$i],
+        			'error' => $_FILES['image']['error'][$i],
+        			'size' => $_FILES['image']['size'][$i]	
+			    ];
+			    $image_alt = isset($this->input->post('image_alt')[$i]) ? $this->input->post('image_alt')[$i] : "No alt text to this image.";
+			    $response = $this->image_model->set_image($image, $image_alt, $item_ref);
+			}
             $response ? $this->set_response(null, REST_Controller::HTTP_CREATED) : $this->set_response(NULL, REST_Controller::HTTP_UNAUTHORIZED);			
 	    }
         

@@ -525,3 +525,5 @@ $config['proxy_ips'] = '';
 $config['db_user'] = 'tunnes';
 
 $config['db_password'] = '';
+
+$config['allowed_types'] = '*';
