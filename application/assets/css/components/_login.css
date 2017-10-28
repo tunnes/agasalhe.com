@@ -1,6 +1,7 @@
 #login-modal{
     border-radius: 10px;
     max-width: 600px;
+    min-height: 460px;
 }
 #login-modal .row{
     width: 80%;

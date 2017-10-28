@@ -8,10 +8,11 @@ $(document).ready(function() {
         endingTop: '10%', 
         ready: function(modal, trigger) { 
             console.log("Ready");
-            console.log(modal, trigger);
+            //console.log(modal, trigger);
         },
         complete: () => { return console.log('Closed') }
     });
+    
     $('.datepicker').pickadate({
         selectMonths: true,
         selectYears: 15,
@@ -31,20 +32,44 @@ $(document).ready(function() {
         onClose: () => { $(document.activeElement).blur() }
     });
     $('select').material_select();
+    
+    
     //Register
-    $("#enviar").click(function(e) {
+    $("#enviar-cadastro").click(function(e) {
         e.preventDefault();
-        alert('foi');
+        e.stopImmediatePropagation();
+        $(this).attr('disabled', 'disabled');
+        
         AJAXRequester('post', 'user', {
-            nickname: $('#nickname').val(),
-            username: $('#username').val(),
-            postal_code: $('#postal_code'),
-            gender: $('#gender'),
-            birth: fixDate($('#birth'))
+            nickname: $('#register-modal #nickname').val(),
+            username: $('#register-modal #username').val(),
+            birth: datefixer($('#register-modal #birth').val()),
+            email: $('#register-modal #emailuser').val(),
+            password: $('#register-modal #password').val(),
+            gender: $('#register-modal #gender').val(),
+            state:  $('#register-modal #state').val(),
+            city:  $('#register-modal #city').val(),
+            country: $("#register-modal #country").data('code')
             }).then(function(data){
-               console.log('THEN: ', JSON.parse(data.responseText));
+                $('#register-modal').modal('close');
+                alert('Cadastro realizado com sucesso :D');
+                $('#login-modal').modal('open');
+                $('#enviar-cadastro').removeAttr('disabled');
             }).catch(function(data){
-                console.log('CATCH: ', JSON.parse(data.responseText));
+                let x = JSON.parse(data.responseText);
+                console.log(x);
+                for (var key in x) {
+                  if(key == 'email'){
+                      $('#register-modal #emailuser + label').attr("data-error", x[key]);
+                      $('#register-modal #emailuser + label').addClass('active');
+                      $('#emailuser').addClass('invalid');
+                   } else {
+                      $('#register-modal #' + key + ' + label').attr("data-error", x[key]);
+                      $('#register-modal #' + key + ' + label').addClass('active');
+                      $('#register-modal #' + key).addClass('invalid');
+                   }
+                }
+                $('#enviar-cadastro').removeAttr('disabled');
             });
     });
 });

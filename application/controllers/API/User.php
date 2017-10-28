@@ -53,7 +53,7 @@ class User extends REST_Controller {
 	    $this->form_validation->set_rules('about_me', 'About me', 'trim|max_length[250]');
 	    $this->form_validation->set_rules('gender', 'gender', 'trim|required|in_list[M,F]');
 	    $this->form_validation->set_rules('phone', 'phone', 'trim|max_length[11]|min_length[10]');
-	    $this->form_validation->set_rules('birth', 'Date of birth', 'trim|required|callback_date_regex');
+	    $this->form_validation->set_rules('birth', 'birth date', 'trim|required|callback_date_regex');
         $this->form_validation->set_rules('country', 'country', 'trim|required|exact_length[2]|alpha');
         $this->form_validation->set_rules('state', 'state', 'trim|max_length[60]');
         $this->form_validation->set_rules('city', 'city', 'trim|max_length[60]');

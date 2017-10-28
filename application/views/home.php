@@ -323,7 +323,7 @@
                                 </span>                             	
                             </div>
                             <div class="body">
-                                <p class="author">Patrick Algusto <span>quer doar</span></p>
+                                <p class="author">Patrick Augusto <span>quer doar</span></p>
                                 <p class="item-name">Cama de gato</p>
                             </div>
                         </div>
