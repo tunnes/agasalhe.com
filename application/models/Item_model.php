@@ -121,10 +121,11 @@ class Item_model extends CI_Model {
     {
         # Gets user items offered for trading.
         $this->db->select("t.item_yours, i.title, i.description, i.use_state, i.category, i.active,
-                           t.created, t.done as 'trade_status', t.item_theirs");
+                           t.created, t.status as 'trade_status', t.item_theirs");
         $this->db->from('trades as t');
         $this->db->join('items as i', 'i.id = t.item_yours', 'inner');
         $this->db->where('i.user_id', $USER_ID);
+        $this->db->order_by('t.created', 'desc');
         $query = $this->db->get()->result_array();
         $results = array();
         

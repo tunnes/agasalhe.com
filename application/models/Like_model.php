@@ -10,11 +10,11 @@ class Like_model extends CI_Model {
     {
         if($ID === FALSE)
         {
-            $this->db->select('users.id as user_id, users.nickname, items.title, items.id as item_id');
+            $this->db->select('users.id as user_id, users.nickname, items.title, items.id as item_id, likes.created');
             $this->db->from('likes');
             $this->db->join('users','likes.user_id = users.id','inner');
             $this->db->join('items', 'likes.item_id = items.id', 'inner');
-            $this->db->order_by('users.id');
+            $this->db->order_by('created', 'desc');
             
             $query_users = array();
             $results = array();
@@ -51,26 +51,25 @@ class Like_model extends CI_Model {
             }
             return $results;
         }
-        /*
-        Curtidas recebidas; Tem que trazer os itens curtidos.
-        select items.id from items inner join likes on items.id = likes.user_id
-        where items.user_id = 62
-        */
-        $this->db->select('likes.user_id, users.nickname, likes.item_id, items.title');
+        
+        /* Received Likes */
+        $this->db->select('likes.user_id, users.nickname, likes.item_id, items.title, likes.created');
         $this->db->from('items');
         $this->db->join('likes','likes.item_id = items.id','inner');
         $this->db->join('users', 'likes.user_id = users.id', 'inner');
         $this->db->where('items.user_id ', $ID);
-        $query = $this->db->get()->result_array();
-        //$results = array();
-        
-        // foreach($query as $value)
-        // {
-        //     $value['qt_item_likes'] = $this->count_like($value['id'])[0]['qt_item_likes'];
-        //     $results[] = $value;
-        // }
+        $this->db->order_by('created', 'desc');
+        $results['received'] = $this->db->get()->result_array();
+        /* Received Given */
+        $this->db->select('items.title, items.id as item_id, likes.created');
+        $this->db->from('likes');
+        $this->db->join('users','likes.user_id = users.id','inner');
+        $this->db->join('items', 'likes.item_id = items.id', 'inner');
+        $this->db->where('likes.user_id', $ID);
+        $this->db->order_by('created', 'desc');
+        $results['given'] = $this->db->get()->result_array();
        
-        return $query;
+        return $results;
     }
     
     public function set_like($ID)
@@ -102,13 +101,5 @@ class Like_model extends CI_Model {
        $query = $this->db->get_where('likes', array('item_id' => $ITEM_ID));
        return $query->result_array();
     }
-    
- /* 
-select likes.user_id, users.nickname, likes.item_id, items.title from items
-inner join likes on likes.item_id = items.id
-inner join users on likes.user_id = users.id
-where items.user_id = 62
-order by likes.user_id, likes.item_id desc
- */
 } 
 ?>
