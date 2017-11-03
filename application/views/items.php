@@ -116,8 +116,8 @@
     	                                </span>
     	                            </div>
     	                            <div class="body">
-    	                                <p class="author">{{ item.author }}<span>{{ item.action }}</span></p>
-    	                                <p class="item-name">{{ item.name }}</p>
+    	                                <p class="author truncate-on-line">{{ item.author }}</p>
+    	                                <p class="item-name truncate-on-line">{{ item.name }}</p>
     	                            </div>
     	                        </div>
 	                        </a>

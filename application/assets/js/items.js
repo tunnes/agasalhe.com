@@ -100,9 +100,11 @@ function bindData(){
             category: null,
             useState: null,
             likes: null,
-            description: null
+            description: null,
+            images: null,
         },
-        items: []
+        items: [],
+        currentImage: null,
       },
         methods:{
             searchBySomething: function(){
@@ -166,6 +168,17 @@ function bindData(){
                         switch (jqXHR.status) {
                             case 200:
                                 var item = jqXHR.responseJSON[0]
+                                
+                                $('#item-modal').modal({
+                                      dismissible: true, // Modal can be dismissed by clicking outside of the modal
+                                      opacity: .8, // Opacity of modal background
+                                      inDuration: 300, // Transition in duration
+                                      outDuration: 200, // Transition out duration
+                                      startingTop: '4%', // Starting top style attribute
+                                      endingTop: '10%', // Ending top style attribute
+                                      complete: () => { $('.modal-trade-step').removeClass('modal-trade-actived') } // Callback for Modal close
+                                    }
+                                );
                                 $('#item-modal').modal('open');
                                 that.item = {
                                     title: item.title,
@@ -176,7 +189,9 @@ function bindData(){
                                     useState: item.use_state,
                                     likes: item.qt_likes,
                                     description: item.description,
+                                    images: item.images
                                 }
+                                that.currentImage = that.item.images[0]
                                 break;
                             case 404:
                                 console.log('404');
@@ -188,9 +203,15 @@ function bindData(){
                 })
             },
             showItemByURL: function(){
-                var url = new URL(window.location.href)
-                var ID = url.searchParams.get('ID')
-                this.showItem(ID)
+                var url = new URL(window.location.href);
+                var ID = url.searchParams.get('ID');
+                ID != null ? this.showItem(ID) : null;
+            },
+            showTrade: function(){
+                $('.modal-trade-step').toggleClass('modal-trade-actived');
+            },
+            changeImageItem: function (image){
+                this.currentImage = image
             }
         }
     })

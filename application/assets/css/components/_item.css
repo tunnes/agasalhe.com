@@ -1,5 +1,6 @@
 #item-modal{
     min-height: 430px;
+    overflow-x: hidden;
 }
 .modal-title{
     font-family: 'Open Sans', sans-serif;
@@ -15,10 +16,33 @@
 .modal-pictures{
     height: 430px;
     width: 30%;
-    background-color: red;
     float: left;
-    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDRhmk9UWJQ6PlxJAMuEJZyJQu3xVr-7j7_6L0gxqTzmxR6Bng');
-    background-size: cover;
+    overflow: hidden;
+    position: relative;
+}
+.modal-pictures img{
+    width: 100%;
+}
+.image-modal-link span {
+    background: rgba(244, 87, 124, 0.73);
+    margin: 3px -1px 10px 5px;
+    width: 37px;
+    display: inline-block;
+    font-size: 14px;
+    text-align: center;
+    font-weight: 100;
+    color: #fdfdfd;
+    -webkit-font-smoothing: antialiased;
+    border-bottom: 3px solid rgba(10, 9, 9, 0.41);
+    cursor: pointer;
+    border-radius: 3px;
+}
+.image-modal-link{
+    z-index: 3;
+    font-family: 'Open Sans', sans-serif;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
 .modal-infomations{
     display: inline-block;
@@ -87,4 +111,71 @@
     border-radius: 5px;
     color: #ffffff;
     background: linear-gradient(to top left, rgba(238, 9, 121, 0.8), #ee6e73);
+}
+
+/* Trade step */
+.modal-trade-step{
+    transition: all 0.3s ease-out;
+    display: inline-block;
+    background-color: #fafafa;    
+    position: absolute;
+    height: 430px;
+    right: -70%;
+    z-index: 2;
+    width: 70%;
+    top: 0;
+    border-left: 1px solid rgba(107, 107, 107, 0.36);
+    -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+}
+.modal-trade-actived{
+    right: 0;
+}
+.modal-trade-step .modal-footer {
+    position: absolute;
+    bottom: 40px;
+    padding: 30px;
+    padding-right: 70px;
+    background-color: unset;
+}
+.modal-trade-step .trade-title{
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 20px;
+    font-size: 22px;
+    text-transform: uppercase;
+    color: rgb(244, 87, 124);
+    font-weight: 900;
+}
+.my-items-to-trade{
+    overflow: auto;
+    height: 260px;
+    width: 95%;
+}
+.my-items-to-trade::-webkit-scrollbar-track
+{
+    background-color: transparent;
+}
+
+.my-items-to-trade::-webkit-scrollbar
+{
+    width: 5px;
+    background-color: transparent;
+}
+
+.my-items-to-trade::-webkit-scrollbar-thumb
+{
+    background-color: #99999978;
+}
+
+.my-items-to-trade .collection-item.avatar{
+    min-height: 65px;
+}
+.modal-trade-step .back-button{
+    background: #f4577c;
+    color: #fffafa;
+    border-radius: 2px;
+    font-weight: 300;
+}
+.trade-icon{
+    font-size: 35px;
+    color: #776f6f;
 }

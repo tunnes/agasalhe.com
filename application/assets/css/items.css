@@ -444,6 +444,12 @@ main {
         margin-left: 0px;
     }
 }
+.truncate-on-line{
+    width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 @media only screen and (max-width: 950px) {
     .grid-sizer,

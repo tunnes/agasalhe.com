@@ -21,11 +21,12 @@ class Item_model extends CI_Model {
             $results = array();
             foreach($query as $value)
             {
-               $images = $this->get_images($value['item_id']);
-               $likes  = $this->count_likes($value['item_id']);
-               $value['images'] = $images;
-               $value['qt_likes'] = $likes[0]['qt_item_likes'];
-               $results[] = $value;
+                $images = $this->get_images($value['item_id']);
+                // var_dump($images);
+                $likes  = $this->count_likes($value['item_id']);
+                $value['images'] = $images;
+                $value['qt_likes'] = $likes[0]['qt_item_likes'];
+                $results[] = $value;
             }
             return $results;
         }
@@ -281,9 +282,16 @@ class Item_model extends CI_Model {
     # Aux Functions
     public function get_images($ITEM_ID)
     {
-        $this->db->select('id, image, alt');
-        $IMAGES = $this->db->get_where('item_images', array("item_id" => $ITEM_ID));
-        return $IMAGES->result_array();
+        $this->db->select('*');
+        $this->db->from('image');
+        $this->db->where('image_reference', $ITEM_ID);
+        $results = $this->db->get()->result_array();
+        $images = [];
+        foreach ($results as &$result) {
+            $image = [ 'image' => "/API/image/index/" . $result['image_id'], 'text' => $result['image_alt'] ];
+            array_push($images, $image);
+        }
+        return $images;
     }
     
     public function count_likes($ITEM_ID)

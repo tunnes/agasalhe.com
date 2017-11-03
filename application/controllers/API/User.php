@@ -21,6 +21,7 @@ class User extends REST_Controller {
 	    $this->load->library('Password_Recovery');
 
     }
+   
     # Get an user
     public function index_get()
     {
@@ -256,6 +257,7 @@ class User extends REST_Controller {
                      : $this->set_response(['status' => false, 'message' => $response[1]], REST_Controller::HTTP_UNPROCESSABLE_ENTITY);
 	    }  
     }
+    
     public function password_recovery_put()
     {
         $this->form_validation->set_data($this->put());
