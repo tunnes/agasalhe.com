@@ -18,7 +18,6 @@ $(document).ready(function() {
 $("#logar").click(function(e) {
     e.preventDefault();
     e.stopImmediatePropagation();
-    $(this).attr('disabled', 'disabled');
     
     AJAXRequester('post', 'user/login', {email: $('#login-modal #email').val(), password: $('#login-modal #password').val()})
       .then(function(data){ 
@@ -38,7 +37,6 @@ $("#logar").click(function(e) {
               $('#login-modal #' + key).addClass('invalid');
             }
            }
-           $('#logar').removeAttr('disabled');
         })
     });
     $('.forgot-my-pswd').click(function(e) {

@@ -23,7 +23,7 @@ class Item extends REST_Controller {
     {
         $ID = $this->get('id');
         $filterResult = $this->input->get('filter-result');
-
+        
         if($filterResult != NULL)
         {
             
@@ -49,16 +49,26 @@ class Item extends REST_Controller {
         {
             $items = $this->item_model->get_item();
             $error = ['status' => FALSE, 'message' => 'No items were found'];
-            $items ? $this->response($items, REST_Controller::HTTP_OK) : $this->response($error, REST_Controller::HTTP_NOT_FOUND); 
+            !empty($items) ? $this->response($items, REST_Controller::HTTP_OK) : $this->response($error, REST_Controller::HTTP_NOT_FOUND); 
         }
         else
         {
             $ID = (int) $ID;
-            $ID <= 0 ? $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST) : $item = $this->item_model->get_item($ID, "id");
+            $ID <= 0 ? $this->response(NULL, REST_Controller::HTTP_BAD_REQUEST) : $item = $this->item_model->get_item($ID);
           
             $error = ['status' => FALSE, 'message' => 'Item could not be found'];
             !empty($item) ? $this->set_response($item, REST_Controller::HTTP_OK) : $this->set_response($error, REST_Controller::HTTP_NOT_FOUND);
         }
+    }
+    
+    # This function get all the user's items
+    public function user_item_get()
+    {
+        $USER = $this->authentication->verify_authentication();
+        $response = $this->item_model->user_items($USER['id']);
+        $error = ['status' => FALSE, 'message' => 'Items could not be found'];
+        !empty($response) ? $this->set_response($response, REST_Controller::HTTP_OK) : $this->set_response($error, REST_Controller::HTTP_NOT_FOUND);
+        
     }
     
     # Create an item
@@ -91,7 +101,6 @@ class Item extends REST_Controller {
 			}
             $response ? $this->set_response(null, REST_Controller::HTTP_CREATED) : $this->set_response(NULL, REST_Controller::HTTP_UNAUTHORIZED);			
 	    }
-        
         
     }
     

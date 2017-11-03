@@ -4,7 +4,6 @@ class Item_model extends CI_Model {
     public function __construct()
     {
         $this->load->database();
-        
     }
     
     # Get itens
@@ -13,7 +12,7 @@ class Item_model extends CI_Model {
         # Get many items: 
         if ($ID === FALSE)
         {
-            $this->db->select(' u.id as user_id, u.nickname, u.phone, u.profile_image, i.id as item_id, i.title,
+            $this->db->select('u.id as user_id, u.nickname, u.phone, u.profile_image, i.id as item_id, i.title,
                                 i.description, i.use_state, i.category, i.active');
             $this->db->from('items as i');
             $this->db->join('users as u', 'u.id = i.user_id', 'inner');
@@ -22,7 +21,6 @@ class Item_model extends CI_Model {
             foreach($query as $value)
             {
                 $images = $this->get_images($value['item_id']);
-                // var_dump($images);
                 $likes  = $this->count_likes($value['item_id']);
                 $value['images'] = $images;
                 $value['qt_likes'] = $likes[0]['qt_item_likes'];
@@ -74,6 +72,29 @@ class Item_model extends CI_Model {
         }
         return $results;
     
+    }
+    # Get items from the user
+    public function user_items($ID) 
+    {
+        $this->db->select('*')->from('items');
+        $this->db->where('user_id', $ID);
+        $this->db->order_by('id', 'desc');
+        $query = $this->db->get()->result_array();
+        if($query == NULL){
+            return false;
+        }
+        
+        $results = array();
+        
+        foreach($query as $value)
+        {
+            $likes  = $this->count_likes($value['id']);
+            $images = $this->get_images($value['id']);
+            $value['images'] = $images;
+            $value['qt_likes'] = $likes[0]['qt_item_likes'];
+            $results[] = $value;
+        }
+        return $results;
     }
     
     # Insert Item
@@ -284,12 +305,12 @@ class Item_model extends CI_Model {
     public function get_images($ITEM_ID)
     {
         $this->db->select('*');
-        $this->db->from('image');
-        $this->db->where('image_reference', $ITEM_ID);
+        $this->db->from('images');
+        $this->db->where('item_id', $ITEM_ID);
         $results = $this->db->get()->result_array();
         $images = [];
         foreach ($results as &$result) {
-            $image = [ 'image' => "/API/image/index/" . $result['image_id'], 'text' => $result['image_alt'] ];
+            $image = [ 'image' => "/API/image/index/" . $result['id'], 'text' => $result['alt'] ];
             array_push($images, $image);
         }
         return $images;
@@ -301,11 +322,7 @@ class Item_model extends CI_Model {
        $query = $this->db->get_where('likes', array('item_id' => $ITEM_ID));
        return $query->result_array();
     }
-    
-    # To implement...
-    public function set_images_item() { echo 'TO DO'; }
-    public function delete_image_item() { echo 'TO DO'; }
-    
+
     public function isMyOwnItem($ITEM_THEIRS, $ID)
     {
         $this->db->select('*')->from('items');

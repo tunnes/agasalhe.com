@@ -149,7 +149,7 @@ $( document ).ready(function(){
  			enabled: true
  		},
  		
- 	onSelectItemEvent: function() {
+ 	onSelectItemEvent: function(){
  			var country = $("#country").getSelectedItemData().code;
  			$("#country").data('code', country);
  			console.log(country);

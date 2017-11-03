@@ -1,62 +1,58 @@
 <div id="register-modal" class="modal bottom-sheet">
     <div class="modal-content">
-        <h4 class="register-title">Bem vindooo! =)</h4>
-        <p class="register-text-body">
-            Nós do time Swapage apreciamos muito seu interesse em utilizar nossa aplicação, esperamos sinceramente que 
-            consiga muitas trocas vantajosas e momentos proveitos, caso precise de algo ou queira nos dar umas dicas 
-            por favor entre em <a>contato</a>.
-        </p>
+        <h4 class="register-title"><?= $this->lang->line('home_modal_register_title') ?></h4>
+        <p class="register-text-body"><?= $this->lang->line('home_modal_register_body') ?></p>
         <div>
             <div class="row">
                 <div class="input-field col s12 m4 ">
                     <input id="username" type="text" class="validate" required>
-                    <label for="username" data-error="wrong" data-success="right">Nome</label>
+                    <label for="username" data-error="wrong" data-success="right"><?= $this->lang->line('home_modal_register_name') ?></label>
                 </div>
                 <div class="input-field col s12 m4">
                     <input id="nickname" type="text" class="validate" required>
-                    <label for="nickname" data-error="wrong" data-success="right">Apelido</label>
+                    <label for="nickname" data-error="wrong" data-success="right"><?= $this->lang->line('home_modal_register_nickname') ?></label>
                 </div>
-                <div class="input-field date-field col s12 m4">
-                    <input type="text" id="birth" class="datepicker" required>
-                    <!--<label for="birth" data-error="wrong" data-success="right">Aniversário</label>-->
+                <div class="date-field input-field col s12 m4">
+                    <input type="text" id="birth" class="validate datepicker" required>
+                    <label for="birth" data-error="wrong" data-success="right"><?= $this->lang->line('home_modal_register_birthday') ?></label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s6 m4">
                     <input id="emailuser" type="email" class="validate" required>
-                    <label for="emailuser" data-error="wrong" data-success="right">Email</label>
+                    <label for="emailuser" data-error="wrong" data-success="right"><?= $this->lang->line('home_modal_register_email') ?></label>
                 </div>
                 <div class="input-field col s6 m4">
                     <input id="password" type="password" class="validate">
-                    <label for="password" data-error="wrong" data-success="right">Senha</label>
+                    <label for="password" data-error="wrong" data-success="right"><?= $this->lang->line('home_modal_register_password') ?></label>
                 </div>
                 <div class="input-field col s6 m4">
-                    <input id="country" type="text" class="validate" placeholder="País" required>
+                    <input id="country" type="text" class="validate" placeholder="<?= $this->lang->line('home_modal_register_country') ?>" required>
                     <!--<label for="country" data-error="wrong" data-success="right">Pais</label>-->
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s6 m4">
                     <input id="state" type="text" class="validate">
-                    <label for="state" data-error="wrong" data-success="right">Estado</label>
+                    <label for="state" data-error="wrong" data-success="right"><?= $this->lang->line('home_modal_register_state') ?></label>
                 </div>
                 <div class="input-field col s6 m4">
                     <input id="city" type="text" class="validate">
-                    <label for="city" data-error="wrong" data-success="right">Cidade</label>
+                    <label for="city" data-error="wrong" data-success="right"><?= $this->lang->line('home_modal_register_city') ?></label>
                 </div>
                  <div class="input-field col s6 m4">
                     <select id="gender" required>
-                      <option value="M">Masculino</option>
-                      <option value="F">Femino</option>
+                      <option value="M"><?= $this->lang->line('home_modal_register_male') ?></option>
+                      <option value="F"><?= $this->lang->line('home_modal_register_female') ?></option>
                     </select>
-                    <label for="gender" data-error="wrong" data-success="right">Sexo</label>
+                    <label for="gender" data-error="wrong" data-success="right"><?= $this->lang->line('home_modal_register_gender') ?></label>
                  </div>
             </div>
         </div>
     </div>
     
     <div class="modal-footer">
-        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat register-button-close">Sair</a>        
-        <a href="#!" id="enviar-cadastro" class="modal-action waves-effect waves-green btn-flat register-button-submmit">Enviar</a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat register-button-close"><?= $this->lang->line('home_modal_register_logout') ?></a>        
+        <a href="#!" id="enviar-cadastro" class="modal-action waves-effect waves-green btn-flat register-button-submmit"><?= $this->lang->line('home_modal_register_send') ?></a>
     </div>
 </div>
