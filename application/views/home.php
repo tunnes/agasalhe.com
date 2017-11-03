@@ -38,6 +38,7 @@
         <link rel="icon" href="/favicon.ico" type="/application/assets/imgx-icon">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Swapage</title>
     </head>
     <body>

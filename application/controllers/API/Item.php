@@ -31,7 +31,8 @@ class Item extends REST_Controller {
                 'category' => $this->input->get('category'),
                 'state' => $this->input->get('state'),
                 'city' => $this->input->get('city'),
-                'title' => $this->input->get('title')
+                'title' => $this->input->get('title'),
+                'user_id' => $this->input->get('user-id')
             );
             
             $useState = $this->input->get('use-state');
