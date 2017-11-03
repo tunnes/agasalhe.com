@@ -19,6 +19,7 @@
         <!-- Another control and meta-tags -->
         <link rel="shortcut icon" href="/application/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/favicon.ico" type="/application/assets/imgx-icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta charset="UTF-8">
         <title>Items</title>
         
@@ -28,11 +29,8 @@
         <header class="subpage-header">
             <div class="container">
                 <div class="col s12">
-                    <img src="/application/assets/img/header-logo.png">
-                    <h2>
-                        swapage <br>
-                        Itens Disponiveis
-                    </h2>
+                    <a href="/"><img src="/application/assets/img/header-logo.png"></a>
+                    <h2><?= $this->lang->line('item_header_h2') ?></h2>
                 </div>
             </div>
         </header>
@@ -49,7 +47,7 @@
                 </li>
                 <div class="divider"></div>
                 </li>
-                <li><a class="subheader">Pesquisar Itens </a></li>
+                <li><a class="subheader"><?= $this->lang->line('item_search_item') ?></a></li>
                 <div class="sidebar">
                     <div class="input-field col s12">
                       <input  id="search-by-title" type="text" class="validate">

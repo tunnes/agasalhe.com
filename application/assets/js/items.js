@@ -109,22 +109,16 @@ function bindData(){
         methods:{
             searchBySomething: function(){
                 var query = "/API/item?filter-result=true"
-                
                 var title = $('#search-by-title').val();
                 title.length ? query = query + "&title=" + title.replace(/\s/g,'') : null;
-                
                 var category = $('.search-by-category .active.selected span').text();
                 category.length ? query = query + "&category=" + category : null;
-                
                 var useState = $('.search-by-use-state .active.selected span').text();
                 useState.length ? query = query + "&use-state=" + useState : null;
-                
                 var state = $('#search-by-state').val();
                 state.length ? query = query + "&state=" + state.replace(/\s/g,'') : null;
-                
                 var city = $('#search-by-city').val();
                 city.length ? query = query + "&city=" + city.replace(/\s/g,'') : null;
-                
                 this.populateController(query)
             },
             populateController: function(path){

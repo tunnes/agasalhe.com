@@ -62,11 +62,12 @@ $route['contact'] = 'institutional/contact';
 $route['items'] = 'institutional/items';
 $route['account'] = 'institutional/account';
 $route['login'] = 'institutional/login';
+# image routes operation in controller:
 $route['API/image/(:num)'] = 'API/image/index/id/$1';
 $route['API/image/register'] = 'API/image/register';
 # item routes operation in controller:
 $route['API/item/(:num)'] = 'API/item/index/id/$1';
-$route['API/item/(:num)'] = 'API/item/index/id/$1';
+$route['API/user/item'] = 'API/item/user_item';
 $route['API/item/trade/(:num)'] = 'API/item/trade/id/$1';
 $route['API/item/(:num)/trade/(:num)'] = 'API/item/trade/item_yours/$1/item_theirs/$2';
 $route['API/item/(:num)/refuse/trade/(:num)'] = 'API/item/refuse_trade/item_yours/$1/item_theirs/$2';

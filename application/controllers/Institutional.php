@@ -7,7 +7,9 @@ class Institutional extends CI_Controller {
     {
         parent::__construct();
         $this->load->library('Password_Recovery');
-      
+        $this->lang->load('main_navigation', USER_LANGUAGE);
+        $this->lang->load('home', USER_LANGUAGE);
+        $this->lang->load('item', USER_LANGUAGE);
     }
 	
 	# This is index function for show an view with basic information of our site 
@@ -46,7 +48,8 @@ class Institutional extends CI_Controller {
 	
 	public function password_recovery($hash)
 	{
-	  if($this->password_recovery->verifyValidity($hash)[0]){
+	  if($this->password_recovery->verifyValidity($hash)[0])
+	  {
 		$this->load->view('password_recovery');
 	  }else {
 	  	echo "<h1>A valídade expirou :(</h1><br> <a href='/'>Voltar para o início</a>";

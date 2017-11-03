@@ -1,4 +1,8 @@
 <?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 class User_model extends CI_Model {
     
     public function __construct()
@@ -36,6 +40,8 @@ class User_model extends CI_Model {
             'state' => $this->input->post('state'),
             'city' => $this->input->post('city')
         );
+        
+        $this->send_email($data);
     
         return $this->db->insert('users', $data);
     }
@@ -103,6 +109,42 @@ class User_model extends CI_Model {
         $res = $this->db->get('users');
         return ! $res->num_rows() > 0;
     }
+    
+    private function send_email($user){
+        switch($user['country']){
+            case 'BR':
+                $title = "Bem-vindo ao trocaqui";
+                $text  = "Faça bom proveito!!! Caso tenha alguma dúvida, entre em contato conosco:";
+                $subject = "Parabéns, ".explode(' ', $user['nickname'])[0].". Agora você é um usuário Trocaqui!";
+                break;
+            default:
+                $title = "Welcome to trocaqui";
+                $text  = "Have a good navigation!!! If you have any questions, please contact us:";
+                $subject = "Congratulations, ".explode(' ', $user['nickname'])[0].". Now you are Trocaqui user!";
+        }
+        
+        $html = file_get_contents('./application/views/email-template.html');
+        $html = str_replace('{title}', $title, $html);
+        $html = str_replace('{text}', $text, $html);
+        $mail = new PHPMailer();
+        $mail->IsSMTP();
+        $mail->Charset = 'utf8-decode()';  
+        $emailSender = 'swapei.noreply@gmail.com';
+        $mail->Port = 587;     
+        $mail->Host = 'smtp.gmail.com';        
+        $mail->Mailer = 'smtp';
+        $mail->SMTPAuth = true;
+        $mail->Username = $emailSender; 
+        $mail->Password = 'swapei-tcc-2017';
+        $mail->setFrom($emailSender, 'Trocaqui');
+        $mail->SingleTo = true; 
+        $mail->addAddress($user['email'], $user['nickname']);          
+        $mail->Subject =  utf8_decode($subject);
+        $mail->MsgHTML($html);
+        $mail->IsHTML(true);  
+        $mail->Send();
+    }
+    
 }
 
 ?>

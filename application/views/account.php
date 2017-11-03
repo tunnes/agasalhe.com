@@ -17,6 +17,10 @@
         <!-- Another control and meta-tags -->
         <link rel="shortcut icon" href="/application/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/favicon.ico" type="/application/assets/imgx-icon">
+        <!-- Kit Firebase Notification -->
+        <link rel="manifest" href="/manifest.json">
+        <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+        <script type="text/javascript" src="/application/assets/js/firebase.js"></script>
         <meta charset="UTF-8">
         <title>Account</title>
     </head>
@@ -430,5 +434,15 @@
                 </div>
             </div>
         </footer>
+        <!-- Tarcisio, mexe aqui -->
+        <div id="notification-modal" class="modal">
+            <div class="modal-content">
+                <h4 class="notification-title">Hey!!!</h4>
+                <p>Quer saber as ofertas de trocas e novas curtidas em seus itens? Ative as notificações.</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close decide-notification waves-effect waves-green btn-flat">Deixe eu decidir!</a>
+            </div>
+        </div>
     </body>
 </html>

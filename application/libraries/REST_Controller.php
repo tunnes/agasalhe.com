@@ -429,6 +429,7 @@ abstract class REST_Controller extends CI_Controller {
         if ($language === NULL)
         {
             $language = 'english';
+            
         }
 
         // Load the language file

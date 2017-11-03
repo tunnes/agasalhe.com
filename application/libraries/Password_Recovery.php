@@ -14,7 +14,7 @@ class Password_Recovery {
     $this->mail->IsSMTP();
     $this->mail->Charset = 'utf8-decode()';      
     #$this->mail->SMTPDebug = 2;
-    $this->emailSender = 'swapei.noreply@gmail.com';
+    $this->emailSender = 'trocaqui.noreply@gmail.com';
     //swapei-tcc-2017
     //swapei.noreply@gmail.com
   }
@@ -32,11 +32,11 @@ class Password_Recovery {
     //configuração do usuário do gmail
     $this->mail->SMTPAuth = true; 
     $this->mail->Username = $this->emailSender; 
-    $this->mail->Password = 'swapei-tcc-2017'; 
-    $this->mail->setFrom($this->emailSender, 'Swapei');
+    $this->mail->Password = 'swapei-tcc-2017';
+    $this->mail->setFrom($this->emailSender, 'Trocaqui');
     $this->mail->SingleTo = true; 
     $this->mail->addAddress($this->emailReceiver, 'Usuário');          
-    $this->mail->Subject =  utf8_decode("Swapei - RECUPERAÇÃO DE SENHA");
+    $this->mail->Subject =  utf8_decode("Trocaqui - RECUPERAÇÃO DE SENHA");
     $this->mail->Body = utf8_decode($this->msg);
     $this->mail->IsHTML(true);  
   }

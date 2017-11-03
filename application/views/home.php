@@ -12,6 +12,9 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
         
+        <!-- Main Js -->
+        <script type="text/javascript" src="/application/assets/js/main.js"></script>
+        
         <!-- Easy Autocomplete -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/easy-autocomplete.min.css" type="text/css" />
@@ -28,7 +31,6 @@
         <link rel="stylesheet" type="text/css" href="/application/assets/css/home.css">
         <script type="text/javascript" src="/application/assets/js/countries.js"></script>
         <script type="text/javascript" src="/application/assets/js/home.js"></script>
-        <script type="text/javascript" src="/application/assets/js/firebase.js"></script>
         <script type="text/javascript" src="/application/assets/js/components/_login.js"></script>
         <script type="text/javascript" src="/application/assets/js/components/_register.js"></script>        
         
@@ -42,36 +44,51 @@
         <title>Swapage</title>
     </head>
     <body>
+         <!-- Start loading -->
+        <div class="upper-wrapper">
+          <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-blue-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div><div class="gap-patch">
+                <div class="circle"></div>
+              </div><div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+         </div>
+        </div>
+        <!-- End loading -->
         <header>
             <nav>
                 <div class="container">
                     <div class="nav-wrapper">
-                        <a href="#" class="brand-logo">
+                        <a href="/" class="brand-logo">
                         <img src="/application/assets/img/header-logo.png"/>
                         </a>
                         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                         <ul class="right hide-on-med-and-down">
-                            <li><a href="#">Itens</a></li>
-                            <li><a href="#">Como funciona</a></li>
-                            <li><a href="#">Sobre</a></li>
-                            <li><a href="#register-modal" class="modal-trigger">Começar</a></li>
-                            <li><a href="#login-modal" class="modal-trigger">Entrar</a></li>                            
+                            <li><a href="/items"><?= $this->lang->line('main_nav_item_1') ?></a></li>
+                            <li><a href="#"><?= $this->lang->line('main_nav_item_2') ?></a></li>
+                            <li><a href="#"><?= $this->lang->line('main_nav_item_3') ?></a></li>
+                            <li><a href="#register-modal" class="modal-trigger"><?= $this->lang->line('main_nav_item_4') ?></a></li>
+                            <li><a href="#login-modal" class="modal-trigger"><?= $this->lang->line('main_nav_item_5') ?></a></li>                            
                         </ul>
                         <ul class="side-nav" id="mobile-demo">
-                            <li><a href="#">Itens</a></li>
-                            <li><a href="#">Como funciona</a></li>
-                            <li><a href="#">Sobre</a></li>
-                            <li><a href="#register-modal" class="modal-trigger">Começar</a></li>
-                            <li><a href="#login-modal" class="modal-trigger">Entrar</a></li>
+                            <li><a href="/items"><?= $this->lang->line('main_nav_item_1') ?></a></li>
+                            <li><a href="#"><?= $this->lang->line('main_nav_item_2') ?></a></li>
+                            <li><a href="#"><?= $this->lang->line('main_nav_item_3') ?></a></li>
+                            <li><a href="#register-modal" class="modal-trigger"><?= $this->lang->line('main_nav_item_4') ?></a></li>
+                            <li><a href="#login-modal" class="modal-trigger"><?= $this->lang->line('main_nav_item_5') ?></a></li>
                         </ul>
                     </div>
                 </div>
             </nav>
             <div class="container">
                 <div class="container message-wrapper">
-                    <h1>Hey, visitante!</h1>
-                    <h2>Muita coisa encostada no <br> guarda-roupa?</h2>
-                    <span>Com certeza!</span> <span>Nem tanto...</span>
+                    <h1><?= $this->lang->line('home_header_h1') ?></h1>
+                    <h2><?= $this->lang->line('home_header_h2') ?></h2>
+                    <span><?= $this->lang->line('home_header_yes') ?></span> <span><?= $this->lang->line('home_header_no') ?></span>
                 </div>
             </div>
         </header>
@@ -80,31 +97,22 @@
                 <div class="row">
                     <div class="content-text col s12 m5">
                         <img src="/application/assets/img/header-quotation.svg"/>
-                        <h4>Okay! O que você faz então?</h4>
-                        <h3>Sabe aquele relógio que você cansou de usar ou jaqueta que não serve mais?</h3>
-                        <p>
-                            Então... É o seguinte, aqui você consegue troca-lo por alguma coisa bacana 
-                            que você curta. Outras pessoas também podem enjoar de seus pertences e coloca-los aqui. 
-                            Quem sabe você goste de algo.
-                        </p>
+                        <h4><?= $this->lang->line('home_quotation_1_h4') ?></h4>
+                        <h3><?= $this->lang->line('home_quotation_1_h3') ?></h3>
+                        <p><?= $this->lang->line('home_quotation_1_p') ?></p>
                     </div>
                     <div class="content-text col s12 m7">
                         <div class="secondary-text">
-                            <img src="/application/assets/img/header-quotation.svg"/>
-                            <h4>Livro-me da bagunça e ainda posso conseguir algo melhor em troca!?</h4>
-                            <h3>É isso mesmo!</h3>
-                            <p>
-                                Ao invés de jogar as suas coisas na calçada, você pode oferta-las aqui,
-                                colaborando com a sustentabilidade.
-                            </p>
+                             <img src="/application/assets/img/header-quotation.svg"/>
+                             <h4><?= $this->lang->line('home_quotation_2_h4') ?></h4>
+                             <h3><?= $this->lang->line('home_quotation_2_h3') ?></h3>
+                             <p><?= $this->lang->line('home_quotation_2_p') ?></p>
                         </div>
                         <div class="secondary-text">
                             <img src="/application/assets/img/header-quotation.svg"/>
-                            <h4>Saquei. Posso trocar qualquer coisa que ta jogada em casa?</h4>
-                            <h3>Você pode divulgar o que quiser.</h3>
-                            <p>
-                                Porém, lembre-se que o seu pertence pode ser de valor para alguém.
-                            </p>
+                             <h4><?= $this->lang->line('home_quotation_3_h4') ?></h4>
+                             <h3><?= $this->lang->line('home_quotation_3_h3') ?></h3>
+                             <p><?= $this->lang->line('home_quotation_3_p') ?></p>
                         </div>
                     </div>
                 </div>
@@ -114,8 +122,8 @@
             <div class="how-works">
                 <div class="row">
                     <h2>
-                        <span>Como funciona?</span>
-                        <span>Essa é fácil. Confira <br> o passo a passo e saiba como!</span>
+                        <span><?= $this->lang->line('home_how_works_span_1') ?></span>
+                        <span><?= $this->lang->line('home_how_works_span_2') ?></span>
                     </h2>
                     <div class="col s12 m6 l3">
                         <div class="content">
@@ -123,7 +131,7 @@
                                 <h4>01</h4>
                             </div>
                             <img src="/application/assets/img/how-it-works-computer.svg"></img>
-                            <span>Faça seu cadastro em nosso site</span>
+                            <span><?= $this->lang->line('home_how_works_step_1') ?></span>
                         </div>
                     </div>
                     <div class="col s12 m6 l3">
@@ -132,7 +140,7 @@
                                 <h4>02</h4>
                             </div>
                             <img src="/application/assets/img/how-it-works-ux.svg"></img>
-                            <span>No seu painel, cadastre todos os itens que deseja trocar.</span>
+                            <span><?= $this->lang->line('home_how_works_step_2') ?></span>
                         </div>
                     </div>
                     <div class="col s12 m6 l3">
@@ -141,7 +149,7 @@
                                 <h4>03</h4>
                             </div>
                             <img src="/application/assets/img/how-it-works-iron.svg"></img>  							
-                            <span>Seus itens serão publicados e ficarão disponíveis para troca.</span>
+                            <span><?= $this->lang->line('home_how_works_step_3') ?></span>
                         </div>
                     </div>
                     <div class="col s12 m6 l3">
@@ -150,7 +158,7 @@
                                 <h4>04</h4>
                             </div>
                             <img src="/application/assets/img/how-it-works-confetti.svg"></img>  
-                            <span>Pronto! Agora é só esperar algum interessado entrar em contato.</span>
+                            <span><?= $this->lang->line('home_how_works_step_4') ?></span>
                         </div>
                     </div>
                 </div>
@@ -160,17 +168,17 @@
             <div class="row">
                 <div class="col s12 m4 l4 register-now">
                     <h3>
-                        <span>Registre-se agora mesmo!</span>
-                        <span>Rápido e gratuito!</span>
+                        <span><?= $this->lang->line('home_register_now_span_1') ?></span>
+                        <span><?= $this->lang->line('home_register_now_span_2') ?></span>
                     </h3>
                     <button>
-                    REGISTRAR
+                        <?= $this->lang->line('home_register_now_button') ?>
                     </button>
                 </div>
                 <div class="col s12 m8 l8 mobile-coming-soon">
                     <h3>
-                        <span>Fique ligado!</span>  
-                        <span>Em breve lançaremos <br> nosso app =)</span>
+                        <span><?= $this->lang->line('home_coming_span_1') ?></span>  
+                        <span><?= $this->lang->line('home_coming_span_2') ?></span>
                     </h3>
                     <img src="/application/assets/img/access-now-iphone.png"/>        			
                 </div>
@@ -180,8 +188,8 @@
             <div class="row">
                 <div class="itens">
                     <h2>
-                        <span>Curtiu?</span>
-                        <span>De uma olhadinha <br> nos itens mais curtidos!</span>
+                        <span><?= $this->lang->line('home_item_span_1') ?></span>
+                        <span><?= $this->lang->line('home_item_span_2') ?></span>
                     </h2>
                 </div>
                 <div class="grid">
@@ -199,7 +207,7 @@
                                 </span>
                             </div>
                             <div class="body">
-                                <p class="author">Ayrton Felipe <span>quer trocar</span></p>
+                                <p class="author">Ayrton Felipe <span><?= $this->lang->line('item_card_wanna_trade') ?></span></p>
                                 <p class="item-name">Bicicleta Trek</p>
                             </div>
                         </div>
@@ -217,7 +225,7 @@
                                 </span>                            	
                             </div>
                             <div class="body">
-                                <p class="author">Carolline Lopes <span>quer trocar</span></p>
+                                <p class="author">Carolline Lopes <span><?= $this->lang->line('item_card_wanna_trade') ?></span></p>
                                 <p class="item-name">Porta Joiais</p>
                             </div>
                         </div>
@@ -235,7 +243,7 @@
                                 </span>                             	
                             </div>
                             <div class="body">
-                                <p class="author">João Ruoccu <span>quer trocar</span></p>
+                                <p class="author">João Ruoccu <span><?= $this->lang->line('item_card_wanna_trade') ?></span></p>
                                 <p class="item-name">Caneta Maneira</p>
                             </div>
                         </div>
@@ -253,7 +261,7 @@
                                 </span>                               	
                             </div>
                             <div class="body">
-                                <p class="author">Gustavo Souza <span>quer trocar</span></p>
+                                <p class="author">Gustavo Souza <span><?= $this->lang->line('item_card_wanna_trade') ?></span></p>
                                 <p class="item-name">Caneta 3D</p>
                             </div>
                         </div>
@@ -271,7 +279,7 @@
                                 </span>                               	
                             </div>
                             <div class="body">
-                                <p class="author">Vitor Sousa <span>quer trocar</span></p>
+                                <p class="author">Vitor Sousa <span><?= $this->lang->line('item_card_wanna_trade') ?></span></p>
                                 <p class="item-name">Cama de casal</p>
                             </div>
                         </div>
@@ -289,7 +297,7 @@
                                 </span>                               	
                             </div>
                             <div class="body">
-                                <p class="author">Gabriel Morais <span>quer trocar</span></p>
+                                <p class="author">Gabriel Morais <span><?= $this->lang->line('item_card_wanna_trade') ?></span></p>
                                 <p class="item-name">Sofá Branco</p>
                             </div>
                         </div>
@@ -307,7 +315,7 @@
                                 </span>                              	
                             </div>
                             <div class="body">
-                                <p class="author">Tarcisio Talles <span>quer trocar</span></p>
+                                <p class="author">Tarcisio Talles <span><?= $this->lang->line('item_card_wanna_trade') ?></span></p>
                                 <p class="item-name">Playground Infantil</p>
                             </div>
                         </div>
@@ -325,37 +333,27 @@
                                 </span>                             	
                             </div>
                             <div class="body">
-                                <p class="author">Patrick Augusto <span>quer doar</span></p>
+                                <p class="author">Patrick Augusto <span><?= $this->lang->line('item_card_wanna_donate') ?></span></p>
                                 <p class="item-name">Cama de gato</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="button-to-itens-page">
-                    <span>Ver mais itens</span>
+                    <span><?= $this->lang->line('home_item_button') ?></span>
                 </div>
             </div>
         </div>
         <div class="about-us">
             <div class="about-wrapper">
                 <div class="about-text about-mobile">
-                    <h3>Nosso time </h3>
-                    <p>
-                        Somos um equipe... ou melhor um time de amigos na verdade, composto por três alunos do curso de Sistemas 
-                        para Internet da faculdade de tecnologia Rubens Lara. Temos como objetivo comum aprender e desenvolver uma aplicação totalmente 
-                        gratuita que propage a importancia de se aproveitar objetos sejam eles quais forem e reduzir o disperdicio de roupas, brinquedos
-                        utensilios e etc. 
-                    </p>
+                    <h3><?= $this->lang->line('home_about_us_h3') ?></h3>
+                    <p><?= $this->lang->line('home_about_us_p_mobile') ?></p>
                 </div>
                 <img src="/application/assets/img/about-us-team-members.png"/>
                 <div class="about-text">
-                    <h3>Nosso time </h3>
-                    <p>
-                        Somos uma equipe... ou melhor um time de amigos na verdade, composto por três alunos do curso de Sistemas 
-                        para Internet da faculdade de tecnologia Rubens Lara. Temos como objetivo comum aprender e desenvolver uma aplicação totalmente 
-                        gratuita que propage a importancia de se aproveitar objetos sejam eles quais forem e reduzir o disperdicio de roupas, brinquetos
-                        utencilious e etc.. Uma realidade a qual nos incomoda. 
-                    </p>
+                    <h3><?= $this->lang->line('home_about_us_h3') ?></h3>
+                    <p><?= $this->lang->line('home_about_us_p') ?></p>
                 </div>
             </div>
         </div>
@@ -365,22 +363,22 @@
                     <form class="col s12">
                         <div class="row">
                             <div class="input-field col s9 offset-s3">
-                                <h3>Nos mande um oi!</h3>
+                                <h3><?= $this->lang->line('home_contact_h3') ?></h3>
                             </div>
                             <div class="input-field col s9 offset-s3">
                                 <input id="name" type="text" class="validate">
-                                <label for="name">NOME</label>
+                                <label for="name"><?= $this->lang->line('home_contact_name') ?></label>
                             </div>
                             <div class="input-field col s9 offset-s3">
                                 <input id="email" type="email" class="validate">
-                                <label for="email">EMAIL</label>
+                                <label for="email"><?= $this->lang->line('home_contact_email') ?></label>
                             </div>
                             <div class="input-field col s9 offset-s3">
                                 <textarea id="textarea1" class="materialize-textarea"></textarea>
-                                <label for="textarea1">MENSAGEM</label>
+                                <label for="textarea1"><?= $this->lang->line('home_contact_mensagem') ?></label>
                             </div>
                             <div class="input-field col s9 offset-s3">
-                                <button class="btn waves-effect waves-light" type="submit" name="action">ENVIAR
+                                <button class="btn waves-effect waves-light" type="submit" name="action"><?= $this->lang->line('home_contact_button') ?>
                                 <i class="material-icons right">send</i>
                                 </button>
                             </div>
@@ -393,7 +391,7 @@
             </div>
             <!--<div class="footer-location"></div>-->
             <div class="power-by">
-                © Copyright 2017 - Feito com <span> < 3 </span> por Time ainda sem nome.
+                <?= $this->lang->line('home_footer') ?>
             </div>
         </div>
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOgRKKdJv0sJSZYLFQQUUjII20mGsbLj4&callback=initMap"> </script>
