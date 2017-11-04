@@ -70,7 +70,7 @@
                         <a class="waves-effect waves-red" href="#!" v-on:click="showTrades()">Trocas</a>
                     </li>
                     <li>
-                        <a class="waves-effect waves-red" href="/">Sair</a>
+                        <a class="waves-effect waves-red" href="/logout">Sair</a>
                     </li>
                 </ul>
                 <div class="mobile-user-view">

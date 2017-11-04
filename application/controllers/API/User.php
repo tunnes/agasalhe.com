@@ -238,6 +238,7 @@ class User extends REST_Controller {
 	        {
 	            unset($user['password']);
 		        $token = $this->auth_model->set_auth($user);
+		        $this->session->set_userdata('user', $token);
 		        $this->set_response($token, REST_Controller::HTTP_OK);
 	        }
 	    }
