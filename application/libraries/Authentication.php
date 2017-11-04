@@ -22,6 +22,11 @@ class Authentication  {
         #   between client and server exemple base64_decode($token)
             $token = $this->CI->input->request_headers()['authorization'];
         }
+        #verify if session has token
+        if($this->session->userdata('user') != $token){
+            $this->referenceOfThis->response(NULL, REST_Controller::HTTP_UNAUTHORIZED);
+            die();
+        }
         
         $user = $this->CI->auth_model->get_auth($token);
 

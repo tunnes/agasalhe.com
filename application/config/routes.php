@@ -62,6 +62,7 @@ $route['contact'] = 'institutional/contact';
 $route['items'] = 'institutional/items';
 $route['account'] = 'institutional/account';
 $route['login'] = 'institutional/login';
+$route['logout'] = 'institutional/logout';
 # image routes operation in controller:
 $route['API/image/(:num)'] = 'API/image/index/id/$1';
 $route['API/image/register'] = 'API/image/register';

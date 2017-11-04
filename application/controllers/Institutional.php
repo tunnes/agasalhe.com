@@ -16,9 +16,11 @@ class Institutional extends CI_Controller {
 	# like a menu navigation, footer, how to use system, last clothes posted and
 	# about we and our project:
 	public function index()
-	{
-		$this->load->helper('url');
-		$this->load->view('home');
+	{ 
+		if($this->session->userdata('user'))
+			$this->load->view('account');
+		else
+			$this->load->view('home');
 	}
 	
 	# Is an simple function to render informations about our project and our
@@ -31,7 +33,10 @@ class Institutional extends CI_Controller {
 	
 	public function account()
 	{
-		$this->load->view('account');
+		if($this->session->userdata('user'))
+			$this->load->view('account');
+		else
+			redirect();
 	}	
 	
 	# May this function is the most simple in the application cause this return
@@ -44,6 +49,12 @@ class Institutional extends CI_Controller {
 	public function login()
 	{
 		$this->load->view('login_test.php');
+	}
+	
+	public function logout()
+	{
+		$this->session->sess_destroy();
+		redirect();
 	}
 	
 	public function password_recovery($hash)

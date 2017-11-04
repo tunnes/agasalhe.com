@@ -21,6 +21,7 @@ class Item extends REST_Controller {
     # Get user item(s)
     public function index_get()
     {
+        header("Access-Control-Allow-Origin: *");
         $ID = $this->get('id');
         $filterResult = $this->input->get('filter-result');
         
