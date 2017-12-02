@@ -83,10 +83,20 @@ $lang['home_modal_register_male'] = 'Male';
 $lang['home_modal_register_female'] = 'Female';
 $lang['home_modal_register_logout'] = 'Log out';
 $lang['home_modal_register_send'] = 'Send';
+$lang['home_modal_register_phone'] = 'Phone';
+$lang['home_modal_register_picture'] = 'Profile picture';
+$lang['home_modal_register_newpassword'] = "New password";
+$lang['home_modal_register_picture_update'] = "Update profile picture";
 
+$lang['home_modal_register_success'] = 'Nice! Registration successful';
+
+
+/*login */
 $lang['home_login_forget'] = 'Forgot your password?';
 $lang['home_login_recovery'] = "We'll send you an email so you can reset your new password :-)";
 $lang['home_get_back'] = 'Back';
+$lang['home_no_account'] = "Don't you have account?";
 
+$lang['home_login_incorrect'] = 'E-mail or Password is incorrect';
                         
 ?>

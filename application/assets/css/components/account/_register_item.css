@@ -1,0 +1,89 @@
+#register-item-modal{
+    max-height: 70%;
+}
+#register-item-modal .modal-content{
+    padding: 50px 15% 0px 15%;
+}
+#register-item-modal .row{
+    margin-top: 10px;
+}
+#register-item-modal .modal-footer{
+    padding: 5px 15%;
+    margin-bottom: 20px;
+}
+#register-item-modal .email-field{
+    margin-top: 20px;
+}
+#register-item-modal .item-register-title{
+    background: linear-gradient(to top left, rgba(255, 47, 0, 0.8), rgba(238, 9, 121, 0.95));
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    font-weight: 900;
+    font-size: 65px;
+}
+#register-item-modal .login-button-close:hover{
+    background-color: rgba(127, 127, 127, 0.4);
+    border-radius: 5px;
+    font-weight: 100;
+    color: white;
+}
+#register-item-modal .login-button-access{
+    border-radius: 5px;
+    color: #ffffff;
+    background: linear-gradient(to top left, rgba(238, 9, 121, 0.8), #ee6e73);
+}
+
+/* label focus color */
+#register-item-modal .modal-content .input-field input[type=text]:focus + label,
+#register-item-modal .modal-content .input-field input[type=password]:focus + label{
+ color: #f55b79;
+}
+
+/* label underline focus color */
+/*#register-item-modal .modal-content .input-field input[type=text]:focus,*/
+/*#register-item-modal .modal-content .input-field input[type=password]:focus{*/
+/* border-bottom: 1px solid #f55b79;*/
+/* box-shadow: 0 1px 0 0 #f55b79;*/
+/*}*/
+
+/* invalid color */
+#register-item-modal .modal-content .input-field input[type=text].invalid {
+    border-bottom: 1px solid red;
+    box-shadow: 0 1px 0 0 #000;
+}
+
+.add-one-image{
+    position: absolute;
+    cursor: pointer;
+    color: #000000;
+    right: 5px;
+    top: 12px;
+}
+#register-item-modal .input-field{
+    position: relative;
+}
+
+/* Globals */
+.input-field label {
+    color: #1b1a1a;
+    font-size: 13px;
+    text-transform: uppercase;
+    -webkit-font-smoothing: antialiased;
+}
+.select-wrapper input.select-dropdown, .items-page-sidebar .select-wrapper {
+    color: #e5005d;
+    font-size: 12px;
+    text-transform: uppercase;
+    -webkit-font-smoothing: antialiased;
+}
+.select-wrapper .dropdown-content li > a, .dropdown-content li > span {
+    -webkit-font-smoothing: antialiased;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: #e5005d;
+}
+
+#register-item-modal ul:not(.browser-default){
+    top: 10px !important;
+    max-height: 300px;
+}

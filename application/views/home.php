@@ -12,9 +12,6 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
         
-        <!-- Main Js -->
-        <script type="text/javascript" src="/application/assets/js/main.js"></script>
-        
         <!-- Easy Autocomplete -->
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/easy-autocomplete.min.css" type="text/css" />
@@ -29,7 +26,8 @@
         
         <!-- Internal file resources -->
         <link rel="stylesheet" type="text/css" href="/application/assets/css/home.css">
-        <script type="text/javascript" src="/application/assets/js/countries.js"></script>
+        <link rel="stylesheet" type="text/css" href="/application/assets/css/helpers.css">
+        <script type="text/javascript" src="/application/assets/js/main.js"></script>
         <script type="text/javascript" src="/application/assets/js/home.js"></script>
         <script type="text/javascript" src="/application/assets/js/components/_login.js"></script>
         <script type="text/javascript" src="/application/assets/js/components/_register.js"></script>        
@@ -40,25 +38,9 @@
         <link rel="icon" href="/favicon.ico" type="/application/assets/imgx-icon">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Swapage</title>
+        <title>Trocaqui</title>
     </head>
     <body>
-         <!-- Start loading -->
-        <div class="upper-wrapper">
-          <div class="preloader-wrapper big active">
-            <div class="spinner-layer spinner-blue-only">
-              <div class="circle-clipper left">
-                <div class="circle"></div>
-              </div><div class="gap-patch">
-                <div class="circle"></div>
-              </div><div class="circle-clipper right">
-                <div class="circle"></div>
-              </div>
-            </div>
-         </div>
-        </div>
-        <!-- End loading -->
         <header>
             <nav>
                 <div class="container">
@@ -68,18 +50,47 @@
                         </a>
                         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                         <ul class="right hide-on-med-and-down">
+                            <li><a href="#" class="go-about"><?= $this->lang->line('main_nav_item_3') ?></a></li>
+                            <li><a href="#" class="go-works"><?= $this->lang->line('main_nav_item_2') ?></a></li>
                             <li><a href="/items"><?= $this->lang->line('main_nav_item_1') ?></a></li>
-                            <li><a href="#"><?= $this->lang->line('main_nav_item_2') ?></a></li>
-                            <li><a href="#"><?= $this->lang->line('main_nav_item_3') ?></a></li>
-                            <li><a href="#register-modal" class="modal-trigger"><?= $this->lang->line('main_nav_item_4') ?></a></li>
-                            <li><a href="#login-modal" class="modal-trigger"><?= $this->lang->line('main_nav_item_5') ?></a></li>                            
-                        </ul>
-                        <ul class="side-nav" id="mobile-demo">
-                            <li><a href="/items"><?= $this->lang->line('main_nav_item_1') ?></a></li>
-                            <li><a href="#"><?= $this->lang->line('main_nav_item_2') ?></a></li>
-                            <li><a href="#"><?= $this->lang->line('main_nav_item_3') ?></a></li>
+                            <?php if($isLogged): ?>
+                                <!--<li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="<?= $this->lang->line('main_tooltip_account') ?>">-->
+                                <li>
+                                    <a class="valign-wrapper" href="/account">
+                                        <!--<img class="circle navbar-account-picture" src="<?= $image?>"/>-->
+                                        <?= $mynickname ?>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/logout"><?= $this->lang->line('main_nav_item_7') ?></a>
+                                </li>
+                            <?php else: ?>
                             <li><a href="#register-modal" class="modal-trigger"><?= $this->lang->line('main_nav_item_4') ?></a></li>
                             <li><a href="#login-modal" class="modal-trigger"><?= $this->lang->line('main_nav_item_5') ?></a></li>
+                            <?php endif; ?>
+                        </ul>
+                        <ul class="side-nav" id="mobile-demo">
+                            <?php if($isLogged): ?>
+                            <li>
+                                <div class="user-view">
+                                    <img class="circle materialboxed" src="<?= $image ?>"/>
+                                    <span class="user-infomations">
+                                        <span class="name black-text"><?= $username ?></span>
+                                        <span class="email black-text"><?= $nickname ?></span>
+                                    </span>
+                                </div>
+                            </li>
+                            <?php endif;?>
+                            <li><a href="#"><i class="material-icons left">help_outline</i><?= $this->lang->line('main_nav_item_3') ?></a></li>
+                            <li><a href="#"><i class="material-icons left">work</i><?= $this->lang->line('main_nav_item_2') ?></a></li>
+                            <li><a href="/items"><i class="material-icons left">search</i><?= $this->lang->line('main_nav_item_1') ?></a></li>
+                            <?php if($isLogged): ?>
+                            <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="<?= $this->lang->line('main_tooltip_account') ?>"><a class="valign-wrapper" href="/account"><i class="material-icons left">account_circle</i><?= $this->lang->line('main_nav_item_6')?></a></li>
+                            <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="<?= $this->lang->line('main_tooltip_logout') ?>"><a href="/logout"><i class="material-icons left">power_settings_new</i><?= $this->lang->line('main_nav_item_7') ?></a></li>
+                            <?php else: ?>
+                            <li><a href="#register-modal" class="modal-trigger"><i class="material-icons left">fiber_new</i><?= $this->lang->line('main_nav_item_4') ?></a></li>
+                            <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="<?= $this->lang->line('main_tooltip_enter') ?>"><a href="#login-modal" class="modal-trigger"><i class="material-icons left">play_circle_outline</i><?= $this->lang->line('main_nav_item_5') ?></a></li>
+                            <?php endif; ?>
                         </ul>
                     </div>
                 </div>
@@ -88,7 +99,7 @@
                 <div class="container message-wrapper">
                     <h1><?= $this->lang->line('home_header_h1') ?></h1>
                     <h2><?= $this->lang->line('home_header_h2') ?></h2>
-                    <span><?= $this->lang->line('home_header_yes') ?></span> <span><?= $this->lang->line('home_header_no') ?></span>
+                    <!--<span><?= $this->lang->line('home_header_yes') ?></span> <span><?= $this->lang->line('home_header_no') ?></span>-->
                 </div>
             </div>
         </header>
@@ -200,7 +211,7 @@
                                 <span>SP</span>
                             </div>
                             <div class="head">
-                                <img src="http://www.pedalpower.com.br/pedalpower/Assets/product_images/grandes/trek%20top%20fuel%20usada.jpg" />
+                                <img src="/application/assets/img/iten-test.jpg" />
                                 <span class="action-like">
                                 <img src="/application/assets/img/itens-like-heart.svg"></img>
                                 <span>10</span>
@@ -218,7 +229,7 @@
                                 <span>SP</span>
                             </div>
                             <div class="head">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwItnekXy2cwEGY2iUKmx5gAfFwymHEtar3qXCpQyXnJE385jv" />
+                                <img src="/application/assets/img/iten-test.jpg" />
                                 <span class="action-like">
                                 <img src="/application/assets/img/itens-like-heart.svg"></img>
                                 <span>10</span>
@@ -236,7 +247,7 @@
                                 <span>SP</span>
                             </div>
                             <div class="head">
-                                <img src="https://ichef-1.bbci.co.uk/news/660/cpsprodpb/3577/production/_91378631_bala.jpg" />
+                                <img src="/application/assets/img/iten-test.jpg" />
                                 <span class="action-like">
                                 <img src="/application/assets/img/itens-like-heart.svg"></img>
                                 <span>10</span>
@@ -254,7 +265,7 @@
                                 <span>SP</span>
                             </div>
                             <div class="head">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQx-g0rblDesm-fFR20KIUalFkbOiAaJItOdYeIKsBLoR_Z8QA8" />
+                                <img src="/application/assets/img/iten-test.jpg" />
                                 <span class="action-like">
                                 <img src="/application/assets/img/itens-like-heart.svg"></img>
                                 <span>10</span>
@@ -272,7 +283,7 @@
                                 <span>SP</span>
                             </div>
                             <div class="head">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaGTtUkANpurpWtbHihXzsV5m_zQT7l5AP5X6E-wp82Jql_OcG" />
+                                <img src="/application/assets/img/iten-test.jpg" />
                                 <span class="action-like">
                                 <img src="/application/assets/img/itens-like-heart.svg"></img>
                                 <span>10</span>
@@ -290,7 +301,7 @@
                                 <span>SP</span>
                             </div>
                             <div class="head">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDuLrmBJmwdo-9SI5P7DvspvQYhotPCgdEWLQKAdW4Z5wIXlOwIg" />
+                                <img src="/application/assets/img/iten-test.jpg" />
                                 <span class="action-like">
                                 <img src="/application/assets/img/itens-like-heart.svg"></img>
                                 <span>10</span>
@@ -308,7 +319,7 @@
                                 <span>SP</span>
                             </div>
                             <div class="head">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSg2_vDvWIktT-WycQFdnLG7b82EtrhdQ55s1HmGlonpAxwSAJ3" />
+                                <img src="/application/assets/img/iten-test.jpg" />
                                 <span class="action-like">
                                 <img src="/application/assets/img/itens-like-heart.svg"></img>
                                 <span>10</span>
@@ -326,7 +337,7 @@
                                 <span>SP</span>
                             </div>
                             <div class="head">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTl67RNk4-5TI6nCHHMnxaOAgO5HstxiTwZvh9EOSJn4O0o3TSd-Q" />
+                                <img src="/application/assets/img/iten-test.jpg" />
                                 <span class="action-like">
                                 <img src="/application/assets/img/itens-like-heart.svg"></img>
                                 <span>10</span>
@@ -402,7 +413,11 @@
         
         <!-- External login component starts -->
             <?php include('components/_register.php') ?>
-        <!-- External login component end's-->    
+        <!-- External login component end's-->
+        
+        <!-- External loading component starts -->
+            <?php include('components/_loading.php') ?>
+        <!-- External loading component end's-->    
         
     </body>
 </html>

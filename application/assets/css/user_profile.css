@@ -1,0 +1,244 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,800|Roboto:300,400,500,700,900');
+
+body{
+    /*font-family: 'Open Sans', sans-serif;*/
+}
+
+.profile-wrapper{
+    margin-top: 20px;
+}
+.profile-infomations{
+    display: block;   
+}
+.profile-image{
+    display: inline-block;
+    border-radius: 35px;
+    margin-right: 25px;
+    width: 220px;
+    height: 220px;
+    background-size: cover;
+}
+
+.profile-name{
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 45px;
+    font-weight: 900;
+    color: #e5005d;
+}
+.profile-infomations .information{
+    display: inline-block;
+    font-size: 14px;
+    margin-bottom: 8px;
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.informations {
+    display: inline-block;
+}
+
+.profile-infomations .information i,
+.profile-infomations .information strong{
+    float: left;
+}
+.profile-infomations .information strong{
+    margin-left: 10px;
+}
+
+.profile-name span{
+    display: block;
+    font-size: 25px;
+    margin-top: -10px;
+    color: #3e3d3d;
+}
+
+.profile-items{
+    margin-top: 50px;
+    clear: both
+}
+.itens-count{
+    font-size: 11px;
+    width: 98%;
+    text-align: right;
+    display: block;
+    color: #9e9e9e;
+    border-bottom: 1px solid;
+    padding-bottom: 8px;
+    margin: auto;
+    margin-bottom: 12px;
+}
+
+.grid-sizer, .grid-item {
+    width: 20%;
+    float: left;
+}
+
+.nav-bar{
+    margin-bottom: 20px;
+    float: right;
+    margin-top: 20px;
+    color: black;
+}
+@media only screen and (max-width: 890px){
+    .profile-name{
+        font-size: 30px;
+    }
+    .profile-name span{
+        margin-top: 0px;
+    }
+    .profile-image{
+        width: 180px;
+        height: 180px
+    }
+    .profile-infomations .information{
+        width: 200px;
+    }
+}
+@media only screen and (max-width: 750px){
+    .grid-sizer, .grid-item {
+        width: 50%;
+    }
+    .profile-image{
+        width: 100%;
+        height: 300px;
+    }
+    .profile-name {
+        font-size: 35px; 
+    }
+    .informations{
+        margin-left: 10px;
+    }
+    
+}
+
+
+/* Header */
+.subpage-header {
+    height: auto;
+    background: linear-gradient(to left, rgb(251, 132, 127), rgba(238, 9, 121, 0.8));
+    background-image: url(/application/assets/img/header-background.jpg);
+    background-size: cover;
+    position: relative;
+}
+.subpage-header:before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-size: 400% 400%;
+    background: linear-gradient(to left, rgb(251, 132, 127), rgba(238, 9, 121, 0.8))
+}
+.subpage-header nav {
+    background: transparent;
+    box-shadow: none;
+}
+.subpage-header h2 {
+    font-family: 'Open Sans', sans-serif;
+    position: relative;
+    margin-left: 10px;
+    margin-top: 20px;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 25px;
+    float: left;
+    text-transform: uppercase;
+}
+.account-menu-trigger{
+    position: relative;
+    margin-top: 37px;
+    font-size: 30px;
+    display: none;
+    float: right;
+    color: white;
+}
+.account-menu-trigger {
+    line-height: unset !important;
+    margin: unset !important;
+}
+
+header img{
+    height: 60px;
+    position: relative;
+    /*margin-top: 4px;*/
+    max-width: 100px;
+    float: left;
+    /*margin-right: 20px;*/
+}
+
+.account-menu-trigger{
+    position: relative;
+    margin-top: 37px;
+    font-size: 30px;
+    display: none;
+    float: right;
+    color: white;
+}
+.user-view {
+    position: relative;
+    margin-bottom: 20px
+}
+.user-view .user-infomations {
+    position: absolute;
+    left: 93px;
+    top: 5px;
+}
+@media only screen and (min-width: 992px){
+    .user-view .user-infomations {
+        position: absolute;
+        left: 114px;
+        top: 21px;
+    }
+}
+@media only screen and (max-width: 992px){
+    .user-view {
+        padding: 16px 16px 0;
+    }
+    .subpage-header h2 {
+        display: none;
+    }
+}
+/* Footer */
+.footer-copyright span {
+    display: inline-block;
+    float: left;
+}
+.footer-copyright .material-icons {
+    font-size: 22px;
+    margin: 0 5px;
+    color: #e13182;
+}
+.copyright-wrapper{
+    margin: 0 auto;
+    width: 425px;
+}
+.page-footer {
+    background-color: rgba(42, 42, 42, 0.94);
+}
+.footer-copyright {
+    background-color: #1f1e1e !important;
+}
+  body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
+@media only screen and (max-width: 470px){
+    .grid-sizer, .grid-item {
+        width: 100%;
+    }
+    .subpage-header h2{
+        font-size: 18px;
+        padding-top: 35px;
+    }
+    .account-menu-trigger{
+        margin-top: 48px;
+    }
+}

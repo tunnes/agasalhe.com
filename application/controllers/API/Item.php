@@ -21,7 +21,6 @@ class Item extends REST_Controller {
     # Get user item(s)
     public function index_get()
     {
-        header("Access-Control-Allow-Origin: *");
         $ID = $this->get('id');
         $filterResult = $this->input->get('filter-result');
         
@@ -37,7 +36,7 @@ class Item extends REST_Controller {
             );
             
             $useState = $this->input->get('use-state');
-            $useState == 'NOVO' || $useState == 'SEMI-NOVO' ? array_push($FILTER_PARAMS, "use_state", $useState) : NULL;
+            $useState == 'NEW' || $useState == 'SEMI-NEW' ? array_push($FILTER_PARAMS, "use_state", $useState) : NULL;
             
             $FILTER_PARAMS = array_filter($FILTER_PARAMS);
             
@@ -48,7 +47,9 @@ class Item extends REST_Controller {
         }
         elseif($ID == NULL)
         {
+            //$this->authentication->getUserIdForLikedItems()['id'];
             $items = $this->item_model->get_item();
+            //var_dump($items);
             $error = ['status' => FALSE, 'message' => 'No items were found'];
             !empty($items) ? $this->response($items, REST_Controller::HTTP_OK) : $this->response($error, REST_Controller::HTTP_NOT_FOUND); 
         }
@@ -72,14 +73,23 @@ class Item extends REST_Controller {
         
     }
     
+    public function user_profile_get()
+    {
+        $ID = $this->get('id');
+        $response = $this->item_model->user_items($ID);
+        $error = ['status' => FALSE, 'message' => 'Items could not be found'];
+        !empty($response) ? $this->set_response($response, REST_Controller::HTTP_OK) : $this->set_response($error, REST_Controller::HTTP_NOT_FOUND);
+        
+    }    
+    
     # Create an item
     public function index_post()
     {
         $USER = $this->authentication->verify_authentication();
         $this->form_validation->set_rules('title', 'title', 'trim|required|min_length[2]|max_length[80]');
         $this->form_validation->set_rules('description', 'description', 'trim|required|min_length[2]|max_length[500]');
-        $this->form_validation->set_rules('use_state', 'use state', 'trim|required|in_list[NOVO,USADO,SEMI-NOVO]');
-	    $this->form_validation->set_rules('category', 'category', 'trim|required|in_list[MOVEL,ELETRONICO,ELETRODOMESTICO,BRINQUEDO,ROUPA,UTENSILIO,FERRAMENTA,INSTRUMENTO]');
+        $this->form_validation->set_rules('use_state', 'use_state', 'trim|required|in_list[NEW,USED,SEMI-NEW]');
+	    $this->form_validation->set_rules('category', 'category', 'trim|required|in_list[FURNITURE,ELECTRONIC,HOUSEHOLD-APPLIANCE,TOY,CLOTHING,UTENSIL,TOOL,INSTRUMENT,MOTORING,SPORT,DECORATION,AUDIO-VISUAL,COLLECTION,OTHERS]');
 	    if ($this->form_validation->run() === FALSE)
 	    {
 	        $error = $this->form_validation->error_array();
@@ -115,7 +125,7 @@ class Item extends REST_Controller {
         $this->form_validation->set_rules('title', 'title', 'trim|required|min_length[2]|max_length[80]');
         $this->form_validation->set_rules('description', 'description', 'trim|required|min_length[2]|max_length[500]');
         $this->form_validation->set_rules('use_state', 'use state', 'trim|required|in_list[NOVO,USADO,SEMI-NOVO]');
-        $this->form_validation->set_rules('category', 'category', 'trim|required|in_list[MOVEL,ELETRONICO,ELETRODOMESTICO,BRINQUEDO,ROUPA,UTENSILIO,FERRAMENTA,INSTRUMENTO]');
+        $this->form_validation->set_rules('category', 'category', 'trim|required|in_list[FURNITURE,ELECTRONIC,HOUSEHOLD-APPLIANCE,TOY,CLOTHING,UTENSIL,TOOL,INSTRUMENT,MOTORING,SPORT,DECORATION,AUDIO-VISUAL,COLLECTION,OTHERS]');
         
         if ($this->form_validation->run() === FALSE)
         {
@@ -150,7 +160,7 @@ class Item extends REST_Controller {
       $error = ['status' => FALSE, 'message' => 'trades were not found.'];
       $response ? $this->set_response($response, REST_Controller::HTTP_OK) : $this->set_response($error, REST_Controller::HTTP_NOT_FOUND);
     }
-    
+        
     # Do a request for trading.
     public function trade_post()
     {
@@ -176,7 +186,7 @@ class Item extends REST_Controller {
 
     }
     
-    # Undo a trade request if the trade isn't accepted (status = done).
+    # Undo a trade request if the trade isn't accepted yet (status = done).
     public function trade_delete()
     {
         $USER = $this->authentication->verify_authentication();

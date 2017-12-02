@@ -1,0 +1,67 @@
+.my-trades-collection .collection-item.avatar{
+    padding-left: 10px;
+}
+.my-trades-collection .collection-item.avatar .secondary-content{
+    top: 30px;
+    right: 15px;
+}
+.my-trades-collection .title,
+.my-trades-collection .description{
+    font-weight: 500;
+    font-size: 12px;
+    width: 45%;
+    font-size: 12px;
+}
+.my-trades-collection .collection-item.avatar .description strong{
+    font-size: 10px;
+    text-transform: uppercase;
+    background: #d5d5d5;
+    color: white;
+    font-weight: 100;
+    padding: 3px 6px;
+    border-radius: 5px;
+    margin-right: 4px;
+}
+.my-trades-collection .collection-item .likes{
+    font-size: 11px;
+    color: #f0458e;
+}
+.my-trades-collection .collection-item .image {
+    float: left;
+    margin-right: 15px;
+    margin-left: 5px;
+    width: 65px;
+    height: 65px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 7px;
+}
+
+.my-trades-collection .collection-item .image:first-child {
+    margin-left: 0px;
+    margin-right: 5px;
+}
+
+.my-trades-collection .two-way-icon{
+    float: left;
+    margin-top: 21px;
+}
+.my-trades-collection .trade-icon{
+    font-size: 24px;
+    color: rgba(0, 0, 0, 0.19);
+    transition: all 0.5s ease;
+}
+.my-trades-collection .trade-icon:hover{
+    color: #f0458e;
+}
+
+/*.delete-item:hover{*/
+/*    color: red;*/
+/*}*/
+/*.show-item:hover{*/
+/*    color: #2ea5fb;*/
+/*}*/
+/*.update-item:hover{*/
+/*    color: yellow;*/
+/*}*/

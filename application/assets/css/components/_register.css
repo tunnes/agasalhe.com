@@ -32,7 +32,7 @@
 .modal.bottom-sheet{
     max-height: 80%;
     min-height: 60%;
-    padding: 0 10%;
+    /*padding: 0 10%;*/
 }
 .register-file-input{
     background: linear-gradient(to top left, rgb(245, 91, 122), rgba(240, 70, 146, 0.93));
@@ -77,23 +77,7 @@
     background: inherit;
     color: #ea0060;
 }
-.upper-wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    bottom: 0;
-    display: none;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    background: rgba(0,0,0,0.6);
-    z-index: 10000;
-}
-.upper-wrapper .spinner-layer {
-    border-color: #fff;
-}
+
 select.picker__select--year.browser-default,
 select.picker__select--month.browser-default{
    

@@ -85,13 +85,18 @@ defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automat
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 //Get the request user language
 $idiom = '';
-switch(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2)){
-    case 'en' : $idiom = 'english'   ; break;
-    case 'pt' : $idiom = 'portuguese'; break;
-    case 'fr' : $idiom = 'french'    ; break;
-    case 'es' : $idiom = 'spanish'   ; break;
-    case 'it' : $idiom = 'italian'   ; break;
-    default   : $idiom = 'english';
+if(array_key_exists("HTTP_ACCEPT_LANGUAGE", $_SERVER))
+{
+    switch(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2)){
+        case 'en' : $idiom = 'english'   ; break;
+        case 'pt' : $idiom = 'portuguese'; date_default_timezone_set('America/Sao_Paulo'); break;
+        case 'fr' : $idiom = 'french'    ; break;
+        case 'es' : $idiom = 'spanish'   ; break;
+        case 'it' : $idiom = 'italian'   ; break;
+        default   : $idiom = 'english';
+    }
+} else {
+    $idiom = 'english';
 }
-//echo "EU SOU: " . $idiom;
+//var_dump($_SERVER['HTTP_ACCEPT_LANGUAGE']);
 define('USER_LANGUAGE', $idiom);

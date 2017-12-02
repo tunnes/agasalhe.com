@@ -1,0 +1,148 @@
+#chat-modal{
+    width:500px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    z-index:1500!important;
+    overflow: unset;
+}
+
+#chat-modal .modal-content{
+    margin: 0;
+    padding: 0;
+    height:500px;
+    background-color:#FFF;
+    position:   relative;
+}
+
+#chatheader{
+    background: linear-gradient(to left, rgb(251, 132, 127), rgba(238, 9, 121, 0.8));
+    margin: 0;
+    padding: 10px 0px;
+    color: #FFF;
+}
+
+#chatheader h4{
+    margin-bottom:0;
+}
+
+#chatheader a{
+    color: #FFF;
+    margin:0;
+}
+
+.back-button{
+    cursor:pointer;
+}
+
+#chatbox{
+    padding: 20px 10px;
+    overflow-y: auto;
+    width:      100%;
+    height:     400px;
+    margin:0;
+}
+
+/* Largura da barra de rolagem */
+#chatbox::-webkit-scrollbar {
+    width: 7px;
+}
+
+/* Fundo da barra de rolagem */
+#chatbox::-webkit-scrollbar-track-piece {
+    background-color: rgba(251, 132, 127,1)
+}
+
+/* Cor do indicador de rolagem */
+#chatbox::-webkit-scrollbar-thumb:vertical{
+    background-color: rgba(238, 9, 121, 0.6)
+}
+
+/* Cor do indicador de rolagem - ao passar o mouse */
+#chatbox::-webkit-scrollbar-thumb:vertical:hover {
+    background-color: rgba(238, 9, 121, 1)
+}
+
+#chatbox .row{
+    padding:0;
+    margin:0;
+    margin-bottom: 15px;
+}
+
+.message-row{
+    font-size:15px;
+}
+
+.my-message, .target-message{
+    display:flex;
+    display:inline-block;
+    position: relative;
+    width: auto;
+    height: auto;
+    padding: 2px 10px;
+    background: #FFFFFF;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    color:#444;
+}
+
+.my-message p, .target-message p{
+    margin:0;
+}
+
+.message-date{
+    font-size:10px;
+    color:#666;
+}
+
+.my-message{
+float: right;
+border: 1px solid #fb847f;
+/*background: linear-gradient(to left, rgba(251, 132, 127, 0.1), rgba(238, 9, 121, 0.1));*/
+}
+
+.target-message
+{
+border: 1px solid #ee0979;
+/*background: linear-gradient(to right, rgba(251, 132, 127, 0.1), rgba(238, 9, 121, 0.1));*/
+}
+
+#sendmessage{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:auto;
+    min-height:40px;
+    max-height:100px;
+    background: linear-gradient(to left, rgb(251, 132, 127), rgba(238, 9, 121, 0.8));
+    margin:0;
+    padding:5px;
+}
+
+#sendmessage .col.s11{
+    margin-left:0px;
+    padding-left:0px;
+    padding-right:0px;
+}
+
+#sendmessage #send-button{
+    cursor: pointer;
+}
+
+#sendmessage i{
+    vertical-align: middle;
+}
+
+#messagebox{
+    padding:5px;
+    width: auto;
+    min-height:30px;
+    max-height:80px;
+    height: auto;
+    background-color:#FFF;
+    color:#444;
+    overflow: auto;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}

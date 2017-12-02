@@ -16,20 +16,20 @@ class Authentication  {
     {
         $token = NULL;
         
-        if (array_key_exists("authorization", $this->CI->input->request_headers()))
+        if(array_key_exists("authorization", $this->CI->input->request_headers()))
         {
         #   To improve security use base64 conversion in exchange of values 
         #   between client and server exemple base64_decode($token)
             $token = $this->CI->input->request_headers()['authorization'];
         }
         #verify if session has token
-        if($this->session->userdata('user') != $token){
+        /*if($this->CI->session->userdata('user') != $token){
             $this->referenceOfThis->response(NULL, REST_Controller::HTTP_UNAUTHORIZED);
             die();
-        }
+        }*/
         
         $user = $this->CI->auth_model->get_auth($token);
-
+   
         if($user === NULL)
         {
             $this->referenceOfThis->response(NULL, REST_Controller::HTTP_UNAUTHORIZED);
@@ -55,6 +55,19 @@ class Authentication  {
         else {
             return (int) $parameter;
         }
+    }
+    
+    public function getUserIdForLikedItems()
+    {
+        if(array_key_exists("authorization", $this->CI->input->request_headers())){
+             $token = $this->CI->input->request_headers()['authorization'];
+             $user = $this->CI->auth_model->get_auth($token);
+             if($user) {
+                 return $user;
+             }
+             return false;
+        }
+        return false;
     }
 }
 
