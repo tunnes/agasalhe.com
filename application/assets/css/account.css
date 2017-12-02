@@ -14,6 +14,7 @@ main {
 }
 .content-items-wrapper {
     margin-bottom: 100px;
+    
 }
 .content-items-wrapper .container {
     width: 90%;
@@ -95,7 +96,7 @@ footer {
 
 /* Header */
 .subpage-header {
-    height: 176px;
+    height: 116px;
     background: linear-gradient(to left, rgb(251, 132, 127), rgba(238, 9, 121, 0.8));
     background-image: url('/application/assets/img/header-background.jpg');
     background-size: cover;
@@ -105,39 +106,78 @@ footer {
     position: absolute;
     content: "";
     width: 100%;
-    height: 176px;
+    height: 100%;
     top: 0;
     left: 0;
     background-size: 400% 400%;
     background: linear-gradient(to left, rgb(251, 132, 127), rgba(238, 9, 121, 0.8));
 }
+.subpage-header nav {
+    background: transparent;
+    box-shadow: none;
+}
 .subpage-header h2 {
     font-family: 'Open Sans', sans-serif;
     position: relative;
-    padding-top: 25px;
-    margin-top: 10px;
+    margin-left: 10px;
+    margin-top: 20px;
     color: #ffffff;
     font-weight: 800;
-    font-size: 45px;
+    font-size: 25px;
     float: left;
     text-transform: uppercase;
+}
+.account-menu-trigger{
+    position: relative;
+    margin-top: 37px;
+    font-size: 30px;
+    display: none;
+    float: right;
+    color: white;
+}
+.account-menu-trigger {
+    line-height: unset;
+    margin: unset;
+}
+
+header img{
+    height: 60px;
+    position: relative;
+    /*margin-top: 4px;*/
+    max-width: 100px;
+    float: left;
+    /*margin-right: 20px;*/
 }
 
 /* Global Options */
 
 .section-title {
-    text-transform: uppercase;
-    font-size: 28px;
-    font-weight: 800;
-    color: #3b3b3b;
-    margin-left: 0px;
-    position: relative;
-    margin-top: 50px;
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 20px;
+    font-size: 45px;
+    font-weight: 900;
+    display: inline-block;
+    color: #e5005d;
+}
+.my-items .btn-floating-swapage{
+    margin-left: 6px;
+    border-radius: 27%;
+    height: 45px;
+    width: 45px;
+    margin-bottom: 5px;
+    background-color: #dc0359;
+    box-shadow: none;
+}
+.my-items .btn-floating-swapage i.material-icons{
+    line-height: 45px;
 }
 .active-option {
     display: block !important;
 }
 .update-register {
+    display: none;
+}
+.my-messages {
     display: none;
 }
 
@@ -200,36 +240,30 @@ table .item-action-button {
     margin-top: 15px;
 }
 
-.my-items .btn-floating-swapage{
-    position: absolute;
-    right: -116px;
-    top: 3%;
-}
-
-.trades {
+.trades-requested, .trades-received {
     display: none;
 }
-.trades .chip {
+.trades-requested .chip, .trades-received .chip {
     border-radius: 12px;
 }
-.trades .button-show {
+.trades-requested .button-show, .trades-received .button-show {
     display: inline-block;
     width: 58px;
     margin-bottom: 6px;
     text-align: center;
 }
-.trades .button-drop {
+.trades-requested .button-drop, .trades-received .button-drop {
     display: inline-block;
     width: 64px;
     text-align: center;
 }
-.trades .trade-or-donate {
+.trades-requested .trade-or-donate, .trades-received .trade-or-donate {
     text-transform: uppercase;
     font-size: 11px;
 }
 
 /* Forms */
-.trades .chip > img {
+.trades-requested .chip > img, .trades-received .chip > img {
     border-radius: 12px;
 }
 .update-register label,
@@ -281,10 +315,6 @@ table .item-action-button {
     background: inherit;
     color: #ea0060;
 }
-.btn-floating-swapage {
-    background-color: #f0458e;
-    border-radius: 30%;
-}
 .btn-floating-swapage:hover,
 .btn-floating-swapage:focus{
     background-color: #bb1f66;
@@ -301,77 +331,11 @@ table .item-action-button {
     color: #e13182;
 }
 
-/* New item modal */
-
-#register-item-modal{
-    border-radius: 10px;
-    max-width: 1200px;
-    max-height: 80%;
-}
-#register-item-modal .row{
-    margin-top: 50px;
-    width: 85%;
-}
-#register-item-modal .modal-footer{
-    padding: 5px 15px;
-    height: auto;
-    width: 80%;
-    margin: 0 auto;
-}
-#register-item-modal .email-field{
-    margin-top: 20px;
-}
-#register-item-modal .item-register-title{
-    text-align: center;
-    margin: 0;
-    font-size: 68px;
-    font-weight: 900;
-    color: #e5005d;
-    background: linear-gradient(to top left, rgba(238, 9, 121, 0.8), rgba(255, 106, 0, 0.8));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-#register-item-modal .login-button-close:hover{
-    background-color: rgba(148, 148, 148, 0.4);
-    border-radius: 5px;
-    color: white;
-}
-#register-item-modal .login-button-access{
-    border-radius: 5px;
-    color: #ffffff;
-    background: linear-gradient(to top left, rgba(238, 9, 121, 0.8), #ee6e73);
-}
-
-/* label color */
-#register-item-modal .modal-content .input-field label {
- color: #929292;
-}
-
-/* label focus color */
-#register-item-modal .modal-content .input-field input[type=text]:focus + label,
-#register-item-modal .modal-content .input-field input[type=password]:focus + label{
- color: #f55b79;
-}
-
-/* label underline focus color */
-#register-item-modal .modal-content .input-field input[type=text]:focus,
-#register-item-modal .modal-content .input-field input[type=password]:focus{
- border-bottom: 1px solid #f55b79;
- box-shadow: 0 1px 0 0 #f55b79;
-}
-
-/* invalid color */
-#register-item-modal .modal-content .input-field input[type=text].invalid {
- border-bottom: 1px solid red;
- box-shadow: 0 1px 0 0 #000;
-}
-
-
 
 /*asdasd*/
 .sidebar-options-wrapper{
     margin-left: 320px;
-    margin-top: 80px;
+    /*margin-top: 80px;*/
 }
 .side-nav.fixed{
     position: absolute;
@@ -389,9 +353,9 @@ main {
     position: relative;
 }
 #account-controller{
-    min-height: 100%;
-    height: 100%;
-    position: absolute;
+    /*position: relative;*/
+    /*height: 75vh;*/
+    min-height: 690px;
 }
 
 .copyright-wrapper{
@@ -399,13 +363,7 @@ main {
     width: 425px;
 }
 
-header img{
-    position: relative;
-    margin-top: 40px;
-    max-width: 100px;
-    float: left;
-    margin-right: 20px;
-}
+
 /* Menu */
 .mobile-nav-bar{
     position: absolute;
@@ -418,19 +376,7 @@ header img{
     top: 45%;
     width: 250px;
 }
-.mobile-user-view{
-    display: none;
-    margin-top: 30px;
-    position: relative;
-}
-.mobile-user-view .user-infomations{
-    position: absolute;
-    margin-left: 15px;
-    top: 8px; 
-}
-.mobile-user-view .user-infomations a{
-    display: block;
-}
+
 .user-view{
     margin-bottom: 20px !important;
     position: relative;
@@ -440,27 +386,11 @@ header img{
     left: 110px;
     top: 23px;
 }
-.trigger-sidenav{
-    position: relative;
+
+.complement-nav-on-mobile{
+        display:none;
 }
-.trigger-sidenav .material-icons{
-    display: none;
-    position: absolute;
-    top: -32px;
-    font-size: 28px;
-    left: 18px;
-    color: white;
-}
-.trigger-sidenav:hover .material-icons{
-    display: block;
-    z-index: 2;
-}
-.trigger-sidenav .circle{
-    -webkit-transition : -webkit-filter 500ms linear
-}
-.trigger-sidenav:hover .circle{
-    filter: brightness(38%);
-}
+
 
 @media only screen and (max-width: 995px) {
     .container {
@@ -486,12 +416,6 @@ header img{
     .my-items .item-description {
         width: 120px;
     }
-    .my-items .btn-floating-swapage{
-        position: absolute;
-        left: 42%;
-        bottom: -136px;
-        top: inherit;
-    }
 }
 @media only screen and (max-width: 992px) {
     header,
@@ -513,46 +437,53 @@ header img{
         left: 93px;
         top: 5px;
     }
+    .subpage-header h2 {
+        display: none;
+    }
     .mobile-nav-bar{
         display: block;
     }
     .sidebar-options-wrapper{
         margin: 0px;
     }
+    .account-menu-trigger{
+        display: block;
+    }
+    
+    .complement-nav-on-mobile{
+        display:block;
+    }
 }
 @media only screen and (max-width: 690px) {
     header .s12 h2{
-        font-size: 30px;
-        margin-top: 25px;
+        font-size: 20px;
     }
     header img{
-        margin-top: 55px;
-        max-width: 70px;
+        height: 49px;
     }
 }
 @media only screen and (max-width: 470px){
-    .subpage-header{
-        height: auto;
-    }
-    .subpage-header:before{
-        height: 100%;
-    }
-    header img{
-        float: none;
-        margin: 10px auto auto auto;
-        display: block;
-    }
-    header .s12 h2{
-        text-align: center;
-        margin-top: 0px;
-        width: 100%;
-    }
-    .section-title{
-        text-align: center;
-    }
+    /* Todo.. */
 }
-@media only screen and (max-width: 1125px) {
-    .my-items .btn-floating-swapage{
-        right: -79px;
-    }
+
+#notification-modal{
+    width:500px;
+}
+
+#notification-modal h4, #notification-modal a{
+    font-weight: 900;
+    color: #e5005d;
+    background: linear-gradient(to top left, rgba(238, 9, 121, 0.8), rgba(255, 106, 0, 0.8));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#notification-modal p{
+    margin-top: 0px;
+    color:rgba(0, 0, 0, 0.6);
+    
+}
+
+.edit-icon{
+    color: #e5005d;
 }

@@ -1,5 +1,7 @@
+
 importScripts('https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/3.9.0/firebase-messaging.js');
+importScripts('idb-keyval.js');
 
 var config = {
     apiKey: "AIzaSyDoT3ObbiBKe459nJIMJsMt2cLhbpmjF4s",
@@ -12,14 +14,15 @@ var config = {
 
 firebase.initializeApp(config);
 
-const messaging = firebase.messaging();
+var messaging = firebase.messaging();
 
 messaging.setBackgroundMessageHandler(function(payload){
+    idbKeyval.set('newMessage', JSON.stringify(payload.data));
+    console.log(payload);
     const title= payload.data.title;
     const options = {
-        body: payload.data.status,
-        icon: payload.data.icon,
-        sound: payload.data.sound
+        body: payload.data.body,
+        icon: payload.data.icon
     }
     return self.registration.showNotification(title, options);
 });

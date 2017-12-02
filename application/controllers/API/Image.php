@@ -12,9 +12,21 @@ class Image extends CI_Controller {
     
 	public function index($ID)
 	{
-		header( "Content-type: image/jpeg");
+		header( "Content-type: image/jpg");
 		echo $this->image_model->get_image($ID);
 	}
+	
+	public function profile($ID)
+	{
+		header( "Content-type: image/jpg");
+		echo $this->image_model->get_profile($ID);
+	}
+	
+	public function item($ID)
+	{
+		header( "Content-type: image/jpg");
+		echo $this->image_model->get_by_item($ID);
+	}	
 	
 	public function register()
 	{

@@ -14,13 +14,16 @@ class User_model extends CI_Model {
     {
         if ($id === FALSE)
         {
-            $this->db->select('id,email,username,nickname,profile_image,about_me,gender,country,state,city,birth,phone');
-            $query = $this->db->get('users');
-            return $query->result_array();
+            $this->db->select('id,email,username,nickname,about_me,gender,countries.name AS country, countries.code as cdCountry, state,city,birth');
+            $this->db->from('users');
+            $this->db->join('countries', 'users.country = countries.code');
+            return $this->db->get()->result_array();
         }
-        $this->db->select('id,email,username,nickname,profile_image,about_me,gender,country,state,city,birth,phone');
-        $query = $this->db->get_where('users', array($attribute => $id));
-        return $query->row_array();
+        $this->db->select('id,email,username,nickname,about_me,gender,countries.name AS country, countries.code as cdCountry, state,city,birth');
+        $this->db->from('users');
+        $this->db->join('countries', 'users.country = countries.code');
+        $this->db->where($attribute, $id);
+        return $this->db->get()->row_array();
     }
 
     public function set_user()
@@ -31,11 +34,9 @@ class User_model extends CI_Model {
             'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
             'nickname' => $this->input->post('nickname'),
             'username' => $this->input->post('username'),
-            'profile_image' => $this->input->post('profile_image'),
-            'about_me' => $this->input->post('about_me'),
+            //'profile_image' => $this->input->post('profile_image'),
             'gender' => $this->input->post('gender'),
             'birth' => $this->input->post('birth'),
-            'phone' => $this->input->post('phone'),
             'country' => $this->input->post('country'),
             'state' => $this->input->post('state'),
             'city' => $this->input->post('city')
@@ -48,7 +49,11 @@ class User_model extends CI_Model {
     
     public function get_login()
     {
-        $query = $this->db->get_where('users', array('email' => $this->input->post('email')))->result_array();
+        $this->db->select('id,email,username, password, nickname,gender,countries.name AS country, countries.code as cdCountry, state,city,birth');
+        $this->db->from('users');
+        $this->db->join('countries', 'users.country = countries.code');
+        $this->db->where('email', $this->input->post('email'));
+        $query = $this->db->get()->result_array();
        if($query) {
           return (password_verify($this->input->post('password'), $query[0]['password'])) ? $query[0] : null;
        }
@@ -67,25 +72,28 @@ class User_model extends CI_Model {
            return [false, 'Nickname must be unique.']; 
         }
         
-       $data = array
+       $user = array
         (
             'email' => $data['email'],
-            'password' => password_hash($data['password'], PASSWORD_DEFAULT),
             'nickname' => $data['nickname'],
             'username' => $data['username'],
-            'profile_image' => array_key_exists('profile_image', $data) ? $data['profile_image'] : NULL,
-            'about_me' =>  array_key_exists('about_me', $data) ? $data['about_me'] : NULL,
             'gender' => $data['gender'],
             'birth' => $data['birth'],
-            'phone' => array_key_exists('phone', $data) ? $data['phone'] : NULL,
             'country' => $data['country'],
             'state' =>  array_key_exists('state', $data) ? $data['state'] : NULL,
             'city' =>  array_key_exists('city', $data) ? $data['city'] : NULL
         );
+        
+        if(!empty($data['newpassword']))
+        {
+            $user['password'] = password_hash($data['newpassword'], PASSWORD_DEFAULT);
+        }
+        
         $this->db->where('id', $ID);
-        $this->db->update('users', $data);
+        $this->db->update('users', $user);
         return [true, 'Update success.']; 
     }
+    
     # All references must be deleted before the user to be removed.
     public function delete_user($ID)
     {
@@ -101,6 +109,13 @@ class User_model extends CI_Model {
         $this->db->delete('users', array('id' => $ID));
     }
     
+    #update firebase cloud messaging token used to identify user who will receive some notification
+    public function update_token($ID, $token){
+        $this->db->set('fcm', $token);
+        $this->db->where('id', $ID);
+        $this->db->update('users');
+    }
+    
     # it returns true for a valid field value
     public function possible_field($ID, $field, $value)
     {
@@ -108,6 +123,14 @@ class User_model extends CI_Model {
         $this->db->where($field, $value);
         $res = $this->db->get('users');
         return ! $res->num_rows() > 0;
+    }
+    
+    # it returns user fcm used to send him notification
+    public function get_fcm($UID){
+        $this->db->select('fcm');
+        $this->db->from('users');
+        $this->db->where('id', $UID);
+        return $this->db->get()->row()->fcm;
     }
     
     private function send_email($user){
@@ -143,6 +166,15 @@ class User_model extends CI_Model {
         $mail->MsgHTML($html);
         $mail->IsHTML(true);  
         $mail->Send();
+    }
+    
+    public function get_profile($user_nickname)
+    {
+        $this->db->select('id,email,username,nickname,about_me,gender,countries.name AS country, countries.code as cdCountry,state,city,birth');
+        $this->db->from('users');
+        $this->db->join('countries', 'users.country = countries.code');
+        $this->db->where('nickname', $user_nickname);
+        return $this->db->get()->row_array();
     }
     
 }

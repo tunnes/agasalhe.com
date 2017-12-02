@@ -7,7 +7,7 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => (ENVIRONMENT !== 'production') ? 'tarcisiolima' : 'troca641_db',
+	'username' => (ENVIRONMENT !== 'production') ? 'tunnes' : 'troca641_db',
 	'password' => (ENVIRONMENT !== 'production') ? '' : '@tr0c@qu1@',
 	'database' => (ENVIRONMENT !== 'production') ? 'db_desapeguei' : 'troca641_db',
 	'dbdriver' => 'mysqli',

@@ -18,7 +18,6 @@ class Auth_model extends CI_Model {
     
     public function set_auth($data)
     {
-    
     #   The variable $ token expects an associative array with 
     #   information to be encrypted:
         $token = $data;
@@ -29,7 +28,6 @@ class Auth_model extends CI_Model {
     
     #   Encryption function that generates JSON token token web token:
         $json_web_token = JWT::encode($token, $this->key);
-    
         return $json_web_token;
     }
     

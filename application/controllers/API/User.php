@@ -14,12 +14,12 @@ class User extends REST_Controller {
         $this->load->model('user_model');
         $this->load->model('wish_model');
         $this->load->model('like_model');
-        
+        $this->load->model('image_model');
 		$this->load->helper('form');        
 	    $this->load->library('form_validation');
 	    $this->load->library('authentication', ['this' => $this]);
 	    $this->load->library('Password_Recovery');
-
+	    $this->lang->load('home', USER_LANGUAGE);
     }
    
     # Get an user
@@ -50,10 +50,8 @@ class User extends REST_Controller {
 	    $this->form_validation->set_rules('password', 'password', 'trim|required|min_length[6]|max_length[20]');
 	    $this->form_validation->set_rules('nickname', 'nick name', 'trim|required|max_length[20]|is_unique[users.nickname]|regex_match[#^[^0-9][_A-z0-9]*((-)*[_A-z0-9])*$#]');
 	    $this->form_validation->set_rules('username', 'user name', 'trim|required|max_length[80]');
-	    $this->form_validation->set_rules('profile_image', 'profile image');
-	    $this->form_validation->set_rules('about_me', 'About me', 'trim|max_length[250]');
+	    $this->form_validation->set_rules('profile_picture', 'profile picture');
 	    $this->form_validation->set_rules('gender', 'gender', 'trim|required|in_list[M,F]');
-	    $this->form_validation->set_rules('phone', 'phone', 'trim|max_length[11]|min_length[10]');
 	    $this->form_validation->set_rules('birth', 'birth date', 'trim|required|callback_date_regex');
         $this->form_validation->set_rules('country', 'country', 'trim|required|exact_length[2]|alpha');
         $this->form_validation->set_rules('state', 'state', 'trim|max_length[60]');
@@ -68,23 +66,21 @@ class User extends REST_Controller {
 	    {
         #   CREATED (201) being the HTTP response code:
 	        $this->user_model->set_user();
-            $this->set_response(null, REST_Controller::HTTP_CREATED);
+	        $UID = $this->db->insert_id();
+	        $this->image_model->set_profile($_FILES['profile_picture'], $UID);
+            $this->set_response(['message' => $this->lang->line('home_modal_register_success')], REST_Controller::HTTP_CREATED);
 	    }
     }
     # Update an user
-    public function index_put()
+    public function update_post()
     {
         $USER = $this->authentication->verify_authentication();
-        
-        $this->form_validation->set_data($this->put());
         $this->form_validation->set_rules('email', 'e-mail', 'trim|required|valid_email|max_length[80]');
-	    $this->form_validation->set_rules('password', 'password', 'trim|required|min_length[6]|max_length[20]');
+	    $this->form_validation->set_rules('newpassword', 'newpassword', 'trim|min_length[6]|max_length[20]');
         $this->form_validation->set_rules('nickname', 'nick name', 'trim|required|max_length[20]|regex_match[#^[^0-9][_A-z0-9]*((-)*[_A-z0-9])*$#]');
 	    $this->form_validation->set_rules('username', 'user name', 'trim|required|max_length[80]');
 	    $this->form_validation->set_rules('profile_image', 'profile image');
-	    $this->form_validation->set_rules('about_me', 'About me', 'trim|max_length[250]');
 	    $this->form_validation->set_rules('gender', 'gender', 'trim|required|in_list[M,F]');
-	    $this->form_validation->set_rules('phone', 'phone', 'trim|max_length[11]|min_length[10]');
 	    $this->form_validation->set_rules('birth', 'Date of birth', 'trim|required|callback_date_regex');
 	    $this->form_validation->set_rules('country', 'country', 'trim|required|exact_length[2]|alpha');
         $this->form_validation->set_rules('state', 'state', 'trim|max_length[60]');
@@ -97,7 +93,7 @@ class User extends REST_Controller {
         }
         else
         {
-            $update = $this->user_model->update($USER['id'], $this->put());
+            $update = $this->user_model->update($USER['id'], $_POST);
             if($update[0] === FALSE)
             {
                 $this->set_response($update[1], REST_Controller::HTTP_UNPROCESSABLE_ENTITY);
@@ -189,19 +185,11 @@ class User extends REST_Controller {
     public function like_post()
     {
         $USER = $this->authentication->verify_authentication();
-        
-        $this->form_validation->set_rules('item_id', 'Item ID', 'trim|required|integer|max_length[10]|greater_than[-1]');
+        $IID = $this->authentication->verify_parameter('item_id');
+	   	
+	   	$response = $this->like_model->set_like($USER['id'], $IID);
+        $response ? $this->set_response(null, REST_Controller::HTTP_CREATED) : $this->set_response(array('message' => 'The item was already liked.'), REST_Controller::HTTP_UNPROCESSABLE_ENTITY);			
 	    
-	    if ($this->form_validation->run() === FALSE)
-	    {
-	        $error = $this->form_validation->error_array();
-	    	$this->set_response($error, REST_Controller::HTTP_UNPROCESSABLE_ENTITY);
-	    }
-	    else
-	    {
-			$response = $this->like_model->set_like($USER['id']);
-            $response ? $this->set_response(null, REST_Controller::HTTP_CREATED) : $this->set_response(NULL, REST_Controller::HTTP_UNAUTHORIZED);			
-	    }
         
     }
     
@@ -230,18 +218,54 @@ class User extends REST_Controller {
 	    else
 	    {
 	        $user = $this->user_model->get_login();
+	        unset($user['password']);
+	        
 	        if(empty($user))
 	        {
-	            $this->set_response(NULL, REST_Controller::HTTP_UNAUTHORIZED);
+	            $this->set_response(['user' => NULL, 'message' => $this->lang->line('home_login_incorrect')], REST_Controller::HTTP_UNAUTHORIZED);
 	        }
 	        else
 	        {
-	            unset($user['password']);
-		        $token = $this->auth_model->set_auth($user);
-		        $this->session->set_userdata('user', $token);
-		        $this->set_response($token, REST_Controller::HTTP_OK);
+	            $token = $this->auth_model->set_auth($user);
+	            $this->session->set_userdata('user', $token);
+	            $this->session->set_userdata('image', "/API/image/profile/" . $user['id']);
+	            $this->session->set_userdata('nickname', $user['nickname']);
+	            $this->session->set_userdata('username', $user['username']);
+	            $response = [
+    		        'token'    => $token,
+		            'username' => $user['username'],
+		            'nickname' => $user['nickname'],
+		            'email'    => $user['email'],
+		            'id'       => $user['id'],
+		            'image'    => "/API/image/profile/" . $user['id'],
+		            'country'  => $user['country'],
+		            'cdCountry'=> $user['cdCountry'],
+		            'city'     => $user['city'],
+		            'state'    => $user['state'],
+		            'birth'    => USER_LANGUAGE == 'en' ? date('m/d/Y', strtotime($user['birth'])) : date('d/m/Y', strtotime($user['birth'])),
+		            'gender'   => $user['gender']
+		        ];
+		        $this->set_response($response, REST_Controller::HTTP_OK);
 	        }
 	    }
+    }
+    
+    public function token_put()
+    {
+        $this->form_validation->set_data($this->put());
+        $this->form_validation->set_rules("token", "Token", "trim|required|max_length[255]");
+        if($this->form_validation->run())
+        {
+            $USER = $this->authentication->verify_authentication();
+            $this->user_model->update_token($USER['id'], $this->put()['token']);
+            $message = ['message' => 'Fcm token updated.'];
+            # NO_CONTENT (204) being the HTTP response code
+            $this->set_response($message, REST_Controller::HTTP_OK);
+        }else{
+            $error = $this->form_validation->error_array();
+            $this->set_response($error, REST_Controller::HTTP_UNPROCESSABLE_ENTITY);
+        }
+        
     }
     
     public function password_recovery_post()

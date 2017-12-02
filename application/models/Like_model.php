@@ -53,15 +53,16 @@ class Like_model extends CI_Model {
         }
         
         /* Received Likes */
-        $this->db->select('likes.user_id, users.nickname, likes.item_id, items.title, likes.created');
+        $this->db->select('likes.user_id, users.nickname, likes.item_id, items.title, items.description, likes.created');
         $this->db->from('items');
         $this->db->join('likes','likes.item_id = items.id','inner');
         $this->db->join('users', 'likes.user_id = users.id', 'inner');
         $this->db->where('items.user_id ', $ID);
         $this->db->order_by('created', 'desc');
         $results['received'] = $this->db->get()->result_array();
+        
         /* Received Given */
-        $this->db->select('items.title, items.id as item_id, likes.created');
+        $this->db->select('users.nickname, items.title, items.id as item_id, items.description, likes.created');
         $this->db->from('likes');
         $this->db->join('users','likes.user_id = users.id','inner');
         $this->db->join('items', 'likes.item_id = items.id', 'inner');
@@ -72,9 +73,9 @@ class Like_model extends CI_Model {
         return $results;
     }
     
-    public function set_like($ID)
+    public function set_like($ID, $ITEM_ID)
     {
-        $query = $this->db->get_where('likes', array("item_id" => $this->input->post('item_id'), "user_id" => $ID));
+        $query = $this->db->get_where('likes', array("item_id" => $ITEM_ID, "user_id" => $ID));
         if($query->num_rows() > 0)
         {
             return false;
@@ -82,7 +83,7 @@ class Like_model extends CI_Model {
         $data = array
         (
             'user_id' => $ID,
-            'item_id' => $this->input->post('item_id')
+            'item_id' => $ITEM_ID
         );
         
         $this->db->insert('likes', $data);

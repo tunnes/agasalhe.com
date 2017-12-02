@@ -1,0 +1,50 @@
+.my-items-collection{
+    /*width: 95%;*/
+}
+.my-items-collection .collection-item.avatar{
+    padding-left: 10px;
+}
+.my-items-collection .collection-item.avatar .secondary-content{
+    top: 30px;
+    right: 16px;
+}
+.my-items-collection .collection-item.avatar .title{
+    font-weight: 500;
+}
+
+.my-items-collection .collection-item .description{
+    width: 45%;
+    font-size: 12px;
+}
+.my-items-collection .collection-item .likes{
+    font-size: 11px;
+    color: #f0458e;
+}
+.my-items-collection .collection-item .image {
+    float: left;
+    margin-right: 13px;
+    width: 65px;
+    height: 65px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 7px;
+}
+.my-items-collection .trade-icon{
+    font-size: 24px;
+    color: rgba(0, 0, 0, 0.19);
+    transition: all 0.5s ease;
+}
+.my-items-collection .trade-icon:hover{
+    color: #f0458e;
+}
+
+/*.delete-item:hover{*/
+/*    color: red;*/
+/*}*/
+/*.show-item:hover{*/
+/*    color: #2ea5fb;*/
+/*}*/
+/*.update-item:hover{*/
+/*    color: yellow;*/
+/*}*/

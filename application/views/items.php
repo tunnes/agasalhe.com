@@ -12,7 +12,16 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
         <script src="https://unpkg.com/vue@2.4.4/dist/vue.js"></script>
-        	
+        
+        <!-- ReactiveX JS -->
+        <script src="https://unpkg.com/rxjs/bundles/Rx.min.js"></script>
+        <!-- Indexed db -->
+        <script src="idb-keyval.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.6.0/firebase.js"></script>
+        <script type="text/javascript" src="/application/assets/js/firebase.js"></script>
+        
+        <script type="text/javascript" src="/application/assets/js/components/_chat.js"></script>
+        
         <link rel="stylesheet" type="text/css" href="/application/assets/css/items.css">
         <script type="text/javascript" src="/application/assets/js/items.js"></script>
         
@@ -24,50 +33,71 @@
         <title>Items</title>
         
         <link rel="stylesheet" type="text/css" href="/application/assets/css/components/_item.css">
+        <link rel="stylesheet" type="text/css" href="/application/assets/css/components/_chat.css">
+        <link rel="stylesheet" type="text/css" href="/application/assets/css/helpers.css">
+        
+        <!-- Main Js -->
+        <script type="text/javascript" src="/application/assets/js/main.js"></script>
+        
+        <!-- Easy Autocomplete -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/jquery.easy-autocomplete.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easy-autocomplete/1.3.5/easy-autocomplete.min.css" type="text/css" />
+        <!-- Login components -->
+        <script type="text/javascript" src="/application/assets/js/components/_register.js"></script>        
+        <link rel="stylesheet" type="text/css" href="/application/assets/css/components/_login.css">
+        
+        <!-- Register components -->
+        <script type="text/javascript" src="/application/assets/js/components/_login.js"></script>
+        <link rel="stylesheet" type="text/css" href="/application/assets/css/components/_register.css">   
+        
+        <script type="text/javascript" src="/application/assets/js/components/_login.js"></script>
+        <script type="text/javascript" src="/application/assets/js/components/_register.js"></script>   
+        <script type="text/javascript" src="/application/assets/js/countries.js"></script>
+        
 	</head>
 	<body>
-        <header class="subpage-header">
+        <header id="top" class="subpage-header">
             <div class="container">
                 <div class="col s12">
-                    <a href="/"><img src="/application/assets/img/header-logo.png"></a>
-                    <h2><?= $this->lang->line('item_header_h2') ?></h2>
+                    <?php include('components/_navbar.php') ?>
                 </div>
             </div>
         </header>
         <main id="itemsController" class="container">
             <ul id="slide-out" class="side-nav fixed account-sidebar">
-                <li>
-                    <div class="user-view">
-                        <a href="#!user"><img class="circle" src="http://via.placeholder.com/64x64"></a>
-                        <span class="user-infomations">
-                            <span class="name">John Doe</span>
-                            <span class="email">jdandturk@gmail.com</span>
-                        </span>
-                    </div>
-                </li>
-                <div class="divider"></div>
-                </li>
-                <li><a class="subheader"><?= $this->lang->line('item_search_item') ?></a></li>
-                <div class="sidebar">
+                <li><a class="subheader"><i class="material-icons left">filter_list</i><?= $this->lang->line('item_filter_item') ?></a></li>
+                <div class="sidebar items-page-sidebar">
                     <div class="input-field col s12">
                       <input  id="search-by-title" type="text" class="validate">
                       <label for="first_name">Digite algum termo</label>
                     </div>
                     <div class="input-field col s12">
-                        <select class="search-by-category">
-                            <option value="0" selected>Todas as categorias</option>
-                            <option value="1">Moveis</option>
-                            <option value="2">Eletrodomestico</option>
-                            <option value="3">Eletronico</option>
+                        <select id="search-by-category" class="search-by-category">
+                            <option value="" selected><?= $this->lang->line('item_category_all') ?></option>
+                            <option value="NONE"><?= $this->lang->line('item_category_none') ?></option>
+                            <option value="FURNITURE"><?= $this->lang->line('item_category_furniture') ?></option>
+                            <option value="ELECTRONIC"><?= $this->lang->line('item_category_electronic') ?></option>
+                            <option value="HOUSEHOLD-APPLIANCE"><?= $this->lang->line('item_category_household-appliance') ?></option>
+                            <option value="TOY"><?= $this->lang->line('item_category_toy') ?></option>
+                            <option value="CLOTHING"><?= $this->lang->line('item_category_clothing') ?></option>
+                            <option value="UTENSIL"><?= $this->lang->line('item_category_utensil') ?></option>
+                            <option value="TOOL"><?= $this->lang->line('item_category_tool') ?></option>
+                            <option value="INSTRUMENT"><?= $this->lang->line('item_category_instrument') ?></option>
+                            <option value="MOTORING"><?= $this->lang->line('item_category_motoring') ?></option>
+                            <option value="SPORT"><?= $this->lang->line('item_category_sport') ?></option>  
+                            <option value="DECORATION"><?= $this->lang->line('item_category_decoration') ?></option>
+                            <option value="AUDIO-VISUAL"><?= $this->lang->line('item_category_audio-visual') ?></option>
+                            <option value="COLLECTION"><?= $this->lang->line('item_category_collection') ?></option>
+                            <option value="OTHERS"><?= $this->lang->line('item_category_others') ?></option>
                         </select>
                         <label>Categoria</label>
                     </div>
                     <div class="input-field col s12" style="margin-top: 40px">
-                        <select class="search-by-use-state">
-                            <option value="0" selected>Indiferente</option>
-                            <option value="1">Novo</option>
-                            <option value="2">Semi-Novo</option>
-                            <option value="3">Usado</option>    
+                        <select id="search-by-use-state" class="search-by-use-state">
+                            <option value="" selected><?= $this->lang->line('item_use-state_all') ?></option>
+                            <option value="USED"><?= $this->lang->line('item_use-state_used') ?></option>
+                            <option value="SEMI-NEW"><?= $this->lang->line('item_use-state_semi-new') ?></option>
+                            <option value="NEW"><?= $this->lang->line('item_use-state_new') ?></option>
                         </select>
                         <label>Estado de uso</label>
                     </div>                    
@@ -84,48 +114,48 @@
                     </a>
                 </div>
             </ul>
+            
             <div class="content-items-wrapper">
-                <div class="mobile-user-view">
-                    <a href="#" data-activates="slide-out" class="button-collapse trigger-sidenav">
-                        <i class="material-icons">menu</i>
-                        <img class="circle" src="http://via.placeholder.com/64x64">
-                    </a>
-                    <span class="user-infomations"> 
-                        <a href="#!name"><span class="name">John Doe</span></a>
-                        <a href="#!email"><span class="email">jdandturk@gmail.com</span></a>
-                    </span>
-                </div>		       	
 		        <div class="item-results">
-		            <span class="itens-count">Exbindo {{ itemsCount }} resultado(s).</span>
+		            <span class="itens-count">Exibindo {{ itemsCount }} resultado(s).</span>
 		            
-		        	<div v-if="itemsCount > 0">
+		        	<div class="grid" v-if="itemsCount > 0">
 			        	<div class="grid-sizer"></div>
 	                    <!-- Item component starts here - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->			        	
 	                    <div class="grid-item" v-for="item in items">
-    	                        <div class="item-card" v-on:click="showItem(item.itemID)">
-    	                            <div class="state"> 
-    	                                <span>SP</span>
-    	                            </div>
-    	                            <div class="head">
-    	                                <img class="item-image" v-bind:src="item.imageUrl"/>
-    	                                <span class="action-like">
-        	                                <img src="/application/assets/img/itens-like-heart.svg"></img>
-        	                                <span>10</span>
-    	                                </span>
-    	                            </div>
-    	                            <div class="body">
-    	                                <p class="author truncate-on-line">{{ item.author }}</p>
-    	                                <p class="item-name truncate-on-line">{{ item.name }}</p>
-    	                            </div>
-    	                        </div>
-	                        </a>
+                            <div class="card trocaqui-item" v-on:click="showItem(item.item_id)">
+                                <div class="card-image">
+                                    <img class="item-image" v-bind:src="'/API/image/item/' + item.item_id"/>
+                                </div>
+                                <div class="card-content">
+                                    <i class="material-icons like-button" v-bind:class="{'item-liked' : item.isLikedForYou}" v-on:click="toggleLike(item.isLikedForYou, item)">
+                                        {{ item.isLikedForYou ? 'favorite' : 'favorite_border' }}
+                                    </i>
+                                    <span class="card-title author">~ {{ item.nickname }}</span>
+                                    <span class="truncate-one-line title">{{ item.title }}</span>
+                                </div>
+                             </div>
 	                    </div>
 	                    <!-- Item component end's here - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 					</div>
 					<div v-if="show404" class="any-results">
 					    <h3>
-					        Desculpe.. Nenhum item encontrado =S
+					        <?= $this->lang->line('item_search_notfound')?>
 					    </h3>
+					</div>
+					
+					<div v-if="loading" class="loading-results">
+					    <div class="preloader-wrapper big active">
+                            <div class="spinner-layer spinner-blue-only">
+                              <div class="circle-clipper left">
+                                <div class="circle"></div>
+                              </div><div class="gap-patch">
+                                <div class="circle"></div>
+                              </div><div class="circle-clipper right">
+                                <div class="circle"></div>
+                              </div>
+                            </div>
+                         </div>
 					</div>
 					
 		        </div>
@@ -138,10 +168,25 @@
                     <div class="copyright-wrapper">
                         <span>© 2017 Copyright - Feito com</span> 
                         <span><i class="material-icons">favorite</i></span>
-                        <span>por um time ainda sem nome.</span>
+                        <span>por equipe trocaqui.</span>
                     </div>
                 </div>
             </div>
         </footer>
+        <!-- External loading component starts -->
+            <?php include('components/_loading.php') ?>
+        <!-- External loading component end's-->    
+        
+        <!-- External login component starts -->
+            <?php include('components/_login.php') ?>
+        <!-- External login component end's-->
+        
+        <!-- External login component starts -->
+            <?php include('components/_register.php') ?>
+        <!-- External login component end's-->
+        <!-- External chat component starts -->
+            <?php include('components/_chat.php') ?>
+        <!-- External chat component end's--> 
+        
 	</body>
 </html>

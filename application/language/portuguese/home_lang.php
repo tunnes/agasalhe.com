@@ -84,10 +84,19 @@ $lang['home_modal_register_male'] = 'Masculino';
 $lang['home_modal_register_female'] = 'Feminino';
 $lang['home_modal_register_logout'] = 'Sair';
 $lang['home_modal_register_send'] = 'Enviar';
+$lang['home_modal_register_phone'] = 'Telefone';
+$lang['home_modal_register_picture'] = 'Foto de perfil';
+$lang['home_modal_register_newpassword'] = "Nova senha";
+$lang['home_modal_register_picture_update'] = "Atualizar foto de perfil";
 
+$lang['home_modal_register_success'] = 'Pronto! Cadastro realizado';
+
+/* Login */
+$lang['home_login_incorrect'] = 'E-Mail ou Senha Inválidos.';
 $lang['home_login_forget'] = 'Esqueceu sua senha?';
 $lang['home_login_recovery'] = 'Enviaremos um e-mail para você poder redefinir sua nova senha :-)';
 $lang['home_get_back'] = 'Voltar';
+$lang['home_no_account'] = 'Ainda não possui conta?';
 
 
 ?>

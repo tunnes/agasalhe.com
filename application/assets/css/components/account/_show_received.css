@@ -1,0 +1,84 @@
+.my-trades-received-collection .collection-item.avatar{
+    padding-left: 10px;
+}
+.my-trades-received-collection .collection-item.avatar .secondary-content{
+    top: 30px;
+    right: 16px;
+}
+.my-trades-received-collection .collection-item.avatar .title{
+    font-size: 13px;
+    width: 35%;
+    display: inline-block;
+}
+.my-trades-received-collection .title strong{
+    font-size: 13px;
+    /*color: #f0458e;*/
+}
+
+
+.my-trades-received-collection .collection-item .description{
+    font-size: 12px;
+    width: 35%;
+    display: block;
+    margin-top: -5px !important;
+}
+.my-trades-received-collection .title span,
+.my-trades-received-collection .collection-item .description strong{
+    font-size: 10px;
+    text-transform: uppercase;
+    background: #e5035d;
+    color: white;
+    padding: 2px 4px;
+    border-radius: 5px;
+    margin-right: 1px;
+    font-weight: 400;
+}
+
+.my-trades-received-collection .collection-item .likes{
+    font-size: 11px;
+    color: #f0458e;
+}
+.my-trades-received-collection .collection-item .image {
+    float: left;
+    margin-right: 15px;
+    margin-left: 5px;
+    width: 65px;
+    height: 65px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 7px;
+}
+
+.my-trades-received-collection .collection-item .image:first-child {
+    margin-left: 0px;
+    margin-right: 5px;
+}
+
+.my-trades-received-collection .two-way-icon{
+    float: left;
+    margin-top: 21px;
+}
+.my-trades-received-collection .trade-icon{
+    font-size: 16px;
+    background: rgba(0, 0, 0, 0.19);
+    transition: all 0.5s ease;
+    border: 2px solid;
+    border-radius: 50%;
+    color: white;
+    padding: 4px;
+}
+.my-trades-received-collection .trade-icon:hover{
+    background: #f0458e;
+    color: white;
+}
+
+/*.delete-item:hover{*/
+/*    color: red;*/
+/*}*/
+/*.show-item:hover{*/
+/*    color: #2ea5fb;*/
+/*}*/
+/*.update-item:hover{*/
+/*    color: yellow;*/
+/*}*/

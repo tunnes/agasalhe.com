@@ -4,6 +4,7 @@ class Item_model extends CI_Model {
     public function __construct()
     {
         $this->load->database();
+        $this->load->library('authentication', ['this' => $this]);
     }
     
     # Get itens
@@ -12,12 +13,26 @@ class Item_model extends CI_Model {
         # Get many items: 
         if ($ID === FALSE)
         {
-            $this->db->select('u.id as user_id, u.nickname, u.phone, u.profile_image, i.id as item_id, i.title,
-                                i.description, i.use_state, i.category, i.active');
+            $this->db->select('u.id as user_id, u.nickname, i.id as item_id, i.title,
+                            i.description, i.use_state, i.category, i.active');
             $this->db->from('items as i');
             $this->db->join('users as u', 'u.id = i.user_id', 'inner');
             $query = $this->db->get()->result_array();
             $results = array();
+            
+            if($this->authentication->getUserIdForLikedItems()['id'])
+            {
+                foreach($query as $value)
+                {
+                    $images = $this->get_images($value['item_id']);
+                    $likes  = $this->count_likes($value['item_id']);
+                    $value['images'] = $images;
+                    $value['qt_likes'] = $likes[0]['qt_item_likes'];
+                    $value['isLikedForYou'] = $this->isLikedForYou($value['item_id'], $this->authentication->getUserIdForLikedItems()['id']);
+                    $results[] = $value;
+                }
+                return $results;
+            }
             foreach($query as $value)
             {
                 $images = $this->get_images($value['item_id']);
@@ -30,12 +45,13 @@ class Item_model extends CI_Model {
         }
         
         # Get specific item:
-        $this->db->select('users.id as user_id, users.nickname, users.phone, users.profile_image, items.id as item_id, items.title,
+        $this->db->select('users.id as user_id, users.nickname, users.username, items.id as item_id, items.title,
                             items.description, items.use_state, items.category, items.active');
         $this->db->from('items');
         $this->db->join('users', 'users.id = items.user_id', 'inner');
         $this->db->where('items.id', $ID);
         $query = $this->db->get()->result_array();
+        
         foreach($query as $value)
         {
             $likes  = $this->count_likes($value['item_id']);
@@ -50,15 +66,35 @@ class Item_model extends CI_Model {
     # Get itens by paramteres
     public function get_filter_items($FILTER_PARAMS)
     {
-
         $this->db->select(' u.id as user_id, u.nickname, i.id as item_id, i.title');
         $this->db->from('items as i');
         $this->db->join('users as u', 'u.id = i.user_id', 'inner');
+        
+        if($this->authentication->getUserIdForLikedItems()['id'])
+        {
+            foreach($FILTER_PARAMS as $key => $value)
+            {
+                $this->db->like($key, $value);
+            }
+            
+            $query = $this->db->get()->result_array();
+            $results = array();
+            foreach($query as $value)
+            {
+               $images = $this->get_images($value['item_id']);
+               $likes  = $this->count_likes($value['item_id']);
+               $value['images'] = $images;
+               $value['qt_likes'] = $likes[0]['qt_item_likes'];
+               $value['isLikedForYou'] = $this->isLikedForYou($value['item_id'], $this->authentication->getUserIdForLikedItems()['id']);
+               $results[] = $value;
+            }
+            return $results;
+        }
+        
         foreach($FILTER_PARAMS as $key => $value)
         {
             $this->db->like($key, $value);
         }
-        
         
         $query = $this->db->get()->result_array();
         $results = array();
@@ -72,6 +108,13 @@ class Item_model extends CI_Model {
         }
         return $results;
     
+    }
+    # Check whether the item is like
+    public function isLikedForYou($IID, $UID)
+    {
+        $query = $this->db->get_where('likes', array('user_id' => $UID, 'item_id' => $IID));
+        $v = $query->num_rows();
+        return $v ? true : false;
     }
     # Get items from the user
     public function user_items($ID) 
@@ -132,8 +175,8 @@ class Item_model extends CI_Model {
         $this->db->where('item_yours', $ITEM_ID)->or_where('item_theirs', $ITEM_ID);
         $this->db->delete('trades');
         # removing item images...
-        $delete = "DELETE item_images FROM item_images INNER JOIN items
-                   ON items.id = item_images.item_id
+        $delete = "DELETE images FROM images INNER JOIN items
+                   ON items.id = images.item_id
                    WHERE items.user_id = ?";
         $this->db->query($delete, array('item_id' => $ITEM_ID));
         $this->db->delete('items', array('id' => $ITEM_ID));
@@ -141,7 +184,7 @@ class Item_model extends CI_Model {
     
     public function get_trades($USER_ID)
     {
-        # Gets user items offered for trading.
+        //trocas solicitadas
         $this->db->select("t.item_yours, i.title, i.description, i.use_state, i.category, i.active,
                            t.created, t.status as 'trade_status', t.item_theirs");
         $this->db->from('trades as t');
@@ -150,24 +193,46 @@ class Item_model extends CI_Model {
         $this->db->order_by('t.created', 'desc');
         $query = $this->db->get()->result_array();
         $results = array();
-        
+    
         foreach($query as $value)
         {
-            # Gets the item desired by the user for trading (it includes the item owner).
-            $this->db->select('i.user_id, i.id as item_id, u.nickname, u.profile_image, u.username, 
+            $this->db->select('i.user_id, i.id as item_id, u.nickname, u.username, 
             i.title, i.description, i.use_state, i.category, i.active');
             $this->db->from('items as i');
             $this->db->join('users as u', 'i.user_id = u.id');
             $this->db->where('i.id', $value['item_theirs']);
-            $item_theirs = $this->db->get()->result_array()[0];
             unset($value['item_theirs']);
+            $item_theirs = $this->db->get()->result_array()[0];
             $value['traded_by'] = $item_theirs;
-            $results[] = $value;
+            $results["requested"][]= $value;
         }
+        //trocas recebidas
+        $this->db->select("t.item_yours, i.title, i.description, i.use_state, i.category, i.active,
+                           t.created, t.status as 'trade_status', t.item_theirs");
+        $this->db->from('trades as t');
+        $this->db->join('items as i', 'i.id = t.item_theirs', 'inner');
+        $this->db->where('i.user_id', $USER_ID);
+        $this->db->order_by('t.created', 'desc');
+        $queryReceived = $this->db->get()->result_array();
+       
+        foreach($queryReceived as $value)
+        {
+            $this->db->select('i.user_id, i.id as item_id, u.nickname, u.username, 
+            i.title, i.description, i.use_state, i.category, i.active');
+            $this->db->from('items as i');
+            $this->db->join('users as u', 'i.user_id = u.id');
+            $this->db->where('i.id', $value['item_yours']);
+            $item_yours = $this->db->get()->result_array()[0];
+            unset($value['item_yours']);
+            $item_yours['received'] = $value;
+            // $aux = $value;
+            // $value['traded_by'] = $item_yours;
+            $results["received"][] = $item_yours;
+        }
+    
         return $results;
     }
     /*
-        
         Required rules for doing a trade:
         - item id must exists ~ obviously.
         - the user cannot trade an item for the same or by another item of their own possession.
@@ -217,7 +282,7 @@ class Item_model extends CI_Model {
     # When the trade is over, this function must update the item active column as FALSE.
     public function complete_trade($ITEM_YOURS, $ITEM_THEIRS, $ID)
     {
-        if($ITEM_YOURS === $ITEM_THEIRS || !$this->isAlreadyRequested($ITEM_THEIRS, $ITEM_YOURS)[1])
+        if($ITEM_YOURS === $ITEM_THEIRS || !$this->isAlreadyRequested($ITEM_YOURS, $ITEM_THEIRS)[1])
         {
             return [false, 'Invalid request.'];
         }
@@ -233,8 +298,8 @@ class Item_model extends CI_Model {
             return [false, 'This trade was already finished before.'];
         }
         
-        $this->db->where('item_theirs', $ITEM_THEIRS);
-        $this->db->where('item_yours', $ITEM_YOURS);
+        $this->db->where('item_theirs', $ITEM_YOURS);
+        $this->db->where('item_yours', $ITEM_THEIRS);
         $this->db->update('trades', array('status' => 'DONE'));
         
         $this->db->where('id', $ITEM_THEIRS);

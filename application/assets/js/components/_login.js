@@ -14,6 +14,11 @@ $(document).ready(function() {
             console.log('Closed');
         }
     });
+
+$('.no-account').click(function() {
+    $('#login-modal').modal('close');
+    $('#register-modal').modal('open');
+});
     
 $("#logar").click(function(e) {
     e.preventDefault();
@@ -21,15 +26,17 @@ $("#logar").click(function(e) {
     
     AJAXRequester('post', 'user/login', {email: $('#login-modal #email').val(), password: $('#login-modal #password').val()})
       .then(function(data){ 
-          sessionStorage.setItem('auth_jwt', data);
+          localStorage.setItem('auth_jwt', data.token);
+          localStorage.setItem('current_user', JSON.stringify(data));
           $('#login-modal').modal('close');
           window.location.href = 'account';
        })
-       .catch(function(data) { 
-           if(data.responseText === '') {
-               alert('Email e/ou senha incorreto(s).');
+       .catch(function(data) {
+           let x = JSON.parse(data.responseText);
+           if(x.user === null){
+                var $toastContent = $('<span>'+ x.message  +'</span>').add($('<button class="btn-flat toast-action" onclick="closeToast(this)">Ok</button>'));
+                Materialize.toast($toastContent, 3000);
            }else {
-            let x = JSON.parse(data.responseText);
             console.log(x);
             for (var key in x) {
               $('#login-modal #' + key + ' + label').attr("data-error", x[key]);

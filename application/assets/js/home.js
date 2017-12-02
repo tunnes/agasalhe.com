@@ -139,35 +139,14 @@ $( document ).ready(function(){
          	columnWidth: '.grid-sizer'
      	}); 
 	});
-	
-	var options = {
- 	data: countries,
- 	getValue: "name",
- 
- 	list: {
- 		match: {
- 			enabled: true
- 		},
- 		
- 	onSelectItemEvent: function(){
- 			var country = $("#country").getSelectedItemData().code;
- 			$("#country").data('code', country);
- 			console.log(country);
-		},
-		
-		showAnimation: {
-			type: "fade", //normal|slide|fade
-			time: 500,
-			callback: function() {}
-		},
-
-		hideAnimation: {
-			type: "slide", //normal|slide|fade
-			time: 500,
-			callback: function() {}
-		}
- }
-};
- $("#country").easyAutocomplete(options);
 	 
+	 //Set Menu
+	 $('.go-about').click(function(e){
+	   e.preventDefault();
+	   $("html, body").animate({ scrollTop: $('.about-us').offset().top }, 1000);
+	 });
+	 $('.go-works').click(function(e){
+	   e.preventDefault();
+	   $("html, body").animate({ scrollTop: $('.how-works').offset().top }, 1000);
+	 });
 })

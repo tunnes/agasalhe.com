@@ -15,7 +15,8 @@
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <a href="#" class="forgot-my-pswd"><?= $this->lang->line('home_login_forget') ?></a>
+                <a href="#" class="forgot-my-pswd"><?= $this->lang->line('home_login_forget') ?></a> | 
+                <a href="#" class="no-account"><?= $this->lang->line('home_no_account') ?></a>
                 <section class="recovery-password">
                     <div class="row">
                         <p><?= $this->lang->line('home_login_recovery') ?></p>
